@@ -1,0 +1,16 @@
+name = "autodiff"
+version = "0.1.0"
+defaultTargets = ["autodiff"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.22.0"
+
+[[lean_lib]]
+name = "Autodiff"
+
+[[lean_exe]]
+name = "autodiff"
+root = "Main"
+supportInterpreter = true
