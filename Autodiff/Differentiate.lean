@@ -21,6 +21,8 @@ open Lean.Parser.Command
 open Meta
 open Std
 
+set_option maxHeartbeats 2000000
+
 def RealOfNat (n: ℕ): ℝ  := @Nat.cast ℝ _ n
 
 namespace AR.Tools.AutoDiff.Differentiate
@@ -40,6 +42,45 @@ def buildDomainExpr (d: List Expr) :=
   match domainExpr'.find? Expr.isFVar with
   | some fv => domainExpr'.replaceFVar fv (mkConst `x [])
   | _ => domainExpr'
+
+def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
+| [] => sorryT -- mkApp domanBVar xBVar
+| x' :: xs =>
+    let x := x'.replace
+      (λ e ↦ match e with
+             | .lam _ _ b _ => b
+             | .fvar _ => xBVar
+             | _ => e)
+
+    --let tmpName := `temp
+    --let tmp := Lean.mkConst tmpName []
+    --let propT := Lean.mkConst `Prop []
+    let anon := Lean.mkConst `_ []
+    --let conj := Lean.mkConstEx ``And.left []
+    let l := mkApp3 (mkConst `And.left) anon anon
+    let r := mkApp3 (mkConst `And.right) anon anon
+
+    if x.eqv sorryT
+    then (if xs.isEmpty then op else r op)
+    else  (buildDomainSelector sorryT (l op) xs)
+
+partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
+  let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
+
+  --logInfo m!"domain predicates: {d}"
+  let s' := prf.find? Expr.isSorry
+  let t ←
+    match s' with
+    | some s => liftTermElabM <| inferType s --logInfo m!"sorry type: {← liftTermElabM <|inferType s}"
+    | _ => return prf --logInfo m!"sorry not found"
+  --logInfo m!"sorry: {s'}:{t}"
+  logInfo m!"{t} -- {d}"
+
+  prepareProof
+    (prf.replace
+      (λ e ↦
+        if e == s' then some (buildDomainSelector t domanBVar d.reverse ) else none))
+    d
 
 partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × List Expr) := do
   let derivFn := `HasDerivAt
@@ -103,7 +144,7 @@ partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × L
   let domainExpr := buildDomainExpr d
   domainMVar.assign domainExpr
 
-  --logInfo m!"domain expression {domainExpr}"
+  logInfo m!"domain expression {domainExpr}"
 
   let domain ← instantiateMVars (Expr.mvar domainMVar)
   --let derivFn := `HasDerivAt
@@ -135,43 +176,6 @@ where
 
   --logInfo m!"prove_direct: domain expression: {domainExpr}"
 
-def buildDomainSelector (sorryT: Expr): List Expr → Expr
-| [] => sorryT -- mkApp domanBVar xBVar
-| x' :: xs =>
-    let x := x'.replace
-      (λ e ↦ match e with
-             | .lam _ _ b _ => b
-             | .fvar _ => xBVar
-             | _ => e)
-
-    --let tmpName := `temp
-    --let tmp := Lean.mkConst tmpName []
-    --let propT := Lean.mkConst `Prop []
-    let anon := Lean.mkConst `_ []
-    --let conj := Lean.mkConstEx ``And.left []
-    --let l (e: Expr) := mkHave tmpName propT domanBVar (mkApp3 e anon conj tmp)
-
-    if x.eqv sorryT
-    then (if xs.isEmpty then domanBVar else mkApp3 (mkConst `And.left []) anon anon domanBVar)
-    else mkApp3 (mkConst `And.right) anon anon (buildDomainSelector sorryT xs)
-
-partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
-  let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
-
-  --logInfo m!"domain predicates: {d}"
-  let s' := prf.find? Expr.isSorry
-  let t ←
-    match s' with
-    | some s => liftTermElabM <| inferType s --logInfo m!"sorry type: {← liftTermElabM <|inferType s}"
-    | _ => return prf --logInfo m!"sorry not found"
-  --logInfo m!"sorry: {s'}:{t}"
-
-  prepareProof
-    (prf.replace
-      (λ e ↦
-        if e == s' then some (buildDomainSelector t d) else none))
-    d
-
 def fixNatCast (p: Expr): Expr :=
   p.replace (λ e ↦ if e.isAppOf `Nat.cast
                    then let as := e.getAppArgs
@@ -182,8 +186,6 @@ def fixNatCast (p: Expr): Expr :=
 
 --def debugExpr (e: Expr): CommandElabM Unit := do
 --  e.forEachWhere (λ e ↦ e.isAppOf `Nat.cast) (λ e ↦ logInfo m!"application: {e} {e.getAppArgs.size} {e.getAppArgs}")
-
-set_option maxHeartbeats 2000000
 
 elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
   --let env ← getEnv

@@ -13,6 +13,8 @@ open Lean.Parser.Command
 open Meta
 open Std
 
+set_option maxHeartbeats 2000000
+
 namespace AR.Tools.Context
 
 def applyConstant (name: Expr): TacticM Unit := do
