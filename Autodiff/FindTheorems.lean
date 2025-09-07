@@ -132,7 +132,9 @@ partial def proveDirect (history domain': List Expr): TacticM (List Expr) := do
             --let target := mkApp2 (mkConst `and []) c target'
             --logInfo m!"setting domainMvar to {target}"
             --domainMvar.assign target
-            domain := (← g.getType) :: domain
+            let t ← g.getType
+            if ! domain.contains t then
+              domain := t :: domain
             --domain := target :: domain
             g.admit
           else

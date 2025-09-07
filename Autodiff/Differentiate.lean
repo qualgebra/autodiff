@@ -151,12 +151,12 @@ def buildDomainSelector (sorryT: Expr): List Expr → Expr
     --let conj := Lean.mkConstEx ``And.left []
     --let l (e: Expr) := mkHave tmpName propT domanBVar (mkApp3 e anon conj tmp)
 
-    if x == sorryT
+    if x.eqv sorryT
     then (if xs.isEmpty then domanBVar else mkApp3 (mkConst `And.left []) anon anon domanBVar)
     else mkApp3 (mkConst `And.right) anon anon (buildDomainSelector sorryT xs)
 
 partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
-  let d := d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
+  let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
 
   --logInfo m!"domain predicates: {d}"
   let s' := prf.find? Expr.isSorry
@@ -182,6 +182,8 @@ def fixNatCast (p: Expr): Expr :=
 
 --def debugExpr (e: Expr): CommandElabM Unit := do
 --  e.forEachWhere (λ e ↦ e.isAppOf `Nat.cast) (λ e ↦ logInfo m!"application: {e} {e.getAppArgs.size} {e.getAppArgs}")
+
+set_option maxHeartbeats 2000000
 
 elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
   --let env ← getEnv

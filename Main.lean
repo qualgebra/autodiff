@@ -96,21 +96,26 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
            return (FuncBody.Cos p, s+1, h+1)
 
 
-def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElabM Unit := do
+def dumpTestData (outFile : IO.FS.Handle) (fnName resultName prfName: Name): CommandElabM Unit := do
   let env ← getEnv
   let some fn := env.find? fnName | unreachable!
   let some result := env.find? resultName | unreachable!
+  let some prf := env.find? prfName | unreachable!
 
   outFile.putStrLn s!"Input: {fn.name}"
-  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.delab fn.value!}"
+  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr fn.value!}"
   outFile.putStrLn ""
 
   outFile.putStrLn "Result:"
-  outFile.putStrLn s!"{result.value!}"
+  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr result.value!}"
   outFile.putStrLn ""
 
-def runTest (i: ℕ) (ctx: Core.Context) (st: Core.State): CommandElabM Unit := do
-  let ⟨b, size, depth⟩ ← genFunc 7
+  outFile.putStrLn "Proof:"
+  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf.value!}"
+  outFile.putStrLn ""
+
+def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
+  let ⟨b, size, depth⟩ ← genFunc 6
   let fsyntax ← func2term b
 
   let stderr ← IO.getStderr
@@ -121,24 +126,39 @@ def runTest (i: ℕ) (ctx: Core.Context) (st: Core.State): CommandElabM Unit := 
   let fnName := Name.appendAfter test (toString i)
   let fnName' := Name.appendAfter test' (toString i)
 
-  let outFile ← IO.FS.Handle.mk fnName.toString IO.FS.Mode.write
+  let outFile ← IO.FS.Handle.mk (fnName.toString ++ ".txt") IO.FS.Mode.write
 
   let fnCmd ← `(noncomputable def $(mkIdent fnName) : $realT → $realT := $tc)
   --IO.println s!"Testing {fnName} = {tc'}, size = {size}, depth = {depth}"
-  stderr.putStr s!"{i}, {size}, {depth}, "
+
   let derivCmd ← `(let $(mkIdent fnName') := differentiate $(mkIdent fnName))
 
-  for _ in List.range 5 do
+  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 2000000}
+
+  let prfName := Name.append fnName' `_proof_2
+
+  -- bootstrapping round
+  elabCommand fnCmd
+
+  let env ← getEnv
+  let some fn := env.find? fnName | unreachable!
+
+  let f ← liftTermElabM <| PrettyPrinter.ppExpr fn.value!
+
+  stderr.putStr s!"{i}, {f}, {size}, {depth}"
+
+  elabCommand derivCmd
+  dumpTestData outFile fnName fnName' prfName
+
+  for _ in List.range 4 do
     let _ ← timeit s!", "
       (Lean.Core.CoreM.toIO (liftCommandElabM <| do
         elabCommand fnCmd
-        elabCommand derivCmd
-        dumpTestData outFile fnName fnName')
+        elabCommand derivCmd)
       ctx st)
 
   stderr.putStrLn ""
 
-#print Core.Context
 unsafe def main: IO Unit := do
   IO.println s!"Lean version {Lean.versionString}"
 
@@ -153,8 +173,8 @@ unsafe def main: IO Unit := do
     `Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic,
     `Mathlib.Data.Real.Basic] {} 1 (loadExts := true)
 
-  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 0}
+  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 2000000}
   let st: Core.State := { env := env }
 
-  for i in List.range 10 do
-    let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest i ctx st) ctx st
+  for i in List.range 100 do
+    let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest i st) ctx st
