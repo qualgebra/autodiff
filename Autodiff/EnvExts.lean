@@ -17,27 +17,20 @@ open Std
 
 namespace AR.Tools.Context
 
---def isTheorem: ConstantInfo → Bool
---| ConstantInfo.axiomInfo _ => True
---| ConstantInfo.thmInfo _ => True
---| _ => False
-
 def isDerivTheorem (ci: ConstantInfo): Bool :=
   let t := ci.toConstantVal.type
   let n' := ci.name
-  let blackList := [`HasDerivAt.real_of_complex, `DifferentiableAt.hasDerivAt]
+  let blackList := [`HasDerivAt.real_of_complex, `DifferentiableAt.hasDerivAt,
+    `Complex.hasDerivAt_exp, `Complex.hasDerivAt_sinh, `Complex.hasDerivAt_sin, `Complex.hasDerivAt_cos,
+    `Complex.hasDerivAt_cosh, `Complex.hasDerivAt_tan]
   let n := Name.mkStr1 "HasDerivAt"
-  --let dw := Name.mkStr1 "derivWithin"
+
   if (! ci.isTheorem || ! t.isForall || blackList.elem n') then
     false
   else
     let b := t.getForallBody
     let app := b.isAppOf n
     app
-    --let eq? := b.eqOrIff?
-    --match eq? with
-    --| some (e₁,e₂) => e₁.isAppOf n
-    --| _ => app
 
 initialize derivExt: EnvExtension (List Name) ←
   registerEnvExtension (return [])

@@ -9,7 +9,7 @@ open Lean.Parser.Command
 open Meta
 open Std
 
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 def arg := "x"
 def argName := mkIdent (Name.mkStr1 arg)
@@ -23,7 +23,9 @@ inductive FuncBody where
 | Div (b₁ b₂:FuncBody)
 | Sin (p:FuncBody)
 | Cos (p:FuncBody)
+| Tan (p:FuncBody)
 | Exp (p:FuncBody)
+| Log (p:FuncBody)
 
 def realT := mkIdent `Real
 def intT  := mkIdent `Int
@@ -37,7 +39,9 @@ def int2Syntax (i: ℤ): CommandElabM (TSyntax `term) := do
 
 def sinF := mkIdent `Real.sin
 def cosF := mkIdent `Real.cos
+def tanF := mkIdent `Real.tan
 def expF := mkIdent `Real.exp
+def logF := mkIdent `Real.log
 
 def func2term: FuncBody → CommandElabM (TSyntax `term)
 | .IntLit i =>      do `(($(← int2Syntax i) : ℝ))
@@ -48,8 +52,9 @@ def func2term: FuncBody → CommandElabM (TSyntax `term)
 | .Div b₁ b₂ =>     do `($(← func2term b₁) / $(← func2term b₂))
 | .Sin p =>         do `($sinF $(← func2term p))
 | .Cos p =>         do `($cosF $(← func2term p))
+| .Tan p =>         do `($tanF $(← func2term p))
 | .Exp p =>         do `($expF $(← func2term p))
-
+| .Log p =>         do `($logF $(← func2term p))
 
 def randInt(r:ℕ): IO Int := do
   let v ← IO.rand 0 (2*r)
@@ -66,7 +71,7 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
     return ⟨FuncBody.IntLit (← randInt 100), 1, 1⟩
   else
     have h: 0 < d := by simp at z; exact Nat.zero_lt_of_ne_zero z
-    let c ← IO.rand 0 (if (d ≤ 1) then 1 else 8)
+    let c ← if d ≤ 1 then pure 0 else IO.rand 0 10
     match c with
     | 0 => let v ← randInt 100
            return (FuncBody.IntLit v, 1, 1)
@@ -88,8 +93,12 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
            return (FuncBody.Sin p, s+1, h+1)
     | 7 => let (p, s, h) ← genFunc (d-1)
            return (FuncBody.Cos p, s+1, h+1)
-    | _ => let (p, s, h) ← genFunc (d-1)
+    | 8 => let (p, s, h) ← genFunc (d-1)
+           return (FuncBody.Tan p, s+1, h+1)
+    | 9 => let (p, s, h) ← genFunc (d-1)
            return (FuncBody.Exp p, s+1, h+1)
+    | _ => let (p, s, h) ← genFunc (d-1)
+           return (FuncBody.Log p, s+1, h+1)
 
 
 def dumpTestData (outFile : IO.FS.Handle) (fnName resultName prfName: Name): CommandElabM Unit := do
@@ -129,7 +138,7 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
 
   let derivCmd ← `(let $(mkIdent fnName') := differentiate $(mkIdent fnName))
 
-  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 2000000}
+  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 1000000}
 
   let prfName := Name.append fnName' `_proof_2
 
@@ -156,7 +165,7 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
   stderr.putStrLn ""
 
 unsafe def main(args: List String): IO Unit := do
-  IO.println s!"Lean version {Lean.versionString}"
+  IO.println s!"{args}"
 
   let initIdx := if args.length > 0 then (args.head!).toNat! else 0
 
@@ -171,8 +180,8 @@ unsafe def main(args: List String): IO Unit := do
     `Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic,
     `Mathlib.Data.Real.Basic] {} 1 (loadExts := true)
 
-  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 2000000}
+  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 1000000}
   let st: Core.State := { env := env }
 
-  for i in List.range' initIdx (initIdx + 100) do
-    let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest i st) ctx st
+  --for i in List.range' initIdx (initIdx + 100) do
+  let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest initIdx st) ctx st

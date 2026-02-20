@@ -3,6 +3,7 @@ import Lean.Elab.Term
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Basic
@@ -21,17 +22,29 @@ open Lean.Parser.Command
 open Meta
 open Std
 
-set_option maxHeartbeats 2000000
-
 def RealOfNat (n: ℕ): ℝ  := @Nat.cast ℝ _ n
 
+theorem HasDerivAt.log' : ∀ {f : ℝ → ℝ} {x f' : ℝ}, f x ≠ 0 → HasDerivAt f f' x → HasDerivAt (fun y => Real.log (f y)) (f' / f x) x := by
+  intros f x f' h₁ h₂; apply HasDerivAt.log
+  exact h₂
+  exact h₁
+
+theorem HasDerivAt.tan' {f : ℝ → ℝ} {x f': ℝ} (g: Real.cos (f x) ≠ 0) (hh : HasDerivAt f f' x):
+  HasDerivAt (λ x ↦ Real.tan (f x)) (1 / Real.cos (f x) ^ 2 * f') x := by
+  rw[←Function.comp_def]
+  apply HasDerivAt.comp
+  apply Real.hasDerivAt_tan
+  exact g
+  exact hh
+
 namespace AR.Tools.AutoDiff.Differentiate
+
+set_option maxHeartbeats 1000000
 
 def domanBVar := Expr.bvar 0
 def xBVar := Expr.bvar 1
 
 def buildDomainExpr (d: List Expr) :=
-  --let d := d'.map (λ e ↦ mkApp e xBVar)
   let t_const := Lean.mkConst `True []
   let domainExpr' := if d.length == 0 then t_const
                      else if d.length == 1 then d.head!
@@ -44,7 +57,7 @@ def buildDomainExpr (d: List Expr) :=
   | _ => domainExpr'
 
 def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
-| [] => sorryT -- mkApp domanBVar xBVar
+| [] => sorryT
 | x' :: xs =>
     let x := x'.replace
       (λ e ↦ match e with
@@ -52,11 +65,7 @@ def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
              | .fvar _ => xBVar
              | _ => e)
 
-    --let tmpName := `temp
-    --let tmp := Lean.mkConst tmpName []
-    --let propT := Lean.mkConst `Prop []
     let anon := Lean.mkConst `_ []
-    --let conj := Lean.mkConstEx ``And.left []
     let l := mkApp3 (mkConst `And.left) anon anon
     let r := mkApp3 (mkConst `And.right) anon anon
 
@@ -67,14 +76,11 @@ def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
 partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
   let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
 
-  --logInfo m!"domain predicates: {d}"
   let s' := prf.find? Expr.isSorry
   let t ←
     match s' with
-    | some s => liftTermElabM <| inferType s --logInfo m!"sorry type: {← liftTermElabM <|inferType s}"
-    | _ => return prf --logInfo m!"sorry not found"
-  --logInfo m!"sorry: {s'}:{t}"
-  logInfo m!"{t} -- {d}"
+    | some s => liftTermElabM <| inferType s
+    | _ => return prf
 
   prepareProof
     (prf.replace
@@ -86,80 +92,35 @@ partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × L
   let derivFn := `HasDerivAt
   let realT := mkIdent `Real
   let x_id := mkIdent `x
-  --let domainTStx ← `(Real → Prop)
-  --let mv ← mkFreshMVarId
 
   let tr ← `(∀ ($x_id : $realT), (((?_ $x_id): Prop) → $(mkIdent derivFn) $f (_:$realT) $x_id))
 
   let goalExpr ← Term.elabTerm tr none
   let mvars ← getMVars goalExpr
-  --let mvtypes ← mvars.mapM (λ v ↦ v.getType)
-  --logInfo m!"mvars: {mvtypes}"
-  --let goal ← `($tr = (_ : $trType))
-
-  /-
-  let env ← getEnv
-  let mut lemmas := Context.derivExt.getState env
-  if lemmas.isEmpty then
-    lemmas ← AR.Tools.Context.populateExt
-  let lemIds := List.toArray <| lemmas.map mkIdent
-  let t ← `(tactic| intros; apply_assumption [$[$lemIds:ident],*])
-  -/
-  --logInfo m!"trying to prove {tr}" --" -- trType: {trType}"
-  --logInfo m!"tactic: {t}"
   let goalMV ← mkFreshExprMVar (some goalExpr)
-  --let domainT ← Term.elabTerm domainTStx none
-  --let domainMV ← mkFreshExprMVar (some domainT)
-  --let domainMVStx ← PrettyPrinter.delab domainMV
 
   let resultMVar := mvars[1]!
   let domainMVar := mvars[0]!
-  --let domainMVar' ← PrettyPrinter.delab (Expr.mvar domainMVar)
 
   let t ←
-    --match f with
-    --| some f' =>
-    `(tactic| unfold $f; intros; prove_direct)
-    --|_ => `(tactic| intros; prove_direct)
+    `(tactic| unfold $f; intros; difftac)
 
   let _ ← runTactic goalMV.mvarId! t
-  --logInfo m!"returned list of MvarIds: {xs.fst}"
-  --logInfo m!"goalMV is assigned: {← goalMV.mvarId!.isAssigned} {goalMV.mvarId!}"
-
-  -- simplifications
-  --let ctx ← Simp.Context.mkDefault
-  --let _ ← simpTarget resultMVar ctx
-  --let _ ← simpTarget domainMVar ctx
-  --let _ ← simpTarget goalMV.mvarId! ctx
 
   let result ← instantiateMVars (Expr.mvar resultMVar)
-
-  --logInfo m!"domainMVar: {domainMVar} {domainMVar.name} {← domainMVar.getType} {← domainMVar.isAssigned}"
-  --if ! (← domainMVar.isAssigned) then
-  --  let predStx ← `(λ _:Real ↦ True)
-  --  domainMVar.assign (← Term.elabTerm predStx none)
 
   let env ← getEnv
   let d := AR.Tools.Context.domainExt.getState env
   let domainExpr := buildDomainExpr d
   domainMVar.assign domainExpr
 
-  logInfo m!"domain expression {domainExpr}"
-
   let domain ← instantiateMVars (Expr.mvar domainMVar)
-  --let derivFn := `HasDerivAt
   let proof ← instantiateMVars goalMV
   --logInfo m!"domain: {domain}"
   --logInfo m!"result: {result}"
   --logInfo m!"proof:  {proof}"
   --logInfo m!"proof type: {goalExpr}"
-  --if result.isAppOf derivFn then
-  --  let newGoal ← PrettyPrinter.delab result
-  --  let (res, prf) ← runTactic' none newGoal trType
-  --  let trans ← Term.elabTerm (← `(Eq.trans)) none
-  --  return (res, Expr.app (Expr.app trans proof) prf)
-  --else
-    return (result, domain, proof, d)
+  return (result, domain, proof, d)
 
 -- certified derivative structure
 structure CDeriv {α β: Type}
@@ -172,9 +133,7 @@ structure CDeriv {α β: Type}
 where
   f': α → β
   domain: α → Prop
-  proof: ∀ (x:α) (_: domain x), HasDerivAt f (f' x) x
-
-  --logInfo m!"prove_direct: domain expression: {domainExpr}"
+  proof: ∀ (x:α), domain x → HasDerivAt f (f' x) x
 
 def fixNatCast (p: Expr): Expr :=
   p.replace (λ e ↦ if e.isAppOf `Nat.cast
@@ -184,38 +143,17 @@ def fixNatCast (p: Expr): Expr :=
                         else none
                    else none)
 
---def debugExpr (e: Expr): CommandElabM Unit := do
---  e.forEachWhere (λ e ↦ e.isAppOf `Nat.cast) (λ e ↦ logInfo m!"application: {e} {e.getAppArgs.size} {e.getAppArgs}")
-
 elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
-  --let env ← getEnv
-  --let fnName := f.getId
-  --let fnType := env.find? fnName |> Option.get! |> ConstantInfo.toConstantVal |> ConstantVal.type
-  --let fnTypeTerm ← liftTermElabM <| PrettyPrinter.delab fnType
-  --let derivFn := `HasDerivAt
-  --let rhs ← `(∀ x, $(mkIdent derivFn) $f (_) x)
-  let (result', domain, prf', d) ← liftTermElabM <| runTactic' f --fnTypeTerm
-  --debugExpr result'
+  let (result', domain, prf', d) ← liftTermElabM <| runTactic' f
   let result := fixNatCast result'
-  --debugExpr result
-  --logInfo m!"result term: {result}"
   let prf'' ← prepareProof prf' d
   let prf := fixNatCast prf''
-  --let prfType ← liftTermElabM <| inferType prf
   let resultTerm ← liftTermElabM <| PrettyPrinter.delab result
   let domainTerm ← liftTermElabM <| PrettyPrinter.delab domain
-  --let realT := mkIdent `Real
 
   let prfTerm ← liftTermElabM <| PrettyPrinter.delab prf
-  --logInfo m!"proof term: {prfTerm}"
-  --logInfo m!"proof type: {prfType}"
 
   let dfn ← `(noncomputable def $lhs : CDeriv $f := CDeriv.mk $resultTerm $domainTerm $prfTerm)
-  --let prfDfn ← `(theorem $pr : ($rhs = $lhs) := $prfTerm)
-  --let n := lhs.getId.append `proof
-  --let env ← getEnv
-  --setEnv <| Context.derivExt.modifyState env (λ xs ↦ n :: xs)
   elabCommand dfn
-  --elabCommand prfDfn
 
 end AR.Tools.AutoDiff.Differentiate
