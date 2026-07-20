@@ -4,7 +4,7 @@ rm test*.txt
 rm -f univ_domain.txt
 
 echo "idx,input,size,depth,t1,t2,t3,t4" >> log.txt
-./scripts/run.sh 1 3
+./scripts/run.sh 1 100 
 ./scripts/processLog.sh
 
 grep 'domain := fun x => True,' *.txt >> univ_domain.txt
