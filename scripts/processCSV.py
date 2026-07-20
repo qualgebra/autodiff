@@ -17,9 +17,6 @@ def lookup(m, v):
     for x in m:
         if v == x:
             return True
-        else:
-            print({v}, " not equal to ", {x})
-
     return False
 
 i = 'log.txt'
@@ -36,4 +33,4 @@ with open('univ_domain.txt', 'r') as dom_file:
     indices = set(map(int, content))
     df['universal'] = df['idx'].apply(lambda x: lookup(indices, x))
         
-df.to_csv(o)
+df.to_csv(o, index=False)

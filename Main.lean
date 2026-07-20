@@ -104,16 +104,18 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
 def dumpTestData (outFile : IO.FS.Handle) (fnName resultName prfName: Name): CommandElabM Unit := do
   let env ← getEnv
   let some fn := env.find? fnName | unreachable!
-  let some result := env.find? resultName | unreachable!
-  let some prf := env.find? prfName | unreachable!
 
   outFile.putStrLn s!"Input: {fn.name}"
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr fn.value!}"
   outFile.putStrLn ""
 
+  let some result := env.find? resultName | unreachable!
+
   outFile.putStrLn "Result:"
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr result.value!}"
   outFile.putStrLn ""
+
+  let some prf := env.find? prfName | unreachable!
 
   outFile.putStrLn "Proof:"
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf.value!}"
