@@ -17,7 +17,7 @@ open Std
 
 namespace AR.Tools.Context
 
-def isDerivTheorem (ci: ConstantInfo): Bool :=
+def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
   let t := ci.toConstantVal.type
   let n' := ci.name
   let blackList := [`HasDerivAt.real_of_complex, `DifferentiableAt.hasDerivAt,
@@ -25,7 +25,10 @@ def isDerivTheorem (ci: ConstantInfo): Bool :=
     `Complex.hasDerivAt_cosh, `Complex.hasDerivAt_tan]
   let n := Name.mkStr1 "HasDerivAt"
 
-  if (! ci.isTheorem || ! t.isForall || blackList.elem n') then
+  let isTheorem := match (getOriginalConstKind? env ci.name) with
+                   | some k => k == ConstantKind.thm
+                   | none => false
+  if (! isTheorem || ! t.isForall || blackList.elem n') then
     false
   else
     let b := t.getForallBody
@@ -47,7 +50,7 @@ def arity (env: Environment) (n:Name): Nat :=
 def populateExt : TermElabM (List Name) := do
   let env ← getEnv
   let cs := SMap.toList (env.constants)
-  let thms' := Prod.fst <| List.unzip <| cs.filter (isDerivTheorem ∘ Prod.snd)
+  let thms' := Prod.fst <| List.unzip <| cs.filter ((isDerivTheorem env) ∘ Prod.snd)
   let thms := List.mergeSort thms' (λ a b ↦ (arity env a) ≤ (arity env b))
   setEnv <| derivExt.setState env thms
   return thms
