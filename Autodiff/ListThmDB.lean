@@ -1,23 +1,10 @@
-/-
-  environment extensions for automatic differentiation
--/
-import Lean
+import Lean.Data.SMap
+import Lean.Declaration
 import Lean.Elab.Term
-import Lean.Elab.Deriving.Basic
-import Lean.Elab.Deriving.Util
-import Lean.Meta.Inductive
-import Lean.Meta.Transform
-import Autodiff.ListThmDB
+import Lean.Environment
 
-open Lean Meta Elab.Tactic Meta.Tactic
-open Lean Elab Command Lean.Meta Lean.Elab.Term
-open Lean.Parser.Term Elab.Tactic Meta.Tactic
-open Lean.Parser.Command
-open Meta
-open Std
+open Lean Elab.Term
 
-namespace AR.Tools.Context
-/-
 def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
   let t := ci.toConstantVal.type
   let n' := ci.name
@@ -35,31 +22,36 @@ def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
     let b := t.getForallBody
     let app := b.isAppOf n
     app
--/
-initialize derivThmList: EnvExtension (List Name) ← do
-  registerEnvExtension (return [])
 
-initialize domainExt: EnvExtension (List Expr) ←
-  registerEnvExtension (return ([]))
-
-def arity (env: Environment) (n:Name): Nat :=
-  let ty := env.find? n
-  match ty with
-  | some ci => ci.type.getForallArity
-  | _ => 0
-
-def db: ListThmDB := {
-}
-
-/-
 def populateExt : TermElabM (List ConstantInfo) := do
   let env ← getEnv
   let cs := SMap.toList (env.constants)
   let thms' := /- Prod.fst <| List.unzip <| -/ (cs.map (Prod.snd)).filter ((isDerivTheorem env))
   let thms := List.mergeSort thms' (λ a b ↦ (a.type.getForallArity ≤ b.type.getForallArity))
-  --setEnv <| derivExt.setState env thms
-  db.init thms
   return thms
--/
 
-end AR.Tools.Context
+class ThmDB (α: Type) where
+  init (t: α): TermElabM Unit
+  size (t: α): TermElabM Nat
+  lookup (t: α) (n: Name): TermElabM (List ConstantInfo)
+
+initialize derivThmList: EnvExtension (List ConstantInfo) ←
+  registerEnvExtension (pure [])
+
+structure ListThmDB where
+  store: EnvExtension (List ConstantInfo) := derivThmList
+
+instance: ThmDB ListThmDB where
+  init t := do
+    let env ← getEnv
+    let env' := t.store.setState env (← populateExt)
+    setEnv env'
+
+  size t := do
+    let env ← getEnv
+    let s := t.store.getState env
+    return s.length
+
+  lookup t _ := do
+    let env ← getEnv
+    pure <| t.store.getState env

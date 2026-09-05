@@ -44,6 +44,11 @@ def getFullTargetType: TacticM (Expr × Expr):= do
       return ⟨e, ← inferType e⟩
   )
 
+def getAppHead: Expr → Name
+| .const n _ => n
+| .app t₁ _ => getAppHead t₁
+| _ => Name.anonymous
+
 mutual
 
 partial def differentiate (history domain': List Expr): TacticM (List Expr) := do
@@ -51,25 +56,44 @@ partial def differentiate (history domain': List Expr): TacticM (List Expr) := d
 
   let goal ← getMainGoal
   let t ← goal.getType
-  let h ← history.findM? (λ e ↦ do (isDefEq e t))
+  let h ← history.findM? (isDefEq . t)
   if h.isSome then
     --logInfo m!"already in history: {t}"
     failure
 
   let blackList := [`DifferentiableAt, `HasFPowerSeriesAt, `HasDerivWithinAt,
                     `DifferentiableOn, `HasStrictDerivAt, `HasFDerivAt]
-  if blackList.any (λ n ↦ t.isAppOf n) then
+  if blackList.any (t.isAppOf) then
     --logInfo m!"goal {t} ignored."
     failure
 
-  --logInfo m!"proveDirect: trying to prove {goal}"
-  let env ← getEnv
-  let mut thms := derivExt.getState env
-  if thms.isEmpty then
-    thms ← populateExt
+  let appHead ← do
+    match t with
+    | .app (.app (.app t₁ (.lam _ _ (.app s₁ _) _)) _) _ =>
+        --logInfo m!"target type: {t} - app of {t₁} --> ({s₁}) ({s₂}) --> {t₃} --> {t₄}"
+        if !(t₁.isAppOf `HasDerivAt) then
+          logInfo m!"expecting an application of HasDerivAt. Got {t₁.dbgToString}"
+          failure
+        let h := getAppHead s₁
+        --logInfo m!"appHead: {h}"
+        pure h
+    | _ => --logInfo "not well-formed {t}";
+              pure t.constName
 
-  for name in thms do
-    let cst ← Meta.mkConstWithFreshMVarLevels name
+  --logInfo m!"proveDirect: trying to prove {goal}"
+  --let env ← getEnv
+  let size ← ThmDB.size db
+  if size = 0 then
+    ThmDB.init db
+    --logInfo m!"DB size: {← ThmDB.size db}"
+
+  let mut thms ← ThmDB.lookup db appHead -- derivExt.getState env
+  --if thms.isEmpty then
+  --  thms ← populateExt
+
+  --logInfo m!"theorems: {thms.map ConstantInfo.name}"
+  for th in thms do
+    let cst ← Meta.mkConstWithFreshMVarLevels th.name
     --logInfo m!"trying --> {cst}"
     try
       applyConstant cst
