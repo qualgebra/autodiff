@@ -24,7 +24,7 @@ inductive FuncBody where
 | Sin (p:FuncBody)
 | Cos (p:FuncBody)
 | Tan (p:FuncBody)
-| Exp (p:FuncBody)
+--| Exp (p:FuncBody)
 | Log (p:FuncBody)
 
 def realT := mkIdent `Real
@@ -53,7 +53,7 @@ def func2term: FuncBody → CommandElabM (TSyntax `term)
 | .Sin p =>         do `($sinF $(← func2term p))
 | .Cos p =>         do `($cosF $(← func2term p))
 | .Tan p =>         do `($tanF $(← func2term p))
-| .Exp p =>         do `($expF $(← func2term p))
+--| .Exp p =>         do `($expF $(← func2term p))
 | .Log p =>         do `($logF $(← func2term p))
 
 def randInt(r:ℕ): IO Int := do
@@ -95,8 +95,8 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
            return (FuncBody.Cos p, s+1, h+1)
     | 8 => let (p, s, h) ← genFunc (d-1)
            return (FuncBody.Tan p, s+1, h+1)
-    | 9 => let (p, s, h) ← genFunc (d-1)
-           return (FuncBody.Exp p, s+1, h+1)
+    --| 9 => let (p, s, h) ← genFunc (d-1)
+    --       return (FuncBody.Exp p, s+1, h+1)
     | _ => let (p, s, h) ← genFunc (d-1)
            return (FuncBody.Log p, s+1, h+1)
 
