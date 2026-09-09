@@ -3,11 +3,15 @@
   context. Based on an example from The Hitchhiker's Guide
   to Logical Verification, Chapter 8.
 -/
-import Autodiff.EnvExts
-import Batteries.Lean.Meta.InstantiateMVars
+module
+
+public meta import Autodiff.EnvExts
+public meta import Batteries.Lean.Meta.InstantiateMVars
+public meta import Lean.Meta.Tactic.Apply
+public meta import Lean.Elab.Tactic.Basic
 
 open Lean Meta Elab.Tactic Meta.Tactic
-open Lean Elab Command Lean.Meta Lean.Elab.Term
+open Lean Elab Command Lean.Meta Lean.Elab.Term Lean.Elab.Tactic
 open Lean.Parser.Term Elab.Tactic Meta.Tactic
 open Lean.Parser.Command
 open Meta
@@ -17,7 +21,7 @@ namespace AR.Tools.Context
 
 set_option maxHeartbeats 100000
 
-def applyConstant (name: Expr): TacticM Unit := do
+meta def applyConstant (name: Expr): TacticM Unit := do
   -- name to expression
   -- applies cst to the current goal,
   -- setting ?m := cst ?m₁ ... ?mₙ and returning
@@ -29,7 +33,7 @@ def applyConstant (name: Expr): TacticM Unit := do
   -- the goal with the subgoals returned by f
   liftMetaTactic f
 
-def getFullTargetType: TacticM (Expr × Expr):= do
+meta def getFullTargetType: TacticM (Expr × Expr):= do
   withMainContext (
     do
       let target ← getMainTarget
@@ -44,18 +48,29 @@ def getFullTargetType: TacticM (Expr × Expr):= do
       return ⟨e, ← inferType e⟩
   )
 
-def getAppHead: Expr → Name
+meta def getAppHead: Expr → Name
 | .const n _ => n
 | .app t₁ _ => getAppHead t₁
 | _ => Name.anonymous
 
-mutual
+def simplifyGoals: Bool := false --true
 
-partial def differentiate (history domain': List Expr): TacticM (List Expr) := do
+mutual
+meta partial def differentiate (history domain': List Expr): TacticM (List Expr) := do
   let mut domain := domain'
 
-  let goal ← getMainGoal
+  let mut goal ← getMainGoal
+  -- if simplifyGoals then
+  --   logInfo m!"goal before simplification: {← goal.getType}"
+  --   let simpTac ← `(tactic| simp)
+  --   let subgoals ← runTactic goal simpTac
+  --   logInfo m!"subgoals: {subgoals.1}"
+  --   if h: subgoals.1 ≠ [] then
+  --      goal := subgoals.1.head h
+
   let t ← goal.getType
+  -- logInfo m!"goal: {t}"
+
   let h ← history.findM? (isDefEq . t)
   if h.isSome then
     --logInfo m!"already in history: {t}"
@@ -97,7 +112,7 @@ partial def differentiate (history domain': List Expr): TacticM (List Expr) := d
     --logInfo m!"trying --> {cst}"
     try
       applyConstant cst
-      --logInfo m!"Proved directly by {name}"
+      -- logInfo m!"Proved directly by {th.name}"
 
       let subgoals₁ ← getUnsolvedGoals
       for g in subgoals₁ do
@@ -111,7 +126,7 @@ partial def differentiate (history domain': List Expr): TacticM (List Expr) := d
             let t ← g.getType
             if ! domain.contains t then
               domain := t :: domain
-            --logInfo m!"extending domain with {t}"
+            -- logInfo m!"extending domain with {t}"
             g.admit
           else
             setGoals [g]

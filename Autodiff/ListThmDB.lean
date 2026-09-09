@@ -1,6 +1,8 @@
+module
+
 import Lean.Data.SMap
 import Lean.Declaration
-import Lean.Elab.Term
+public import Lean.Elab.Term
 import Lean.Environment
 
 open Lean Elab.Term
@@ -10,7 +12,8 @@ def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
   let n' := ci.name
   let blackList := [`HasDerivAt.real_of_complex, `DifferentiableAt.hasDerivAt,
     `Complex.hasDerivAt_exp, `Complex.hasDerivAt_sinh, `Complex.hasDerivAt_sin, `Complex.hasDerivAt_cos,
-    `Complex.hasDerivAt_cosh, `Complex.hasDerivAt_tan]
+    `Complex.hasDerivAt_cosh, `Complex.hasDerivAt_tan,
+    `HasDerivAt.of_notMem_tsupport]
   let n := Name.mkStr1 "HasDerivAt"
 
   let isTheorem := match (getOriginalConstKind? env ci.name) with
@@ -23,25 +26,25 @@ def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
     let app := b.isAppOf n
     app
 
-def populateExt : TermElabM (List ConstantInfo) := do
+public def populateExt : TermElabM (List ConstantInfo) := do
   let env ← getEnv
   let cs := SMap.toList (env.constants)
   let thms' := /- Prod.fst <| List.unzip <| -/ (cs.map (Prod.snd)).filter ((isDerivTheorem env))
   let thms := List.mergeSort thms' (λ a b ↦ (a.type.getForallArity ≤ b.type.getForallArity))
   return thms
 
-class ThmDB (α: Type) where
+public class ThmDB (α: Type) where
   init (t: α): TermElabM Unit
   size (t: α): TermElabM Nat
   lookup (t: α) (n: Name): TermElabM (List ConstantInfo)
 
-initialize derivThmList: EnvExtension (List ConstantInfo) ←
+public initialize derivThmList: EnvExtension (List ConstantInfo) ←
   registerEnvExtension (pure [])
 
-structure ListThmDB where
+public structure ListThmDB where
   store: EnvExtension (List ConstantInfo) := derivThmList
 
-instance: ThmDB ListThmDB where
+public instance: ThmDB ListThmDB where
   init t := do
     let env ← getEnv
     let env' := t.store.setState env (← populateExt)

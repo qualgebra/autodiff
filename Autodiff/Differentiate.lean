@@ -1,20 +1,24 @@
+module
+
 import Lean
+public import Lean.Elab.Command
 import Lean.Elab.Term
+public meta import Lean.Elab.Tactic.Meta
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Inv
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.Calculus.Deriv.Shift
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Inv
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Analysis.Calculus.Deriv.Shift
 
-import Autodiff.FindTheorems
-import Autodiff.EnvExts
+public import Autodiff.FindTheorems
+public meta import Autodiff.EnvExts
 
 open Lean Elab Command Lean.Meta Lean.Elab.Term
 open Lean.Parser.Term Elab.Tactic Meta.Tactic
@@ -24,12 +28,12 @@ open Std
 
 def RealOfNat (n: ℕ): ℝ  := @Nat.cast ℝ _ n
 
-theorem HasDerivAt.log' : ∀ {f : ℝ → ℝ} {x f' : ℝ}, f x ≠ 0 → HasDerivAt f f' x → HasDerivAt (fun y => Real.log (f y)) (f' / f x) x := by
+public theorem HasDerivAt.log' : ∀ {f : ℝ → ℝ} {x f' : ℝ}, f x ≠ 0 → HasDerivAt f f' x → HasDerivAt (fun y => Real.log (f y)) (f' / f x) x := by
   intros f x f' h₁ h₂; apply HasDerivAt.log
   exact h₂
   exact h₁
 
-theorem HasDerivAt.tan' {f : ℝ → ℝ} {x f': ℝ} (g: Real.cos (f x) ≠ 0) (hh : HasDerivAt f f' x):
+public theorem HasDerivAt.tan' {f : ℝ → ℝ} {x f': ℝ} (g: Real.cos (f x) ≠ 0) (hh : HasDerivAt f f' x):
   HasDerivAt (λ x ↦ Real.tan (f x)) (1 / Real.cos (f x) ^ 2 * f') x := by
   rw[←Function.comp_def]
   apply HasDerivAt.comp
@@ -41,10 +45,10 @@ namespace AR.Tools.AutoDiff.Differentiate
 
 set_option maxHeartbeats 1000000
 
-def domanBVar := Expr.bvar 0
-def xBVar := Expr.bvar 1
+meta def domainBVar := Expr.bvar 0
+meta def xBVar := Expr.bvar 1
 
-def buildDomainExpr (d: List Expr) :=
+meta def buildDomainExpr (d: List Expr) :=
   let t_const := Lean.mkConst `True []
   let domainExpr' := if d.length == 0 then t_const
                      else if d.length == 1 then d.head!
@@ -56,7 +60,7 @@ def buildDomainExpr (d: List Expr) :=
   | some fv => domainExpr'.replaceFVar fv (mkConst `x [])
   | _ => domainExpr'
 
-def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
+meta def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
 | [] => sorryT
 | x' :: xs =>
     let x := x'.replace
@@ -73,7 +77,7 @@ def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
     then (if xs.isEmpty then op else r op)
     else  (buildDomainSelector sorryT (l op) xs)
 
-partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
+meta partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
   let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
 
   let s' := prf.find? Expr.isSorry
@@ -85,10 +89,10 @@ partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
   prepareProof
     (prf.replace
       (λ e ↦
-        if e == s' then some (buildDomainSelector t domanBVar d.reverse ) else none))
+        if e == s' then some (buildDomainSelector t domainBVar d.reverse ) else none))
     d
 
-partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × List Expr) := do
+meta partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × List Expr) := do
   let derivFn := `HasDerivAt
   let realT := mkIdent `Real
   let x_id := mkIdent `x
@@ -99,16 +103,17 @@ partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × L
   let mvars ← getMVars goalExpr
   let goalMV ← mkFreshExprMVar (some goalExpr)
 
+  --logInfo m!"goalExpr: {goalExpr} - goalMV: {goalMV}"
   let resultMVar := mvars[1]!
   let domainMVar := mvars[0]!
 
-  let t ←
-    `(tactic| unfold $f; intros; difftac)
+  let t ← `(tactic| unfold $f; intros; difftac)
 
   let _ ← runTactic goalMV.mvarId! t
+  --logInfo m!"results: {results.1}"
 
   let result ← instantiateMVars (Expr.mvar resultMVar)
-
+  --logInfo m!"result: {result}"
   let env ← getEnv
   let d := AR.Tools.Context.domainExt.getState env
   let domainExpr := buildDomainExpr d
@@ -123,7 +128,7 @@ partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × L
   return (result, domain, proof, d)
 
 -- certified derivative structure
-structure CDeriv {α β: Type}
+public structure CDeriv {α β: Type}
   [NontriviallyNormedField α]
   [AddCommGroup β]
   [_root_.Module α β]
@@ -135,6 +140,7 @@ where
   domain: α → Prop
   proof: ∀ (x:α), domain x → HasDerivAt f (f' x) x
 
+/-
 def fixNatCast (p: Expr): Expr :=
   p.replace (λ e ↦ if e.isAppOf `Nat.cast
                    then let as := e.getAppArgs
@@ -142,18 +148,21 @@ def fixNatCast (p: Expr): Expr :=
                         then some (mkApp (Expr.const `RealOfNat []) as[2]!)
                         else none
                    else none)
-
+-/
 elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
   let (result', domain, prf', d) ← liftTermElabM <| runTactic' f
-  let result := fixNatCast result'
+  let result := result' --fixNatCast result'
   let prf'' ← prepareProof prf' d
-  let prf := fixNatCast prf''
+  let prf := prf'' --fixNatCast prf''
+  --logInfo m!"prf'': {prf''} - prf: {prf}"
   let resultTerm ← liftTermElabM <| PrettyPrinter.delab result
   let domainTerm ← liftTermElabM <| PrettyPrinter.delab domain
 
   let prfTerm ← liftTermElabM <| PrettyPrinter.delab prf
+  --logInfo m!"prfTerm: {prfTerm}"
 
   let dfn ← `(noncomputable def $lhs : CDeriv $f := CDeriv.mk $resultTerm $domainTerm $prfTerm)
+  --logInfo m!"command dfn: {dfn}"
   elabCommand dfn
 
 end AR.Tools.AutoDiff.Differentiate

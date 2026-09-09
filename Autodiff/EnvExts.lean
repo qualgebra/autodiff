@@ -1,13 +1,15 @@
 /-
   environment extensions for automatic differentiation
 -/
+module
+
 import Lean
-import Lean.Elab.Term
-import Lean.Elab.Deriving.Basic
-import Lean.Elab.Deriving.Util
-import Lean.Meta.Inductive
-import Lean.Meta.Transform
-import Autodiff.ListThmDB
+public import Lean.Elab.Term
+public import Lean.Elab.Deriving.Basic
+public import Lean.Elab.Deriving.Util
+public import Lean.Meta.Inductive
+public import Lean.Meta.Transform
+public import Autodiff.ListThmDB
 
 open Lean Meta Elab.Tactic Meta.Tactic
 open Lean Elab Command Lean.Meta Lean.Elab.Term
@@ -39,7 +41,7 @@ def isDerivTheorem (env: Environment) (ci: ConstantInfo): Bool :=
 initialize derivThmList: EnvExtension (List Name) ← do
   registerEnvExtension (return [])
 
-initialize domainExt: EnvExtension (List Expr) ←
+public initialize domainExt: EnvExtension (List Expr) ←
   registerEnvExtension (return ([]))
 
 def arity (env: Environment) (n:Name): Nat :=
@@ -48,7 +50,7 @@ def arity (env: Environment) (n:Name): Nat :=
   | some ci => ci.type.getForallArity
   | _ => 0
 
-def db: ListThmDB := {
+public def db: ListThmDB := {
 }
 
 /-
