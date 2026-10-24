@@ -126,7 +126,7 @@ private def test2' : AR.Tools.AutoDiff.Differentiate.CDeriv test2 :=
 info:
 private theorem test2'._proof_1 : ∀ (x : ℝ),
   Real.cos (Real.cos x) ≠ 0 → HasDerivAt test2 (1 / Real.cos (Real.cos x) ^ 2 * -Real.sin x) x :=
-id fun x a => HasDerivAt.tan' a (Real.hasDerivAt_cos x)
+id fun x a => HasDerivAt.comp x (Real.hasDerivAt_tan a) (Real.hasDerivAt_cos x)
 -/
 #guard_msgs in
 #print test2'._proof_1
@@ -225,15 +225,15 @@ let f' := differentiate f
 /--
 info:
 private def demo.f' : AR.Tools.AutoDiff.Differentiate.CDeriv f :=
-{ f' := fun x => 3 * -(x ^ 2)⁻¹ / (3 / x), domain := fun x => x ≠ 0 ∧ 3 / x ≠ 0, proof := f'._proof_1 }
+{ f' := fun x => (0 * x - 3 * 1) / x ^ 2 / (3 / x), domain := fun x => x ≠ 0 ∧ 3 / x ≠ 0, proof := f'._proof_1 }
 -/
 #guard_msgs in
 #print f'
 
 /--
 info:
-private theorem demo.f'._proof_1 : ∀ (x : ℝ), x ≠ 0 ∧ 3 / x ≠ 0 → HasDerivAt f (3 * -(x ^ 2)⁻¹ / (3 / x)) x :=
-id fun x a => HasDerivAt.log' a.right (HasDerivAt.const_mul 3 (hasDerivAt_inv a.left))
+private theorem demo.f'._proof_1 : ∀ (x : ℝ), x ≠ 0 ∧ 3 / x ≠ 0 → HasDerivAt f ((0 * x - 3 * 1) / x ^ 2 / (3 / x)) x :=
+id fun x a => HasDerivAt.log' a.right (HasDerivAt.fun_div (hasDerivAt_const x 3) (hasDerivAt_id' x) a.left)
 -/
 #guard_msgs in
 #print f'._proof_1

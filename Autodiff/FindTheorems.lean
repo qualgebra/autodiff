@@ -68,7 +68,7 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   --   if h: subgoals.1 ≠ [] then
   --      goal := subgoals.1.head h
 
-  let t ← goal.getType
+  let t ← instantiateMVars (← goal.getType)
   -- logInfo m!"goal: {t}"
 
   let h ← history.findM? (isDefEq . t)
@@ -97,7 +97,10 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
           return domain
         catch _ => pure ()
 
-  let appHead ← do
+  -- index key: head symbol of the function being differentiated, computed like
+  -- the theorems' keys (the function may be a lambda or, eta-reduced, an
+  -- application such as `HDiv.hDiv 3`); the legacy search ignores the key
+  let appHead ← if ! legacy then pure (thmHead t) else do
     match t with
     | .app (.app (.app t₁ (.lam _ _ (.app s₁ _) _)) _) _ =>
         --logInfo m!"target type: {t} - app of {t₁} --> ({s₁}) ({s₂}) --> {t₃} --> {t₄}"
