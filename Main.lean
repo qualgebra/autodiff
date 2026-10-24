@@ -71,12 +71,14 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
     return ⟨FuncBody.IntLit (← randInt 100), 1, 1⟩
   else
     have h: 0 < d := by simp at z; exact Nat.zero_lt_of_ne_zero z
-    let c ← if d ≤ 1 then pure 0 else IO.rand 0 10
+    -- leaves are a literal or the variable; inner nodes pick each of the 10
+    -- constructors with equal probability (`Exp` is disabled, see FuncBody)
+    let c ← if d ≤ 1 then IO.rand 0 1 else IO.rand 0 9
     match c with
     | 0 => let v ← randInt 100
            return (FuncBody.IntLit v, 1, 1)
-    | 1 => let p ← IO.rand 0 10
-           return ⟨FuncBody.Arg 1 , 3, 2⟩
+    | 1 => let p ← IO.rand 1 10
+           return ⟨FuncBody.Arg p, 3, 2⟩
     | 2 => let ⟨t₁, s₁, h₁⟩ ← genFunc (d-1)
            let ⟨t₂, s₂, h₂⟩ ← genFunc (d-1)
            return ⟨FuncBody.Plus t₁ t₂, 1 + s₁ + s₂, 1 + Nat.max h₁ h₂⟩
@@ -100,6 +102,18 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
     | _ => let (p, s, h) ← genFunc (d-1)
            return (FuncBody.Log p, s+1, h+1)
 
+
+def FuncBody.hasArg : FuncBody → Bool
+  | .IntLit _ => false
+  | .Arg _ => true
+  | .Plus b₁ b₂ | .Minus b₁ b₂ | .Mul b₁ b₂ | .Div b₁ b₂ => b₁.hasArg || b₂.hasArg
+  | .Sin p | .Cos p | .Tan p | .Log p => p.hasArg
+
+/-- A random function body that mentions the variable (constant functions are
+  trivially differentiable, so they are excluded from the test set). -/
+partial def genNonConstFunc (d: ℕ): IO (FuncBody × ℕ × ℕ) := do
+  let r ← genFunc d
+  if r.1.hasArg then return r else genNonConstFunc d
 
 def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElabM Unit := do
   let env ← getEnv
@@ -141,7 +155,7 @@ def fmtMs (ns: Nat): String :=
   s!"{(Float.ofNat (ns / 100000)) / 10}ms"
 
 def runTest (i: ℕ) (ctx: Core.Context) (st: Core.State): CommandElabM Unit := do
-  let ⟨b, size, depth⟩ ← genFunc 6
+  let ⟨b, size, depth⟩ ← genNonConstFunc 6
   let fsyntax ← func2term b
 
   let stderr ← IO.getStderr
