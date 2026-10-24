@@ -17,18 +17,18 @@ let f' := differentiate f
 /--
 info:
 private def f' : AR.Tools.AutoDiff.Differentiate.CDeriv f :=
-{ f' := fun x => 2 * x ^ (2 - 1), domain := fun x => True, proof := f'._proof_3 }
+{ f' := fun x => ↑2 * x ^ (2 - 1), domain := fun x => True, proof := f'._proof_2 }
 -/
 #guard_msgs in
 #print f'
 
 /--
 info:
-private theorem f'._proof_3 : ∀ (x : ℝ), True → HasDerivAt f (2 * x ^ (2 - 1)) x :=
+private theorem f'._proof_2 : ∀ (x : ℝ), True → HasDerivAt f (↑2 * x ^ (2 - 1)) x :=
 id fun x a => HasDerivAt.add_const 3 (hasDerivAt_pow 2 x)
 -/
 #guard_msgs in
-#print f'._proof_3
+#print f'._proof_2
 
 noncomputable def test0 :=
   fun x: Real => 4 - (x ^ 1 / (92 - x ^ 2)) - ( (38 / x ^ 5) / Real.cos (x ^ 3))
@@ -40,22 +40,22 @@ info:
 private def test0' : AR.Tools.AutoDiff.Differentiate.CDeriv test0 :=
 {
   f' := fun x =>
-    -(Real.one * (92 - x ^ 2)⁻¹ + x ^ 1 * (- -(2 * x ^ (2 - 1)) / (92 - x ^ 2) ^ 2)) +
-      -(38 * (-(5 * x ^ (5 - 1)) / (x ^ 5) ^ 2) * (Real.cos (x ^ 3))⁻¹ +
-          38 / x ^ 5 * (-(-Real.sin (x ^ 3) * (3 * x ^ (3 - 1))) / Real.cos (x ^ 3) ^ 2)),
-  domain := fun x => (Real.cos (x ^ 3) ≠ 0 ∧ x ^ 5 ≠ 0) ∧ 92 - x ^ 2 ≠ 0, proof := test0'._proof_2 }
+    -(Real.one * (92 - x ^ 2)⁻¹ + x ^ 1 * (- -(↑2 * x ^ (2 - 1)) / (92 - x ^ 2) ^ 2)) +
+      -(38 * (-(↑5 * x ^ (5 - 1)) / (x ^ 5) ^ 2) * (Real.cos (x ^ 3))⁻¹ +
+          38 / x ^ 5 * (-(-Real.sin (x ^ 3) * (↑3 * x ^ (3 - 1))) / Real.cos (x ^ 3) ^ 2)),
+  domain := fun x => (Real.cos (x ^ 3) ≠ 0 ∧ x ^ 5 ≠ 0) ∧ 92 - x ^ 2 ≠ 0, proof := test0'._proof_1 }
 -/
 #guard_msgs in
 #print test0'
 
 /--
 info:
-private theorem test0'._proof_2 : ∀ (x : ℝ),
+private theorem test0'._proof_1 : ∀ (x : ℝ),
   (Real.cos (x ^ 3) ≠ 0 ∧ x ^ 5 ≠ 0) ∧ 92 - x ^ 2 ≠ 0 →
     HasDerivAt test0
-      (-(Real.one * (92 - x ^ 2)⁻¹ + x ^ 1 * (- -(2 * x ^ (2 - 1)) / (92 - x ^ 2) ^ 2)) +
-        -(38 * (-(5 * x ^ (5 - 1)) / (x ^ 5) ^ 2) * (Real.cos (x ^ 3))⁻¹ +
-            38 / x ^ 5 * (-(-Real.sin (x ^ 3) * (3 * x ^ (3 - 1))) / Real.cos (x ^ 3) ^ 2)))
+      (-(Real.one * (92 - x ^ 2)⁻¹ + x ^ 1 * (- -(↑2 * x ^ (2 - 1)) / (92 - x ^ 2) ^ 2)) +
+        -(38 * (-(↑5 * x ^ (5 - 1)) / (x ^ 5) ^ 2) * (Real.cos (x ^ 3))⁻¹ +
+            38 / x ^ 5 * (-(-Real.sin (x ^ 3) * (↑3 * x ^ (3 - 1))) / Real.cos (x ^ 3) ^ 2)))
       x :=
 id fun x a =>
   HasDerivAt.add
@@ -68,7 +68,7 @@ id fun x a =>
         (HasDerivAt.fun_inv (HasDerivAt.cos (hasDerivAt_pow 3 x)) a.left.left)))
 -/
 #guard_msgs in
-#print test0'._proof_2
+#print test0'._proof_1
 
 noncomputable def test1 :=
   fun x: Real => (Real.cos (Real.sin (x ^ 1)) + (x ^ 88)) / x ^ 1 * (((x ^ 1 * 1) + x ^ 1) / 50)
@@ -80,21 +80,21 @@ info:
 private def test1' : AR.Tools.AutoDiff.Differentiate.CDeriv test1 :=
 {
   f' := fun x =>
-    ((-Real.sin (Real.sin (x ^ 1)) * (Real.cos (x ^ 1) * Real.one) + 88 * x ^ (88 - 1)) * (x ^ 1)⁻¹ +
+    ((-Real.sin (Real.sin (x ^ 1)) * (Real.cos (x ^ 1) * Real.one) + ↑88 * x ^ (88 - 1)) * (x ^ 1)⁻¹ +
           (Real.cos (Real.sin (x ^ 1)) + x ^ 88) * (-Real.one / (x ^ 1) ^ 2)) *
         ((x ^ 1 * 1 + x ^ 1) / 50) +
       (Real.cos (Real.sin (x ^ 1)) + x ^ 88) / x ^ 1 * ((Real.one * 1 + Real.one) * 50⁻¹),
-  domain := fun x => x ^ 1 ≠ 0, proof := test1'._proof_2 }
+  domain := fun x => x ^ 1 ≠ 0, proof := test1'._proof_1 }
 -/
 #guard_msgs in
 #print test1'
 
 /--
 info:
-private theorem test1'._proof_2 : ∀ (x : ℝ),
+private theorem test1'._proof_1 : ∀ (x : ℝ),
   x ^ 1 ≠ 0 →
     HasDerivAt test1
-      (((-Real.sin (Real.sin (x ^ 1)) * (Real.cos (x ^ 1) * Real.one) + 88 * x ^ (88 - 1)) * (x ^ 1)⁻¹ +
+      (((-Real.sin (Real.sin (x ^ 1)) * (Real.cos (x ^ 1) * Real.one) + ↑88 * x ^ (88 - 1)) * (x ^ 1)⁻¹ +
             (Real.cos (Real.sin (x ^ 1)) + x ^ 88) * (-Real.one / (x ^ 1) ^ 2)) *
           ((x ^ 1 * 1 + x ^ 1) / 50) +
         (Real.cos (Real.sin (x ^ 1)) + x ^ 88) / x ^ 1 * ((Real.one * 1 + Real.one) * 50⁻¹))
@@ -108,7 +108,7 @@ id fun x a =>
       (HasDerivAt.add (HasDerivAt.mul_const (hasDerivAt_const_mul Real.one) 1) (hasDerivAt_const_mul Real.one)) 50⁻¹)
 -/
 #guard_msgs in
-#print test1'._proof_2
+#print test1'._proof_1
 
 noncomputable def test2 := Real.tan ∘ Real.cos
 

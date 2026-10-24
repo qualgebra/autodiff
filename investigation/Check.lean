@@ -16,3 +16,7 @@ let test0' := differentiate test0
 #print f'
 #print test0'
 #print axioms test0'
+#print axioms p1'
+#print axioms p4'
+#print axioms f'
+#print f'._proof_1

@@ -160,11 +160,10 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
           g.instantiateMVars
           if ! (← g.getType).hasMVar then
             if (← IO.getEnv "AD_KEEPBUG").isSome then let _ ← getFullTargetType
-            let t ← g.getType
-            if ! domain.contains t then
-              domain := t :: domain
-            -- logInfo m!"extending domain with {t}"
-            g.admit
+            -- a domain constraint: leave it as a hole, to be filled from the
+            -- domain hypothesis once the whole domain is known
+            g.setKind .syntheticOpaque
+            domain := .mvar g :: domain
           else
             setGoals [g]
             domain ← differentiate (t :: history) domain
@@ -185,7 +184,6 @@ end -- mutual
 --                      h = filter by head symbol, r = reducible transparency,
 --                      i = instances transparency
 --   AD_KEEPBUG=1       restore the original `getFullTargetType` call (see B8)
---   AD_DIRECT=1        add the CDeriv via `addDecl` instead of delab/re-elab (incomplete)
 elab "difftac" : tactic => do
   statsRef.set #[]
   initNanosRef.set 0

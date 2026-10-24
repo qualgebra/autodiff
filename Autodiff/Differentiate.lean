@@ -45,97 +45,35 @@ namespace AR.Tools.AutoDiff.Differentiate
 
 set_option maxHeartbeats 1000000
 
-meta def domainBVar := Expr.bvar 0
-meta def xBVar := Expr.bvar 1
+/-- The domain predicate `fun x => c₁ ∧ … ∧ cₙ`, where the conjuncts are the types of the
+  domain holes collected by `difftac` (newest first), without duplicates. -/
+meta def buildDomain (holes: List MVarId) : MetaM Expr := do
+  -- keep each conjunct at the position of its first occurrence
+  let mut uniq : Array Expr := #[]
+  for h in holes.reverse do
+    let t ← instantiateMVars (← h.getType)
+    if ! uniq.contains t then
+      uniq := uniq.push t
+  let body := match uniq.reverse.toList with
+    | [] => mkConst ``True
+    | c :: cs => cs.foldl (mkApp2 (mkConst ``And)) c
+  match (collectFVars {} body).fvarIds with
+  | #[] => return mkLambda `x BinderInfo.default (mkConst ``Real) body
+  | #[x] => holes.head!.withContext <| mkLambdaFVars #[mkFVar x] body
+  | _ => throwError "domain constraints mention more than one variable: {body}"
 
-meta def buildDomainExprDirect (d: List Expr) : Expr :=
-  let t_const := Lean.mkConst `True []
-  let body := if d.length == 0 then t_const
-              else if d.length == 1 then d.head!
-              else d.tail.foldl (mkApp2 (mkConst `And [])) d.head!
-  let body := match body.find? Expr.isFVar with
-              | some fv => body.abstract #[fv]
-              | none => body
-  mkLambda `x BinderInfo.default (mkConst `Real []) body
-
-meta def buildDomainExpr (d: List Expr) :=
-  let t_const := Lean.mkConst `True []
-  let domainExpr' := if d.length == 0 then t_const
-                     else if d.length == 1 then d.head!
-                     else d.tail.foldl (mkApp2 (mkConst `And [])) d.head!
-
-  let domainExpr' := mkLambda `x BinderInfo.default (mkConst `Real []) domainExpr'
-
-  match domainExpr'.find? Expr.isFVar with
-  | some fv => domainExpr'.replaceFVar fv (mkConst `x [])
-  | _ => domainExpr'
-
-meta def buildDomainSelector (sorryT: Expr) (op: Expr) : List Expr → Expr
-| [] => sorryT
-| x' :: xs =>
-    let x := x'.replace
-      (λ e ↦ match e with
-             | .lam _ _ b _ => b
-             | .fvar _ => xBVar
-             | _ => e)
-
-    let anon := Lean.mkConst `_ []
-    let l := mkApp3 (mkConst `And.left) anon anon
-    let r := mkApp3 (mkConst `And.right) anon anon
-
-    if x.eqv sorryT
-    then (if xs.isEmpty then op else r op)
-    else  (buildDomainSelector sorryT (l op) xs)
-
-meta partial def prepareProof (prf: Expr) (d': List Expr): CommandElabM Expr := do
-  let d :=  d'.map (Expr.replace (λ e ↦ if e.isFVar then some xBVar else none))
-
-  let s' := prf.find? Expr.isSorry
-  let t ←
-    match s' with
-    | some s => liftTermElabM <| inferType s
-    | _ => return prf
-
-  prepareProof
-    (prf.replace
-      (λ e ↦
-        if e == s' then some (buildDomainSelector t domainBVar d.reverse ) else none))
-    d
-
-meta partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr × List Expr) := do
-  let derivFn := `HasDerivAt
-  let realT := mkIdent `Real
-  let x_id := mkIdent `x
-
-  let tr ← `(∀ ($x_id : $realT), (((?_ $x_id): Prop) → $(mkIdent derivFn) $f (_:$realT) $x_id))
-
-  let goalExpr ← Term.elabTerm tr none
-  let mvars ← getMVars goalExpr
-  let goalMV ← mkFreshExprMVar (some goalExpr)
-
-  --logInfo m!"goalExpr: {goalExpr} - goalMV: {goalMV}"
-  let resultMVar := mvars[1]!
-  let domainMVar := mvars[0]!
-
-  let t ← `(tactic| unfold $f; intros; difftac)
-
-  let _ ← runTactic goalMV.mvarId! t
-  --logInfo m!"results: {results.1}"
-
-  let result ← instantiateMVars (Expr.mvar resultMVar)
-  --logInfo m!"result: {result}"
-  let env ← getEnv
-  let d := AR.Tools.Context.domainExt.getState env
-  let domainExpr := if (← IO.getEnv "AD_DIRECT").isSome then buildDomainExprDirect d else buildDomainExpr d
-  domainMVar.assign domainExpr
-
-  let domain ← instantiateMVars (Expr.mvar domainMVar)
-  let proof ← instantiateMVars goalMV
-  --logInfo m!"domain: {domain}"
-  --logInfo m!"result: {result}"
-  --logInfo m!"proof:  {proof}"
-  --logInfo m!"proof type: {goalExpr}"
-  return (result, domain, proof, d)
+/-- A proof of `target` obtained by projecting the conjunction proved by `h`,
+  if `target` is one of its conjuncts. -/
+meta partial def projectConjunct (h target: Expr) : MetaM (Option Expr) := do
+  let hType ← instantiateMVars (← inferType h)
+  if ← withReducible (isDefEq hType target) then
+    return some h
+  match (← whnfR hType).and? with
+  | some (a, b) =>
+    if let some p ← projectConjunct (mkApp3 (mkConst ``And.left) a b h) target then
+      return some p
+    projectConjunct (mkApp3 (mkConst ``And.right) a b h) target
+  | none => return none
 
 -- certified derivative structure
 public structure CDeriv {α β: Type}
@@ -150,39 +88,56 @@ where
   domain: α → Prop
   proof: ∀ (x:α), domain x → HasDerivAt f (f' x) x
 
-/-
-def fixNatCast (p: Expr): Expr :=
-  p.replace (λ e ↦ if e.isAppOf `Nat.cast
-                   then let as := e.getAppArgs
-                        if as.size = 3
-                        then some (mkApp (Expr.const `RealOfNat []) as[2]!)
-                        else none
-                   else none)
--/
-elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
-  let (result', domain, prf', d) ← liftTermElabM <| runTactic' f
-  let result := result' --fixNatCast result'
-  let prf'' ← prepareProof prf' d
-  let prf := prf'' --fixNatCast prf''
-  --logInfo m!"prf'': {prf''} - prf: {prf}"
-  if (← IO.getEnv "AD_DIRECT").isSome then
-    liftTermElabM do
-      let prf ← instantiateMVars prf
-      let val ← mkAppM ``CDeriv.mk #[result, domain, prf]
-      let val ← instantiateMVars val
-      let ty ← instantiateMVars (← inferType val)
-      let declName := (← getCurrNamespace) ++ lhs.getId
-      addDecl (.defnDecl { name := declName, levelParams := [], type := ty, value := val,
-                           hints := .opaque, safety := .safe })
-    return
-  let resultTerm ← liftTermElabM <| PrettyPrinter.delab result
-  let domainTerm ← liftTermElabM <| PrettyPrinter.delab domain
+elab "let " lhs: ident ":= " "differentiate " f: ident : command => liftTermElabM do
+  let derivFn := `HasDerivAt
+  let realT := mkIdent `Real
+  let x_id := mkIdent `x
 
-  let prfTerm ← liftTermElabM <| PrettyPrinter.delab prf
-  --logInfo m!"prfTerm: {prfTerm}"
+  let tr ← `(∀ ($x_id : $realT), (((?_ $x_id): Prop) → $(mkIdent derivFn) $f (_:$realT) $x_id))
 
-  let dfn ← `(noncomputable def $lhs : CDeriv $f := CDeriv.mk $resultTerm $domainTerm $prfTerm)
-  --logInfo m!"command dfn: {dfn}"
-  elabCommand dfn
+  let goalExpr ← Term.elabTerm tr none
+  let mvars ← getMVars goalExpr
+  let goalMV ← mkFreshExprMVar (some goalExpr)
+
+  let resultMVar := mvars[1]!
+  let domainMVar := mvars[0]!
+
+  let t ← `(tactic| unfold $f; intros; difftac)
+  let _ ← runTactic goalMV.mvarId! t
+
+  let result ← instantiateMVars (Expr.mvar resultMVar)
+
+  -- the domain constraints were left as holes in the proof; build the domain
+  -- predicate from them, then fill each hole by projecting the domain hypothesis
+  let holes := (AR.Tools.Context.domainExt.getState (← getEnv)).filterMap
+    (fun e => if e.isMVar then some e.mvarId! else none)
+  let domain ← buildDomain holes
+  domainMVar.assign domain
+
+  for h in holes do
+    unless ← h.isAssigned do
+      h.withContext do
+        let some hyp := (← getLCtx).findDecl? (fun d =>
+            if d.type.getAppFn.isMVar && d.type.getAppFn.mvarId! == domainMVar
+            then some d.toExpr else none)
+          | throwError "no domain hypothesis in the context of {mkMVar h}"
+        let target ← instantiateMVars (← h.getType)
+        let some p ← projectConjunct hyp target
+          | throwError "no domain conjunct proves {target}"
+        h.assign p
+
+  let proof ← instantiateMVars goalMV
+  if proof.hasMVar then
+    throwError "incomplete derivative proof: {proof}"
+
+  -- add the definition directly (checked by the kernel), with no
+  -- pretty-print/re-elaboration round trip
+  let value ← instantiateMVars (← mkAppM ``CDeriv.mk #[result, domain, proof])
+  let type ← instantiateMVars (← inferType value)
+  let (declName, _) ← mkDeclName (← getCurrNamespace) {} lhs.getId
+  let value ← withDeclNameForAuxNaming declName <| Meta.abstractNestedProofs value
+  addDecl <| .defnDecl { name := declName, levelParams := [], type, value,
+                         hints := .regular (getMaxHeight (← getEnv) value + 1), safety := .safe }
+  modifyEnv (addNoncomputable · declName)
 
 end AR.Tools.AutoDiff.Differentiate

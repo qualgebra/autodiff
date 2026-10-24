@@ -101,7 +101,7 @@ def genFunc(d:ℕ): IO (FuncBody × ℕ × ℕ) := do
            return (FuncBody.Log p, s+1, h+1)
 
 
-def dumpTestData (outFile : IO.FS.Handle) (fnName resultName prfName: Name): CommandElabM Unit := do
+def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElabM Unit := do
   let env ← getEnv
   let some fn := env.find? fnName | unreachable!
 
@@ -115,10 +115,16 @@ def dumpTestData (outFile : IO.FS.Handle) (fnName resultName prfName: Name): Com
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr result.value!}"
   outFile.putStrLn ""
 
-  let some prf := env.find? prfName | unreachable!
+  -- the proof is the last argument of `CDeriv.mk`, usually an auxiliary lemma
+  let prf := result.value!.getAppArgs.back!
+  let prf := match prf.getAppFn with
+             | .const n _ => match env.find? n with
+                             | some ci => ci.value! (allowOpaque := true)
+                             | none => prf
+             | _ => prf
 
   outFile.putStrLn "Proof:"
-  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf.value!}"
+  outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf}"
   outFile.putStrLn ""
 
 def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
@@ -142,8 +148,6 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
 
   let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 1000000}
 
-  let prfName := Name.append fnName' `_proof_2
-
   -- bootstrapping round
   elabCommand fnCmd
 
@@ -155,7 +159,7 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
   stderr.putStr s!"{i}, {f}, {size}, {depth}"
 
   elabCommand derivCmd
-  dumpTestData outFile fnName fnName' prfName
+  dumpTestData outFile fnName fnName'
 
   for _ in List.range 4 do
     let _ ← timeit s!", "

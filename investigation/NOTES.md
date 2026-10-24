@@ -2,7 +2,7 @@
 
 This branch adds opt-in instrumentation and experimental search variants to
 `Autodiff/`, plus small probe files in this directory. With no environment
-variables set, behaviour is the original except for the B8 fix below.
+variables set, the search is the original one; B8 and B9 below are fixed.
 
 ## Running
 
@@ -23,7 +23,6 @@ Environment variables (see the comment above `difftac` in `Autodiff/FindTheorems
 | `AD_RECS=<file>` | append `theorem,success,nanos` per apply attempt |
 | `AD_MODE=<flags>` | `c` skip catch-all theorems, `h` filter by head symbol, `r` reducible, `i` instances transparency |
 | `AD_KEEPBUG=1` | restore the original `getFullTargetType` call (B8) |
-| `AD_DIRECT=1` | add the `CDeriv` with `addDecl` instead of delab/re-elab (incomplete, see B9) |
 
 ## Findings (on `test0` from `Test/autodiff_debug.lean`, restricted domain)
 
@@ -51,12 +50,22 @@ were restated with swapped premises. The call is now skipped unless `AD_KEEPBUG`
 Consequence: 6 `#guard_msgs` outputs in `Test/autodiff_debug.lean` now differ (different,
 valid derivations), so `lake test` fails until the expected outputs are updated.
 
-### B9: delab → re-elab round trip (not fixed)
+### B9: delab → re-elab round trip (fixed on this branch)
 
-`buildDomainExpr` uses the constant `x` instead of a bound variable and `buildDomainSelector`
-uses constant `_` for `And.left/right` implicits; both only work because the final term is
-pretty-printed and re-parsed. `↑n` casts (e.g. from `hasDerivAt_pow`) do not survive the round
-trip. `AD_DIRECT` fixes the domain but still fails on the `_` selectors.
+Previously `buildDomainExpr` used the constant `x` instead of a bound variable and
+`buildDomainSelector` used constant `_` for `And.left/right` implicits; both only worked
+because the final term was pretty-printed and re-parsed, and `↑n` casts (e.g. from
+`hasDerivAt_pow`) did not survive the round trip.
+
+Now domain constraints are left as (synthetic opaque) holes during the search and recorded
+in the threaded `domain` list (so abandoned branches drop theirs). The command builds the
+domain predicate with `mkLambdaFVars`, fills each hole by projecting the domain hypothesis
+(`projectConjunct`), and adds the `CDeriv` with `addDecl` (kernel-checked, nested proofs
+abstracted as usual, module visibility via `mkDeclName`). No `sorry` is ever introduced.
+
+Visible consequences: casts now appear in outputs (`↑2 * x ^ (2 - 1)` instead of the
+re-elaborated literal `2 * …`), and auxiliary proof lemmas are numbered differently;
+test expectations were updated. `Main.lean` no longer assumes the proof lemma is `_proof_2`.
 
 ### Experiments
 
@@ -66,12 +75,13 @@ trip. `AD_DIRECT` fixes the domain but still fails on the `_` selectors.
 | B8 fixed | 1970 attempts, tactic 1.9 s |
 | B8 + `c` | 860 attempts; all functions differentiated |
 | B8 + `ch` | 84 attempts, tactic 0.19 s (~15×); derivations found, but `↑n` outputs then fail B9 |
+| B8 + B9 + `ch` | tactic 0.21 s; all test functions differentiated, kernel-checked, standard axioms only (outputs differ from default mode) |
 | `r` / `i` | some functions no longer differentiable |
 
 ## Suggested next steps
 
-1. Keep B8 fixed; update the test outputs.
-2. Fix B9: build proper `Expr`s and `addDecl` directly (kernel-checked, no round trip).
+1. ~~Keep B8 fixed; update the test outputs.~~ Done.
+2. ~~Fix B9.~~ Done.
 3. Drop catch-all theorems automatically instead of the hand-written blacklists.
 4. Index theorems by head symbol (`DiscrTree`; `ThmDB.lookup` already takes the key).
 5. Build the DB once per benchmark process (timed runs currently restart from the post-import
