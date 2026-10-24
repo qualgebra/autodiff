@@ -36,5 +36,5 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 - Median time per differentiation: 181 ms with the index, 2423 ms without; median per-case
   speedup 8.6x (restricted domains 13.8x, universal domains 5.9x), up to 71x.
 - Total time over the 488 common cases: 98 s with the index, 1333 s without.
-- Timing varies by about 5% between runs: an earlier indexed run (commit 517e43e-299505e code,
+- Timing varies by about 5% between runs: an earlier indexed run (commit a7e7d90,
   producing identical derivations for all 500 cases) gave a median of 172 ms.
