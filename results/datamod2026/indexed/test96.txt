@@ -1,0 +1,29 @@
+Input: test96
+fun x => (x ^ 9 - x ^ 7) / (Real.log (Real.tan 7) * Real.log (x ^ 8 - 10) - Real.log (Real.log (Real.log (x ^ 2))))
+
+Result:
+{
+  f' := fun x =>
+    ((↑9 * x ^ (9 - 1) - ↑7 * x ^ (7 - 1)) *
+          (Real.log (Real.tan 7) * Real.log (x ^ 8 - 10) - Real.log (Real.log (Real.log (x ^ 2)))) -
+        (x ^ 9 - x ^ 7) *
+          (Real.log (Real.tan 7) * (↑8 * x ^ (8 - 1) / (x ^ 8 - 10)) -
+            ↑2 * x ^ (2 - 1) / x ^ 2 / Real.log (x ^ 2) / Real.log (Real.log (x ^ 2)))) /
+      (Real.log (Real.tan 7) * Real.log (x ^ 8 - 10) - Real.log (Real.log (Real.log (x ^ 2)))) ^ 2,
+  domain := fun x =>
+    (((Real.log (Real.tan 7) * Real.log (x ^ 8 - 10) - Real.log (Real.log (Real.log (x ^ 2))) ≠ 0 ∧ x ^ 2 ≠ 0) ∧
+          Real.log (x ^ 2) ≠ 0) ∧
+        Real.log (Real.log (x ^ 2)) ≠ 0) ∧
+      x ^ 8 - 10 ≠ 0,
+  proof := d_test96._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (HasDerivAt.sub (hasDerivAt_pow 9 x) (hasDerivAt_pow 7 x))
+    (HasDerivAt.sub
+      (HasDerivAt.const_mul (Real.log (Real.tan 7))
+        (HasDerivAt.log' a.right (HasDerivAt.sub_const 10 (hasDerivAt_pow 8 x))))
+      (HasDerivAt.log' a.left.right
+        (HasDerivAt.log' a.left.left.right (HasDerivAt.log' a.left.left.left.right (hasDerivAt_pow 2 x)))))
+    a.left.left.left.left
+

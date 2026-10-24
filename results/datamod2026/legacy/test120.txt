@@ -1,0 +1,20 @@
+Input: test120
+fun x => Real.tan (Real.sin (Real.tan (91 / (x ^ 5 + -30))))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.sin (Real.tan (91 / (x ^ 5 + -30)))) ^ 2 *
+      (Real.cos (Real.tan (91 / (x ^ 5 + -30))) *
+        (1 / Real.cos (91 / (x ^ 5 + -30)) ^ 2 * (91 * (-(↑5 * x ^ (5 - 1)) / (x ^ 5 + -30) ^ 2)))),
+  domain := fun x =>
+    (x ^ 5 + -30 ≠ 0 ∧ Real.cos (91 / (x ^ 5 + -30)) ≠ 0) ∧ Real.cos (Real.sin (Real.tan (91 / (x ^ 5 + -30)))) ≠ 0,
+  proof := d_test120._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sin
+      (HasDerivAt.tan' a.left.right
+        (HasDerivAt.const_mul 91 (HasDerivAt.inv (HasDerivAt.add_const (-30) (hasDerivAt_pow 5 x)) a.left.left))))
+

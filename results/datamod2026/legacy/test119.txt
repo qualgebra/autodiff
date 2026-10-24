@@ -1,0 +1,16 @@
+Input: test119
+fun x => Real.sin (Real.cos (Real.log (Real.sin (x ^ 10) + Real.tan 17)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.log (Real.sin (x ^ 10) + Real.tan 17))) *
+      (-Real.sin (Real.log (Real.sin (x ^ 10) + Real.tan 17)) *
+        (Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1)) / (Real.sin (x ^ 10) + Real.tan 17))),
+  domain := fun x => Real.sin (x ^ 10) + Real.tan 17 ≠ 0, proof := d_test119._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.cos (HasDerivAt.log' a (HasDerivAt.add_const (Real.tan 17) (HasDerivAt.sin (hasDerivAt_pow 10 x)))))
+

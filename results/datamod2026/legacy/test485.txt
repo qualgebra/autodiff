@@ -1,0 +1,20 @@
+Input: test485
+fun x => -17 + Real.log (Real.cos (x ^ 4 * x ^ 7 * (x ^ 6 + x ^ 5)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 4 * x ^ 7 * (x ^ 6 + x ^ 5)) *
+        ((↑4 * x ^ (4 - 1) * x ^ 7 + x ^ 4 * (↑7 * x ^ (7 - 1))) * (x ^ 6 + x ^ 5) +
+          x ^ 4 * x ^ 7 * (↑6 * x ^ (6 - 1) + ↑5 * x ^ (5 - 1))) /
+      Real.cos (x ^ 4 * x ^ 7 * (x ^ 6 + x ^ 5)),
+  domain := fun x => Real.cos (x ^ 4 * x ^ 7 * (x ^ 6 + x ^ 5)) ≠ 0, proof := d_test485._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (-17)
+    (HasDerivAt.log' a
+      (HasDerivAt.cos
+        (HasDerivAt.fun_mul (HasDerivAt.fun_mul (hasDerivAt_pow 4 x) (hasDerivAt_pow 7 x))
+          (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 5 x)))))
+

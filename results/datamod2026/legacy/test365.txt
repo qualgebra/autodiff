@@ -1,0 +1,29 @@
+Input: test365
+fun x => (x ^ 7 + x ^ 6) * Real.sin (x ^ 2 - x ^ 4) / Real.log (Real.tan (x ^ 4) / Real.sin (-76)) / -100
+
+Result:
+{
+  f' := fun x =>
+    (((↑7 * x ^ (7 - 1) + ↑6 * x ^ (6 - 1)) * Real.sin (x ^ 2 - x ^ 4) +
+            (x ^ 7 + x ^ 6) * (Real.cos (x ^ 2 - x ^ 4) * (↑2 * x ^ (2 - 1) - ↑4 * x ^ (4 - 1)))) *
+          (Real.log (Real.tan (x ^ 4) / Real.sin (-76)))⁻¹ +
+        (x ^ 7 + x ^ 6) * Real.sin (x ^ 2 - x ^ 4) *
+          (-(1 / Real.cos (x ^ 4) ^ 2 * (↑4 * x ^ (4 - 1)) * (Real.sin (-76))⁻¹ / (Real.tan (x ^ 4) / Real.sin (-76))) /
+            Real.log (Real.tan (x ^ 4) / Real.sin (-76)) ^ 2)) *
+      (-100)⁻¹,
+  domain := fun x =>
+    (Real.log (Real.tan (x ^ 4) / Real.sin (-76)) ≠ 0 ∧ Real.cos (x ^ 4) ≠ 0) ∧ Real.tan (x ^ 4) / Real.sin (-76) ≠ 0,
+  proof := d_test365._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_mul (HasDerivAt.fun_add (hasDerivAt_pow 7 x) (hasDerivAt_pow 6 x))
+        (HasDerivAt.sin (HasDerivAt.sub (hasDerivAt_pow 2 x) (hasDerivAt_pow 4 x))))
+      (HasDerivAt.inv
+        (HasDerivAt.log' a.right
+          (HasDerivAt.mul_const (HasDerivAt.tan' a.left.right (hasDerivAt_pow 4 x)) (Real.sin (-76))⁻¹))
+        a.left.left))
+    (-100)⁻¹
+

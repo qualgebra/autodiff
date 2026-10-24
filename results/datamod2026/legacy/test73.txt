@@ -1,0 +1,17 @@
+Input: test73
+fun x => -44 + Real.log (Real.cos (x ^ 7) + (x ^ 7 + -68)) - x ^ 6
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (x ^ 7) * (↑7 * x ^ (7 - 1)) + ↑7 * x ^ (7 - 1)) / (Real.cos (x ^ 7) + (x ^ 7 + -68)) - ↑6 * x ^ (6 - 1),
+  domain := fun x => Real.cos (x ^ 7) + (x ^ 7 + -68) ≠ 0, proof := d_test73._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_add (-44)
+      (HasDerivAt.log' a
+        (HasDerivAt.fun_add (HasDerivAt.cos (hasDerivAt_pow 7 x)) (HasDerivAt.add_const (-68) (hasDerivAt_pow 7 x)))))
+    (hasDerivAt_pow 6 x)
+

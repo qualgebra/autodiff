@@ -1,0 +1,32 @@
+Input: test39
+fun x => Real.cos (x ^ 1) / Real.cos (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6)))
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)) *
+          Real.cos (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6))) -
+        Real.cos (x ^ 1) *
+          (-Real.sin (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6))) *
+            ((-Real.sin (x ^ 3 / x ^ 8) * ((↑3 * x ^ (3 - 1) * x ^ 8 - x ^ 3 * (↑8 * x ^ (8 - 1))) / (x ^ 8) ^ 2) *
+                  (Real.tan (x ^ 2) + Real.cos (x ^ 6)) -
+                Real.cos (x ^ 3 / x ^ 8) *
+                  (1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)) + -Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1)))) /
+              (Real.tan (x ^ 2) + Real.cos (x ^ 6)) ^ 2))) /
+      Real.cos (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6))) ^ 2,
+  domain := fun x =>
+    ((Real.cos (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6))) ≠ 0 ∧
+          Real.tan (x ^ 2) + Real.cos (x ^ 6) ≠ 0) ∧
+        Real.cos (x ^ 2) ≠ 0) ∧
+      x ^ 8 ≠ 0,
+  proof := d_test39._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (HasDerivAt.cos (hasDerivAt_pow 1 x))
+    (HasDerivAt.cos
+      (HasDerivAt.fun_div (HasDerivAt.cos (HasDerivAt.fun_div (hasDerivAt_pow 3 x) (hasDerivAt_pow 8 x) a.right))
+        (HasDerivAt.fun_add (HasDerivAt.tan' a.left.right (hasDerivAt_pow 2 x)) (HasDerivAt.cos (hasDerivAt_pow 6 x)))
+        a.left.left.right))
+    a.left.left.left
+

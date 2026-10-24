@@ -1,0 +1,27 @@
+Input: test123
+fun x =>
+  (Real.cos 11 - x ^ 4 - Real.log (x ^ 2 / 75 + (x ^ 1 + -2))) *
+    (Real.cos (x ^ 9) - Real.cos (x ^ 1) + Real.cos (52 / 96) + Real.tan (x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    (-(↑4 * x ^ (4 - 1)) - (↑2 * x ^ (2 - 1) / 75 + ↑1 * x ^ (1 - 1)) / (x ^ 2 / 75 + (x ^ 1 + -2))) *
+        (Real.cos (x ^ 9) - Real.cos (x ^ 1) + Real.cos (52 / 96) + Real.tan (x ^ 2)) +
+      (Real.cos 11 - x ^ 4 - Real.log (x ^ 2 / 75 + (x ^ 1 + -2))) *
+        (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)) - -Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)) +
+          1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1))),
+  domain := fun x => Real.cos (x ^ 2) ≠ 0 ∧ x ^ 2 / 75 + (x ^ 1 + -2) ≠ 0, proof := d_test123._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.sub (HasDerivAt.const_sub (Real.cos 11) (hasDerivAt_pow 4 x))
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_add (HasDerivAt.div_const (hasDerivAt_pow 2 x) 75)
+          (HasDerivAt.add_const (-2) (hasDerivAt_pow 1 x)))))
+    (HasDerivAt.fun_add
+      (HasDerivAt.add_const (Real.cos (52 / 96))
+        (HasDerivAt.sub (HasDerivAt.cos (hasDerivAt_pow 9 x)) (HasDerivAt.cos (hasDerivAt_pow 1 x))))
+      (HasDerivAt.tan' a.left (hasDerivAt_pow 2 x)))
+

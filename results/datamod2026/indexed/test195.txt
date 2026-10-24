@@ -1,0 +1,12 @@
+Input: test195
+fun x => Real.log (x ^ 7) * (Real.cos (-77) + (-32 * 75 + 4 * -48)) + -8 * Real.cos (-35)
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1) / x ^ 7 * (Real.cos (-77) + (-32 * 75 + 4 * -48)), domain := fun x => x ^ 7 ≠ 0,
+  proof := d_test195._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const (-8 * Real.cos (-35))
+    (HasDerivAt.mul_const (HasDerivAt.log' a (hasDerivAt_pow 7 x)) (Real.cos (-77) + (-32 * 75 + 4 * -48)))
+

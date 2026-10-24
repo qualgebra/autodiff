@@ -1,0 +1,19 @@
+Input: test44
+fun x => Real.sin (Real.cos (Real.log (Real.log (95 / x ^ 1))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.log (Real.log (95 / x ^ 1)))) *
+      (-Real.sin (Real.log (Real.log (95 / x ^ 1))) *
+        (95 * (-Real.one✝ / (x ^ 1) ^ 2) / (95 / x ^ 1) / Real.log (95 / x ^ 1))),
+  domain := fun x => (x ^ 1 ≠ 0 ∧ 95 / x ^ 1 ≠ 0) ∧ Real.log (95 / x ^ 1) ≠ 0, proof := d_test44._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.cos
+      (HasDerivAt.log' a.right
+        (HasDerivAt.log' a.left.right
+          (HasDerivAt.const_mul 95 (HasDerivAt.inv (hasDerivAt_const_mul Real.one✝) a.left.left)))))
+

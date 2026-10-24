@@ -1,0 +1,38 @@
+Input: test305
+fun x =>
+  (Real.cos (-16) / (x ^ 9 + x ^ 7) + x ^ 3 / (x ^ 6 / x ^ 6)) * Real.cos (Real.log (-39 - x ^ 6)) -
+    Real.cos (Real.cos (x ^ 1) - Real.tan (x ^ 10)) * (x ^ 10 / Real.log 44)
+
+Result:
+{
+  f' := fun x =>
+    ((0 * (x ^ 9 + x ^ 7) - Real.cos (-16) * (↑9 * x ^ (9 - 1) + ↑7 * x ^ (7 - 1))) / (x ^ 9 + x ^ 7) ^ 2 +
+            (↑3 * x ^ (3 - 1) * (x ^ 6 / x ^ 6) -
+                x ^ 3 * ((↑6 * x ^ (6 - 1) * x ^ 6 - x ^ 6 * (↑6 * x ^ (6 - 1))) / (x ^ 6) ^ 2)) /
+              (x ^ 6 / x ^ 6) ^ 2) *
+          Real.cos (Real.log (-39 - x ^ 6)) +
+        (Real.cos (-16) / (x ^ 9 + x ^ 7) + x ^ 3 / (x ^ 6 / x ^ 6)) *
+          (-Real.sin (Real.log (-39 - x ^ 6)) * (-(↑6 * x ^ (6 - 1)) / (-39 - x ^ 6))) -
+      (-Real.sin (Real.cos (x ^ 1) - Real.tan (x ^ 10)) *
+            (-Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)) - 1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1))) *
+          (x ^ 10 / Real.log 44) +
+        Real.cos (Real.cos (x ^ 1) - Real.tan (x ^ 10)) * (↑10 * x ^ (10 - 1) / Real.log 44)),
+  domain := fun x => (((Real.cos (x ^ 10) ≠ 0 ∧ -39 - x ^ 6 ≠ 0) ∧ x ^ 6 / x ^ 6 ≠ 0) ∧ x ^ 6 ≠ 0) ∧ x ^ 9 + x ^ 7 ≠ 0,
+  proof := d_test305._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_add
+        (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (-16)))
+          (HasDerivAt.fun_add (hasDerivAt_pow 9 x) (hasDerivAt_pow 7 x)) a.right)
+        (HasDerivAt.fun_div (hasDerivAt_pow 3 x)
+          (HasDerivAt.fun_div (hasDerivAt_pow 6 x) (hasDerivAt_pow 6 x) a.left.right) a.left.left.right))
+      (HasDerivAt.cos (HasDerivAt.log' a.left.left.left.right (HasDerivAt.const_sub (-39) (hasDerivAt_pow 6 x)))))
+    (HasDerivAt.fun_mul
+      (HasDerivAt.cos
+        (HasDerivAt.sub (HasDerivAt.cos (hasDerivAt_pow 1 x))
+          (HasDerivAt.tan' a.left.left.left.left (hasDerivAt_pow 10 x))))
+      (HasDerivAt.div_const (hasDerivAt_pow 10 x) (Real.log 44)))
+

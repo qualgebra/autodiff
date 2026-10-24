@@ -1,0 +1,48 @@
+Input: test330
+fun x =>
+  Real.sin (Real.tan (Real.tan (x ^ 10)) / Real.cos (-82 + x ^ 4)) *
+    (Real.tan (x ^ 10 * -54 / (x ^ 6 + x ^ 6)) + Real.cos (Real.sin 68) / (x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan (Real.tan (x ^ 10)) / Real.cos (-82 + x ^ 4)) *
+          ((1 / Real.cos (Real.tan (x ^ 10)) ^ 2 * (1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1))) *
+                Real.cos (-82 + x ^ 4) -
+              Real.tan (Real.tan (x ^ 10)) * (-Real.sin (-82 + x ^ 4) * (↑4 * x ^ (4 - 1)))) /
+            Real.cos (-82 + x ^ 4) ^ 2) *
+        (Real.tan (x ^ 10 * -54 / (x ^ 6 + x ^ 6)) + Real.cos (Real.sin 68) / (x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5))) +
+      Real.sin (Real.tan (Real.tan (x ^ 10)) / Real.cos (-82 + x ^ 4)) *
+        (1 / Real.cos (x ^ 10 * -54 / (x ^ 6 + x ^ 6)) ^ 2 *
+            ((↑10 * x ^ (10 - 1) * -54 * (x ^ 6 + x ^ 6) - x ^ 10 * -54 * (↑6 * x ^ (6 - 1) + ↑6 * x ^ (6 - 1))) /
+              (x ^ 6 + x ^ 6) ^ 2) +
+          (0 * (x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5)) -
+              Real.cos (Real.sin 68) *
+                (((↑6 * x ^ (6 - 1) * x ^ 2 - x ^ 6 * (↑2 * x ^ (2 - 1))) / (x ^ 2) ^ 2 * (x ^ 8 - x ^ 5) -
+                    x ^ 6 / x ^ 2 * (↑8 * x ^ (8 - 1) - ↑5 * x ^ (5 - 1))) /
+                  (x ^ 8 - x ^ 5) ^ 2)) /
+            (x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5)) ^ 2),
+  domain := fun x =>
+    ((((((x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5) ≠ 0 ∧ x ^ 8 - x ^ 5 ≠ 0) ∧ x ^ 2 ≠ 0) ∧ x ^ 6 + x ^ 6 ≠ 0) ∧
+            Real.cos (x ^ 10 * -54 / (x ^ 6 + x ^ 6)) ≠ 0) ∧
+          Real.cos (-82 + x ^ 4) ≠ 0) ∧
+        Real.cos (x ^ 10) ≠ 0) ∧
+      Real.cos (Real.tan (x ^ 10)) ≠ 0,
+  proof := d_test330._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.sin
+      (HasDerivAt.fun_div (HasDerivAt.tan' a.right (HasDerivAt.tan' a.left.right (hasDerivAt_pow 10 x)))
+        (HasDerivAt.cos (HasDerivAt.const_add (-82) (hasDerivAt_pow 4 x))) a.left.left.right))
+    (HasDerivAt.fun_add
+      (HasDerivAt.tan' a.left.left.left.right
+        (HasDerivAt.fun_div (HasDerivAt.mul_const (hasDerivAt_pow 10 x) (-54))
+          (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 6 x)) a.left.left.left.left.right))
+      (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (Real.sin 68)))
+        (HasDerivAt.fun_div
+          (HasDerivAt.fun_div (hasDerivAt_pow 6 x) (hasDerivAt_pow 2 x) a.left.left.left.left.left.right)
+          (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 5 x)) a.left.left.left.left.left.left.right)
+        a.left.left.left.left.left.left.left))
+

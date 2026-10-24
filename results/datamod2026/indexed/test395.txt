@@ -1,0 +1,16 @@
+Input: test395
+fun x => Real.cos (x ^ 3 * (69 - 28 + Real.cos (x ^ 5)) - (92 - 52))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 3 * (69 - 28 + Real.cos (x ^ 5)) - (92 - 52)) *
+      (↑3 * x ^ (3 - 1) * (69 - 28 + Real.cos (x ^ 5)) + x ^ 3 * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)))),
+  domain := fun x => True, proof := d_test395._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sub_const (92 - 52)
+      (HasDerivAt.fun_mul (hasDerivAt_pow 3 x) (HasDerivAt.const_add (69 - 28) (HasDerivAt.cos (hasDerivAt_pow 5 x)))))
+

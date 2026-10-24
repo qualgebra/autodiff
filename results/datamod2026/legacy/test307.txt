@@ -1,0 +1,50 @@
+Input: test307
+fun x =>
+  (Real.log (x ^ 9 - x ^ 3) / (-42 * -55 / (-45 + x ^ 6)) - (x ^ 6 + -55) / x ^ 3 * Real.log 7) /
+    ((Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) / (Real.sin 13 - x ^ 4))
+
+Result:
+{
+  f' := fun x =>
+    ((↑9 * x ^ (9 - 1) - ↑3 * x ^ (3 - 1)) / (x ^ 9 - x ^ 3) * (-42 * -55 / (-45 + x ^ 6))⁻¹ +
+            Real.log (x ^ 9 - x ^ 3) *
+              (-(-42 * -55 * (-(↑6 * x ^ (6 - 1)) / (-45 + x ^ 6) ^ 2)) / (-42 * -55 / (-45 + x ^ 6)) ^ 2) -
+          (↑6 * x ^ (6 - 1) * (x ^ 3)⁻¹ + (x ^ 6 + -55) * (-(↑3 * x ^ (3 - 1)) / (x ^ 3) ^ 2)) * Real.log 7) *
+        ((Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) / (Real.sin 13 - x ^ 4))⁻¹ +
+      (Real.log (x ^ 9 - x ^ 3) / (-42 * -55 / (-45 + x ^ 6)) - (x ^ 6 + -55) / x ^ 3 * Real.log 7) *
+        (-((-Real.sin (x ^ 4 * x ^ 8) * (↑4 * x ^ (4 - 1) * x ^ 8 + x ^ 4 * (↑8 * x ^ (8 - 1))) -
+                  (↑10 * x ^ (10 - 1) * (-53 + x ^ 5)⁻¹ + x ^ 10 * (-(↑5 * x ^ (5 - 1)) / (-53 + x ^ 5) ^ 2))) *
+                (Real.sin 13 - x ^ 4)⁻¹ +
+              (Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) *
+                (- -(↑4 * x ^ (4 - 1)) / (Real.sin 13 - x ^ 4) ^ 2)) /
+          ((Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) / (Real.sin 13 - x ^ 4)) ^ 2),
+  domain := fun x =>
+    ((((((Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) / (Real.sin 13 - x ^ 4) ≠ 0 ∧ Real.sin 13 - x ^ 4 ≠ 0) ∧
+              -53 + x ^ 5 ≠ 0) ∧
+            x ^ 3 ≠ 0) ∧
+          -42 * -55 / (-45 + x ^ 6) ≠ 0) ∧
+        -45 + x ^ 6 ≠ 0) ∧
+      x ^ 9 - x ^ 3 ≠ 0,
+  proof := d_test307._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.sub
+      (HasDerivAt.fun_mul (HasDerivAt.log' a.right (HasDerivAt.sub (hasDerivAt_pow 9 x) (hasDerivAt_pow 3 x)))
+        (HasDerivAt.inv
+          (HasDerivAt.const_mul (-42 * -55)
+            (HasDerivAt.inv (HasDerivAt.const_add (-45) (hasDerivAt_pow 6 x)) a.left.right))
+          a.left.left.right))
+      (HasDerivAt.mul_const
+        (HasDerivAt.fun_mul (HasDerivAt.add_const (-55) (hasDerivAt_pow 6 x))
+          (HasDerivAt.inv (hasDerivAt_pow 3 x) a.left.left.left.right))
+        (Real.log 7)))
+    (HasDerivAt.inv
+      (HasDerivAt.fun_mul
+        (HasDerivAt.sub (HasDerivAt.cos (HasDerivAt.fun_mul (hasDerivAt_pow 4 x) (hasDerivAt_pow 8 x)))
+          (HasDerivAt.fun_mul (hasDerivAt_pow 10 x)
+            (HasDerivAt.inv (HasDerivAt.const_add (-53) (hasDerivAt_pow 5 x)) a.left.left.left.left.right)))
+        (HasDerivAt.inv (HasDerivAt.const_sub (Real.sin 13) (hasDerivAt_pow 4 x)) a.left.left.left.left.left.right))
+      a.left.left.left.left.left.left)
+

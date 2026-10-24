@@ -1,0 +1,41 @@
+Input: test105
+fun x =>
+  (Real.cos (-77) + (-1 - 87)) / (Real.log (x ^ 4) * (64 / x ^ 10)) - Real.tan (Real.log (x ^ 8) * Real.tan (-2)) +
+    Real.tan ((Real.sin (x ^ 6) + 40) * (Real.log (x ^ 10) * (x ^ 3 * -29)))
+
+Result:
+{
+  f' := fun x =>
+    (0 * (Real.log (x ^ 4) * (64 / x ^ 10)) -
+            (Real.cos (-77) + (-1 - 87)) *
+              (↑4 * x ^ (4 - 1) / x ^ 4 * (64 / x ^ 10) +
+                Real.log (x ^ 4) * ((0 * x ^ 10 - 64 * (↑10 * x ^ (10 - 1))) / (x ^ 10) ^ 2))) /
+          (Real.log (x ^ 4) * (64 / x ^ 10)) ^ 2 -
+        1 / Real.cos (Real.log (x ^ 8) * Real.tan (-2)) ^ 2 * (↑8 * x ^ (8 - 1) / x ^ 8 * Real.tan (-2)) +
+      1 / Real.cos ((Real.sin (x ^ 6) + 40) * (Real.log (x ^ 10) * (x ^ 3 * -29))) ^ 2 *
+        (Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1)) * (Real.log (x ^ 10) * (x ^ 3 * -29)) +
+          (Real.sin (x ^ 6) + 40) *
+            (↑10 * x ^ (10 - 1) / x ^ 10 * (x ^ 3 * -29) + Real.log (x ^ 10) * (↑3 * x ^ (3 - 1) * -29))),
+  domain := fun x =>
+    (((((x ^ 10 ≠ 0 ∧ Real.cos ((Real.sin (x ^ 6) + 40) * (Real.log (x ^ 10) * (x ^ 3 * -29))) ≠ 0) ∧ x ^ 8 ≠ 0) ∧
+            Real.cos (Real.log (x ^ 8) * Real.tan (-2)) ≠ 0) ∧
+          Real.log (x ^ 4) * (64 / x ^ 10) ≠ 0) ∧
+        x ^ 10 ≠ 0) ∧
+      x ^ 4 ≠ 0,
+  proof := d_test105._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.sub
+      (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (-77) + (-1 - 87)))
+        (HasDerivAt.fun_mul (HasDerivAt.log' a.right (hasDerivAt_pow 4 x))
+          (HasDerivAt.fun_div (hasDerivAt_const x 64) (hasDerivAt_pow 10 x) a.left.left.left.left.left.left))
+        a.left.left.right)
+      (HasDerivAt.tan' a.left.left.left.right
+        (HasDerivAt.mul_const (HasDerivAt.log' a.left.left.left.left.right (hasDerivAt_pow 8 x)) (Real.tan (-2)))))
+    (HasDerivAt.tan' a.left.left.left.left.left.right
+      (HasDerivAt.fun_mul (HasDerivAt.add_const 40 (HasDerivAt.sin (hasDerivAt_pow 6 x)))
+        (HasDerivAt.fun_mul (HasDerivAt.log' a.left.left.left.left.left.left (hasDerivAt_pow 10 x))
+          (HasDerivAt.mul_const (hasDerivAt_pow 3 x) (-29)))))
+

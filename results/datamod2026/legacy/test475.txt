@@ -1,0 +1,13 @@
+Input: test475
+fun x => -17 + Real.tan (Real.sin (-94) * x ^ 3) - x ^ 4
+
+Result:
+{ f' := fun x => 1 / Real.cos (Real.sin (-94) * x ^ 3) ^ 2 * (Real.sin (-94) * (↑3 * x ^ (3 - 1))) - ↑4 * x ^ (4 - 1),
+  domain := fun x => Real.cos (Real.sin (-94) * x ^ 3) ≠ 0, proof := d_test475._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_add (-17) (HasDerivAt.tan' a (HasDerivAt.const_mul (Real.sin (-94)) (hasDerivAt_pow 3 x))))
+    (hasDerivAt_pow 4 x)
+

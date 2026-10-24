@@ -1,0 +1,14 @@
+Input: test156
+fun x => Real.log (x ^ 9 * (Real.tan (Real.sin 82) + Real.log (7 * -10)))
+
+Result:
+{
+  f' := fun x =>
+    ↑9 * x ^ (9 - 1) * (Real.tan (Real.sin 82) + Real.log (7 * -10)) /
+      (x ^ 9 * (Real.tan (Real.sin 82) + Real.log (7 * -10))),
+  domain := fun x => x ^ 9 * (Real.tan (Real.sin 82) + Real.log (7 * -10)) ≠ 0, proof := d_test156._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a (HasDerivAt.mul_const (hasDerivAt_pow 9 x) (Real.tan (Real.sin 82) + Real.log (7 * -10)))
+

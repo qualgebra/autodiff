@@ -1,0 +1,18 @@
+Input: test64
+fun x => Real.log 14 - ((x ^ 5 - 100 + -75 * 41) / (Real.cos 7 - Real.cos (x ^ 2)) - 81)
+
+Result:
+{
+  f' := fun x =>
+    -((↑5 * x ^ (5 - 1) * (Real.cos 7 - Real.cos (x ^ 2)) -
+          (x ^ 5 - 100 + -75 * 41) * -(-Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1)))) /
+        (Real.cos 7 - Real.cos (x ^ 2)) ^ 2),
+  domain := fun x => Real.cos 7 - Real.cos (x ^ 2) ≠ 0, proof := d_test64._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_sub (Real.log 14)
+    (HasDerivAt.sub_const 81
+      (HasDerivAt.fun_div (HasDerivAt.add_const (-75 * 41) (HasDerivAt.sub_const 100 (hasDerivAt_pow 5 x)))
+        (HasDerivAt.const_sub (Real.cos 7) (HasDerivAt.cos (hasDerivAt_pow 2 x))) a))
+

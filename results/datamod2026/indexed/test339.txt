@@ -1,0 +1,20 @@
+Input: test339
+fun x => Real.log (x ^ 8 / (72 * x ^ 3) - Real.log 82 + x ^ 4 / -52 / Real.sin 5)
+
+Result:
+{
+  f' := fun x =>
+    ((↑8 * x ^ (8 - 1) * (72 * x ^ 3) - x ^ 8 * (72 * (↑3 * x ^ (3 - 1)))) / (72 * x ^ 3) ^ 2 +
+        ↑4 * x ^ (4 - 1) / -52 / Real.sin 5) /
+      (x ^ 8 / (72 * x ^ 3) - Real.log 82 + x ^ 4 / -52 / Real.sin 5),
+  domain := fun x => 72 * x ^ 3 ≠ 0 ∧ x ^ 8 / (72 * x ^ 3) - Real.log 82 + x ^ 4 / -52 / Real.sin 5 ≠ 0,
+  proof := d_test339._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_add
+      (HasDerivAt.sub_const (Real.log 82)
+        (HasDerivAt.fun_div (hasDerivAt_pow 8 x) (HasDerivAt.const_mul 72 (hasDerivAt_pow 3 x)) a.left))
+      (HasDerivAt.div_const (HasDerivAt.div_const (hasDerivAt_pow 4 x) (-52)) (Real.sin 5)))
+

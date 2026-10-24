@@ -1,0 +1,19 @@
+Input: test367
+fun x => Real.sin (Real.cos ((97 - x ^ 1) / -52 * Real.sin (x ^ 6 - x ^ 7)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos ((97 - x ^ 1) / -52 * Real.sin (x ^ 6 - x ^ 7))) *
+      (-Real.sin ((97 - x ^ 1) / -52 * Real.sin (x ^ 6 - x ^ 7)) *
+        (-(↑1 * x ^ (1 - 1)) / -52 * Real.sin (x ^ 6 - x ^ 7) +
+          (97 - x ^ 1) / -52 * (Real.cos (x ^ 6 - x ^ 7) * (↑6 * x ^ (6 - 1) - ↑7 * x ^ (7 - 1))))),
+  domain := fun x => True, proof := d_test367._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.cos
+      (HasDerivAt.fun_mul (HasDerivAt.div_const (HasDerivAt.const_sub 97 (hasDerivAt_pow 1 x)) (-52))
+        (HasDerivAt.sin (HasDerivAt.sub (hasDerivAt_pow 6 x) (hasDerivAt_pow 7 x)))))
+

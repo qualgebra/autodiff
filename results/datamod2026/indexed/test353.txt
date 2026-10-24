@@ -1,0 +1,17 @@
+Input: test353
+fun x => Real.log (Real.cos (-38)) - x ^ 3 / (16 + 94) - Real.log (-37) * (Real.cos (x ^ 9) * Real.sin (-55)) - 16
+
+Result:
+{
+  f' := fun x =>
+    -(↑3 * x ^ (3 - 1) / (16 + 94)) - Real.log (-37) * (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)) * Real.sin (-55)),
+  domain := fun x => True, proof := d_test353._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const 16
+    (HasDerivAt.sub
+      (HasDerivAt.const_sub (Real.log (Real.cos (-38))) (HasDerivAt.div_const (hasDerivAt_pow 3 x) (16 + 94)))
+      (HasDerivAt.const_mul (Real.log (-37))
+        (HasDerivAt.mul_const (HasDerivAt.cos (hasDerivAt_pow 9 x)) (Real.sin (-55)))))
+

@@ -1,0 +1,35 @@
+Input: test16
+fun x =>
+  Real.sin (Real.log (Real.tan (Real.cos 26))) /
+    ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    Real.sin (Real.log (Real.tan (Real.cos 26))) *
+      (-((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) *
+            (-((1 / Real.cos (x ^ 6) ^ 2 * (↑6 * x ^ (6 - 1)) * (Real.cos (x ^ 1))⁻¹ +
+                    Real.tan (x ^ 6) * (-(-Real.sin (x ^ 1) * Real.one✝) / Real.cos (x ^ 1) ^ 2)) /
+                  (Real.tan (x ^ 6) / Real.cos (x ^ 1))) /
+              Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ^ 2)) /
+        ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1))) ^ 2),
+  domain := fun x =>
+    ((((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ≠ 0 ∧
+            Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ≠ 0) ∧
+          Real.cos (x ^ 1) ≠ 0) ∧
+        Real.cos (x ^ 6) ≠ 0) ∧
+      Real.tan (x ^ 6) / Real.cos (x ^ 1) ≠ 0,
+  proof := d_test16._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (Real.sin (Real.log (Real.tan (Real.cos 26))))
+    (HasDerivAt.inv
+      (HasDerivAt.const_mul (90 / 83 * (-78 + 100) - (79 + Real.cos (-30)))
+        (HasDerivAt.inv
+          (HasDerivAt.log' a.right
+            (HasDerivAt.fun_mul (HasDerivAt.tan' a.left.right (hasDerivAt_pow 6 x))
+              (HasDerivAt.inv (HasDerivAt.cos (hasDerivAt_const_mul Real.one✝)) a.left.left.right)))
+          a.left.left.left.right))
+      a.left.left.left.left)
+

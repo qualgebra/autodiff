@@ -1,0 +1,35 @@
+Input: test241
+fun x => Real.cos (x ^ 7 / (-18 / x ^ 6) / (x ^ 7 + x ^ 7 + Real.log (-75)) * (x ^ 6 * (x ^ 7 / x ^ 4) * x ^ 7))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 7 / (-18 / x ^ 6) / (x ^ 7 + x ^ 7 + Real.log (-75)) * (x ^ 6 * (x ^ 7 / x ^ 4) * x ^ 7)) *
+      (((↑7 * x ^ (7 - 1) * (-18 / x ^ 6) - x ^ 7 * ((0 * x ^ 6 - -18 * (↑6 * x ^ (6 - 1))) / (x ^ 6) ^ 2)) /
+                  (-18 / x ^ 6) ^ 2 *
+                (x ^ 7 + x ^ 7 + Real.log (-75)) -
+              x ^ 7 / (-18 / x ^ 6) * (↑7 * x ^ (7 - 1) + ↑7 * x ^ (7 - 1))) /
+            (x ^ 7 + x ^ 7 + Real.log (-75)) ^ 2 *
+          (x ^ 6 * (x ^ 7 / x ^ 4) * x ^ 7) +
+        x ^ 7 / (-18 / x ^ 6) / (x ^ 7 + x ^ 7 + Real.log (-75)) *
+          ((↑6 * x ^ (6 - 1) * (x ^ 7 / x ^ 4) +
+                x ^ 6 * ((↑7 * x ^ (7 - 1) * x ^ 4 - x ^ 7 * (↑4 * x ^ (4 - 1))) / (x ^ 4) ^ 2)) *
+              x ^ 7 +
+            x ^ 6 * (x ^ 7 / x ^ 4) * (↑7 * x ^ (7 - 1)))),
+  domain := fun x => ((x ^ 4 ≠ 0 ∧ x ^ 7 + x ^ 7 + Real.log (-75) ≠ 0) ∧ -18 / x ^ 6 ≠ 0) ∧ x ^ 6 ≠ 0,
+  proof := d_test241._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_div
+        (HasDerivAt.fun_div (hasDerivAt_pow 7 x)
+          (HasDerivAt.fun_div (hasDerivAt_const x (-18)) (hasDerivAt_pow 6 x) a.right) a.left.right)
+        (HasDerivAt.add_const (Real.log (-75)) (HasDerivAt.fun_add (hasDerivAt_pow 7 x) (hasDerivAt_pow 7 x)))
+        a.left.left.right)
+      (HasDerivAt.fun_mul
+        (HasDerivAt.fun_mul (hasDerivAt_pow 6 x)
+          (HasDerivAt.fun_div (hasDerivAt_pow 7 x) (hasDerivAt_pow 4 x) a.left.left.left))
+        (hasDerivAt_pow 7 x)))
+

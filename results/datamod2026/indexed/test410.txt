@@ -1,0 +1,24 @@
+Input: test410
+fun x => Real.log (Real.cos (-10 / x ^ 6 / (-52 - x ^ 1) * x ^ 3))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (-10 / x ^ 6 / (-52 - x ^ 1) * x ^ 3) *
+        (((0 * x ^ 6 - -10 * (↑6 * x ^ (6 - 1))) / (x ^ 6) ^ 2 * (-52 - x ^ 1) - -10 / x ^ 6 * -(↑1 * x ^ (1 - 1))) /
+              (-52 - x ^ 1) ^ 2 *
+            x ^ 3 +
+          -10 / x ^ 6 / (-52 - x ^ 1) * (↑3 * x ^ (3 - 1))) /
+      Real.cos (-10 / x ^ 6 / (-52 - x ^ 1) * x ^ 3),
+  domain := fun x => (-52 - x ^ 1 ≠ 0 ∧ x ^ 6 ≠ 0) ∧ Real.cos (-10 / x ^ 6 / (-52 - x ^ 1) * x ^ 3) ≠ 0,
+  proof := d_test410._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.cos
+      (HasDerivAt.fun_mul
+        (HasDerivAt.fun_div (HasDerivAt.fun_div (hasDerivAt_const x (-10)) (hasDerivAt_pow 6 x) a.left.right)
+          (HasDerivAt.const_sub (-52) (hasDerivAt_pow 1 x)) a.left.left)
+        (hasDerivAt_pow 3 x)))
+

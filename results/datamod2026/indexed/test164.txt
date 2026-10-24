@@ -1,0 +1,21 @@
+Input: test164
+fun x => Real.cos (Real.log (x ^ 2 + 46)) * x ^ 10 - Real.sin (Real.cos (23 + x ^ 8 + Real.cos (x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (x ^ 2 + 46)) * (↑2 * x ^ (2 - 1) / (x ^ 2 + 46)) * x ^ 10 +
+        Real.cos (Real.log (x ^ 2 + 46)) * (↑10 * x ^ (10 - 1)) -
+      Real.cos (Real.cos (23 + x ^ 8 + Real.cos (x ^ 8))) *
+        (-Real.sin (23 + x ^ 8 + Real.cos (x ^ 8)) * (↑8 * x ^ (8 - 1) + -Real.sin (x ^ 8) * (↑8 * x ^ (8 - 1)))),
+  domain := fun x => x ^ 2 + 46 ≠ 0, proof := d_test164._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.fun_mul (HasDerivAt.cos (HasDerivAt.log' a (HasDerivAt.add_const 46 (hasDerivAt_pow 2 x))))
+      (hasDerivAt_pow 10 x))
+    (HasDerivAt.sin
+      (HasDerivAt.cos
+        (HasDerivAt.fun_add (HasDerivAt.const_add 23 (hasDerivAt_pow 8 x)) (HasDerivAt.cos (hasDerivAt_pow 8 x)))))
+

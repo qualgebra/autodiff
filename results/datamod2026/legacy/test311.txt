@@ -1,0 +1,39 @@
+Input: test311
+fun x =>
+  (23 + x ^ 10 - x ^ 5 * x ^ 4) * (x ^ 8 / x ^ 3 + -28) - Real.tan (x ^ 7 * 7) * (61 / -73 / (x ^ 2 + 46)) -
+    (Real.log (Real.sin (x ^ 2) + Real.tan (x ^ 2)) + (x ^ 1 - (x ^ 8 - x ^ 7) * x ^ 9))
+
+Result:
+{
+  f' := fun x =>
+    (↑10 * x ^ (10 - 1) - (↑5 * x ^ (5 - 1) * x ^ 4 + x ^ 5 * (↑4 * x ^ (4 - 1)))) * (x ^ 8 / x ^ 3 + -28) +
+          (23 + x ^ 10 - x ^ 5 * x ^ 4) * (↑8 * x ^ (8 - 1) * (x ^ 3)⁻¹ + x ^ 8 * (-(↑3 * x ^ (3 - 1)) / (x ^ 3) ^ 2)) -
+        (1 / Real.cos (x ^ 7 * 7) ^ 2 * (↑7 * x ^ (7 - 1) * 7) * (61 / -73 / (x ^ 2 + 46)) +
+          Real.tan (x ^ 7 * 7) * (61 / -73 * (-(↑2 * x ^ (2 - 1)) / (x ^ 2 + 46) ^ 2))) -
+      ((Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)) + 1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1))) /
+          (Real.sin (x ^ 2) + Real.tan (x ^ 2)) +
+        (Real.one✝ - ((↑8 * x ^ (8 - 1) - ↑7 * x ^ (7 - 1)) * x ^ 9 + (x ^ 8 - x ^ 7) * (↑9 * x ^ (9 - 1))))),
+  domain := fun x =>
+    (((Real.cos (x ^ 2) ≠ 0 ∧ Real.sin (x ^ 2) + Real.tan (x ^ 2) ≠ 0) ∧ x ^ 2 + 46 ≠ 0) ∧ Real.cos (x ^ 7 * 7) ≠ 0) ∧
+      x ^ 3 ≠ 0,
+  proof := d_test311._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.sub
+      (HasDerivAt.fun_mul
+        (HasDerivAt.sub (HasDerivAt.const_add 23 (hasDerivAt_pow 10 x))
+          (HasDerivAt.fun_mul (hasDerivAt_pow 5 x) (hasDerivAt_pow 4 x)))
+        (HasDerivAt.add_const (-28)
+          (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (HasDerivAt.inv (hasDerivAt_pow 3 x) a.right))))
+      (HasDerivAt.fun_mul (HasDerivAt.tan' a.left.right (HasDerivAt.mul_const (hasDerivAt_pow 7 x) 7))
+        (HasDerivAt.const_mul (61 / -73)
+          (HasDerivAt.inv (HasDerivAt.add_const 46 (hasDerivAt_pow 2 x)) a.left.left.right))))
+    (HasDerivAt.fun_add
+      (HasDerivAt.log' a.left.left.left.right
+        (HasDerivAt.fun_add (HasDerivAt.sin (hasDerivAt_pow 2 x))
+          (HasDerivAt.tan' a.left.left.left.left (hasDerivAt_pow 2 x))))
+      (HasDerivAt.sub (hasDerivAt_const_mul Real.one✝)
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 7 x)) (hasDerivAt_pow 9 x))))
+

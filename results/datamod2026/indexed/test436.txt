@@ -1,0 +1,17 @@
+Input: test436
+fun x => Real.log (Real.tan (-19) - Real.log (Real.sin (x ^ 7 + -36)))
+
+Result:
+{
+  f' := fun x =>
+    -(Real.cos (x ^ 7 + -36) * (↑7 * x ^ (7 - 1)) / Real.sin (x ^ 7 + -36)) /
+      (Real.tan (-19) - Real.log (Real.sin (x ^ 7 + -36))),
+  domain := fun x => Real.sin (x ^ 7 + -36) ≠ 0 ∧ Real.tan (-19) - Real.log (Real.sin (x ^ 7 + -36)) ≠ 0,
+  proof := d_test436._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.const_sub (Real.tan (-19))
+      (HasDerivAt.log' a.left (HasDerivAt.sin (HasDerivAt.add_const (-36) (hasDerivAt_pow 7 x)))))
+

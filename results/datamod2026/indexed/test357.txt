@@ -1,0 +1,27 @@
+Input: test357
+fun x =>
+  Real.sin (-52 / (x ^ 7 - -16)) + 100 / (-30 / Real.cos 69) + Real.log (Real.sin (Real.tan (x ^ 1) - x ^ 6 / x ^ 4))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (-52 / (x ^ 7 - -16)) * ((0 * (x ^ 7 - -16) - -52 * (↑7 * x ^ (7 - 1))) / (x ^ 7 - -16) ^ 2) +
+      Real.cos (Real.tan (x ^ 1) - x ^ 6 / x ^ 4) *
+          (1 / Real.cos (x ^ 1) ^ 2 * (↑1 * x ^ (1 - 1)) -
+            (↑6 * x ^ (6 - 1) * x ^ 4 - x ^ 6 * (↑4 * x ^ (4 - 1))) / (x ^ 4) ^ 2) /
+        Real.sin (Real.tan (x ^ 1) - x ^ 6 / x ^ 4),
+  domain := fun x =>
+    ((x ^ 4 ≠ 0 ∧ Real.cos (x ^ 1) ≠ 0) ∧ Real.sin (Real.tan (x ^ 1) - x ^ 6 / x ^ 4) ≠ 0) ∧ x ^ 7 - -16 ≠ 0,
+  proof := d_test357._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.add_const (100 / (-30 / Real.cos 69))
+      (HasDerivAt.sin
+        (HasDerivAt.fun_div (hasDerivAt_const x (-52)) (HasDerivAt.sub_const (-16) (hasDerivAt_pow 7 x)) a.right)))
+    (HasDerivAt.log' a.left.right
+      (HasDerivAt.sin
+        (HasDerivAt.sub (HasDerivAt.tan' a.left.left.right (hasDerivAt_pow 1 x))
+          (HasDerivAt.fun_div (hasDerivAt_pow 6 x) (hasDerivAt_pow 4 x) a.left.left.left))))
+

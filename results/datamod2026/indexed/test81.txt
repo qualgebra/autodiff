@@ -1,0 +1,15 @@
+Input: test81
+fun x => Real.cos (Real.cos (-22) * Real.sin (x ^ 8 + Real.sin 43))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.cos (-22) * Real.sin (x ^ 8 + Real.sin 43)) *
+      (Real.cos (-22) * (Real.cos (x ^ 8 + Real.sin 43) * (↑8 * x ^ (8 - 1)))),
+  domain := fun x => True, proof := d_test81._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.const_mul (Real.cos (-22)) (HasDerivAt.sin (HasDerivAt.add_const (Real.sin 43) (hasDerivAt_pow 8 x))))
+

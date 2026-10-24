@@ -1,0 +1,18 @@
+Input: test424
+fun x => Real.cos (Real.log (-91 * 98 + x ^ 10 / x ^ 10 - Real.log (Real.sin 33)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (-91 * 98 + x ^ 10 / x ^ 10 - Real.log (Real.sin 33))) *
+      ((↑10 * x ^ (10 - 1) * x ^ 10 - x ^ 10 * (↑10 * x ^ (10 - 1))) / (x ^ 10) ^ 2 /
+        (-91 * 98 + x ^ 10 / x ^ 10 - Real.log (Real.sin 33))),
+  domain := fun x => x ^ 10 ≠ 0 ∧ -91 * 98 + x ^ 10 / x ^ 10 - Real.log (Real.sin 33) ≠ 0, proof := d_test424._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.log' a.right
+      (HasDerivAt.sub_const (Real.log (Real.sin 33))
+        (HasDerivAt.const_add (-91 * 98) (HasDerivAt.fun_div (hasDerivAt_pow 10 x) (hasDerivAt_pow 10 x) a.left))))
+

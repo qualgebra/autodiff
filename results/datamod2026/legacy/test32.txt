@@ -1,0 +1,21 @@
+Input: test32
+fun x => Real.log ((x ^ 6 * -80 + (39 + x ^ 3)) * Real.log (Real.tan (-13)) / (Real.sin (-65 - 35) / 54))
+
+Result:
+{
+  f' := fun x =>
+    (↑6 * x ^ (6 - 1) * -80 + ↑3 * x ^ (3 - 1)) * Real.log (Real.tan (-13)) * (Real.sin (-65 - 35) / 54)⁻¹ /
+      ((x ^ 6 * -80 + (39 + x ^ 3)) * Real.log (Real.tan (-13)) / (Real.sin (-65 - 35) / 54)),
+  domain := fun x => (x ^ 6 * -80 + (39 + x ^ 3)) * Real.log (Real.tan (-13)) / (Real.sin (-65 - 35) / 54) ≠ 0,
+  proof := d_test32._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.mul_const
+      (HasDerivAt.mul_const
+        (HasDerivAt.fun_add (HasDerivAt.mul_const (hasDerivAt_pow 6 x) (-80))
+          (HasDerivAt.const_add 39 (hasDerivAt_pow 3 x)))
+        (Real.log (Real.tan (-13))))
+      (Real.sin (-65 - 35) / 54)⁻¹)
+

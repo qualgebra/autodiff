@@ -1,0 +1,26 @@
+Input: test250
+fun x =>
+  (-45 + Real.cos (Real.log (-99)) - Real.log (Real.cos (x ^ 8 * x ^ 8))) /
+    ((-23 - Real.cos (x ^ 3)) / (Real.cos (-63) / (-8 + -79)) + 10)
+
+Result:
+{
+  f' := fun x =>
+    (-(-Real.sin (x ^ 8 * x ^ 8) * (↑8 * x ^ (8 - 1) * x ^ 8 + x ^ 8 * (↑8 * x ^ (8 - 1))) / Real.cos (x ^ 8 * x ^ 8)) *
+          ((-23 - Real.cos (x ^ 3)) / (Real.cos (-63) / (-8 + -79)) + 10) -
+        (-45 + Real.cos (Real.log (-99)) - Real.log (Real.cos (x ^ 8 * x ^ 8))) *
+          (-(-Real.sin (x ^ 3) * (↑3 * x ^ (3 - 1))) / (Real.cos (-63) / (-8 + -79)))) /
+      ((-23 - Real.cos (x ^ 3)) / (Real.cos (-63) / (-8 + -79)) + 10) ^ 2,
+  domain := fun x => (-23 - Real.cos (x ^ 3)) / (Real.cos (-63) / (-8 + -79)) + 10 ≠ 0 ∧ Real.cos (x ^ 8 * x ^ 8) ≠ 0,
+  proof := d_test250._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.const_sub (-45 + Real.cos (Real.log (-99)))
+      (HasDerivAt.log' a.right (HasDerivAt.cos (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (hasDerivAt_pow 8 x)))))
+    (HasDerivAt.add_const 10
+      (HasDerivAt.div_const (HasDerivAt.const_sub (-23) (HasDerivAt.cos (hasDerivAt_pow 3 x)))
+        (Real.cos (-63) / (-8 + -79))))
+    a.left
+

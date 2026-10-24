@@ -1,0 +1,10 @@
+Input: test295
+fun x => Real.sin (Real.log (x ^ 6))
+
+Result:
+{ f' := fun x => Real.cos (Real.log (x ^ 6)) * (↑6 * x ^ (6 - 1) / x ^ 6), domain := fun x => x ^ 6 ≠ 0,
+  proof := d_test295._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (HasDerivAt.log' a (hasDerivAt_pow 6 x))
+

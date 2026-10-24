@@ -1,0 +1,28 @@
+Input: test180
+fun x =>
+  Real.sin ((21 * x ^ 9 + -98) * -86) +
+    ((x ^ 8 + -31) / (58 - x ^ 10) - Real.cos 31 * (-99 / -67)) / Real.cos (Real.cos (Real.sin (x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((21 * x ^ 9 + -98) * -86) * (21 * (↑9 * x ^ (9 - 1)) * -86) +
+      ((↑8 * x ^ (8 - 1) * (58 - x ^ 10) - (x ^ 8 + -31) * -(↑10 * x ^ (10 - 1))) / (58 - x ^ 10) ^ 2 *
+            Real.cos (Real.cos (Real.sin (x ^ 8))) -
+          ((x ^ 8 + -31) / (58 - x ^ 10) - Real.cos 31 * (-99 / -67)) *
+            (-Real.sin (Real.cos (Real.sin (x ^ 8))) *
+              (-Real.sin (Real.sin (x ^ 8)) * (Real.cos (x ^ 8) * (↑8 * x ^ (8 - 1)))))) /
+        Real.cos (Real.cos (Real.sin (x ^ 8))) ^ 2,
+  domain := fun x => Real.cos (Real.cos (Real.sin (x ^ 8))) ≠ 0 ∧ 58 - x ^ 10 ≠ 0, proof := d_test180._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.sin
+      (HasDerivAt.mul_const (HasDerivAt.add_const (-98) (HasDerivAt.const_mul 21 (hasDerivAt_pow 9 x))) (-86)))
+    (HasDerivAt.fun_div
+      (HasDerivAt.sub_const (Real.cos 31 * (-99 / -67))
+        (HasDerivAt.fun_div (HasDerivAt.add_const (-31) (hasDerivAt_pow 8 x))
+          (HasDerivAt.const_sub 58 (hasDerivAt_pow 10 x)) a.right))
+      (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.sin (hasDerivAt_pow 8 x)))) a.left)
+

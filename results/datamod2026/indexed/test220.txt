@@ -1,0 +1,32 @@
+Input: test220
+fun x =>
+  Real.sin (98 / (Real.sin 32 - Real.tan (x ^ 10))) -
+    Real.tan (x ^ 2 + x ^ 2) * x ^ 6 * Real.sin (Real.cos (Real.log (x ^ 2)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (98 / (Real.sin 32 - Real.tan (x ^ 10))) *
+        ((0 * (Real.sin 32 - Real.tan (x ^ 10)) - 98 * -(1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1)))) /
+          (Real.sin 32 - Real.tan (x ^ 10)) ^ 2) -
+      ((1 / Real.cos (x ^ 2 + x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1) + ↑2 * x ^ (2 - 1)) * x ^ 6 +
+            Real.tan (x ^ 2 + x ^ 2) * (↑6 * x ^ (6 - 1))) *
+          Real.sin (Real.cos (Real.log (x ^ 2))) +
+        Real.tan (x ^ 2 + x ^ 2) * x ^ 6 *
+          (Real.cos (Real.cos (Real.log (x ^ 2))) * (-Real.sin (Real.log (x ^ 2)) * (↑2 * x ^ (2 - 1) / x ^ 2)))),
+  domain := fun x =>
+    ((x ^ 2 ≠ 0 ∧ Real.cos (x ^ 2 + x ^ 2) ≠ 0) ∧ Real.sin 32 - Real.tan (x ^ 10) ≠ 0) ∧ Real.cos (x ^ 10) ≠ 0,
+  proof := d_test220._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.sin
+      (HasDerivAt.fun_div (hasDerivAt_const x 98)
+        (HasDerivAt.const_sub (Real.sin 32) (HasDerivAt.tan' a.right (hasDerivAt_pow 10 x))) a.left.right))
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_mul
+        (HasDerivAt.tan' a.left.left.right (HasDerivAt.fun_add (hasDerivAt_pow 2 x) (hasDerivAt_pow 2 x)))
+        (hasDerivAt_pow 6 x))
+      (HasDerivAt.sin (HasDerivAt.cos (HasDerivAt.log' a.left.left.left (hasDerivAt_pow 2 x)))))
+

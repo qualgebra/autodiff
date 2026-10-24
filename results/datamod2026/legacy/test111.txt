@@ -1,0 +1,23 @@
+Input: test111
+fun x =>
+  Real.sin (Real.sin (-25)) + Real.cos (x ^ 1) -
+    (Real.cos (x ^ 9) + (x ^ 7 * x ^ 3 - Real.sin (-83)) / (Real.log (x ^ 3) / Real.cos 51))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 1) * Real.one✝ -
+      (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)) +
+        ((↑7 * x ^ (7 - 1) * x ^ 3 + x ^ 7 * (↑3 * x ^ (3 - 1))) * (Real.log (x ^ 3) / Real.cos 51)⁻¹ +
+          (x ^ 7 * x ^ 3 - Real.sin (-83)) *
+            (-(↑3 * x ^ (3 - 1) / x ^ 3 * (Real.cos 51)⁻¹) / (Real.log (x ^ 3) / Real.cos 51) ^ 2))),
+  domain := fun x => Real.log (x ^ 3) / Real.cos 51 ≠ 0 ∧ x ^ 3 ≠ 0, proof := d_test111._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub (HasDerivAt.const_add (Real.sin (Real.sin (-25))) (HasDerivAt.cos (hasDerivAt_const_mul Real.one✝)))
+    (HasDerivAt.fun_add (HasDerivAt.cos (hasDerivAt_pow 9 x))
+      (HasDerivAt.fun_mul
+        (HasDerivAt.add_const (-Real.sin (-83)) (HasDerivAt.fun_mul (hasDerivAt_pow 7 x) (hasDerivAt_pow 3 x)))
+        (HasDerivAt.inv (HasDerivAt.mul_const (HasDerivAt.log' a.right (hasDerivAt_pow 3 x)) (Real.cos 51)⁻¹) a.left)))
+

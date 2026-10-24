@@ -1,0 +1,18 @@
+Input: test435
+fun x => Real.cos (x ^ 4) * Real.cos ((-41 + 1 + 49 * -94) * (x ^ 10 + -27 + (27 + 91)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1)) * Real.cos ((-41 + 1 + 49 * -94) * (x ^ 10 + -27 + (27 + 91))) +
+      Real.cos (x ^ 4) *
+        (-Real.sin ((-41 + 1 + 49 * -94) * (x ^ 10 + -27 + (27 + 91))) * ((-41 + 1 + 49 * -94) * (↑10 * x ^ (10 - 1)))),
+  domain := fun x => True, proof := d_test435._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.cos (hasDerivAt_pow 4 x))
+    (HasDerivAt.cos
+      (HasDerivAt.const_mul (-41 + 1 + 49 * -94)
+        (HasDerivAt.add_const (27 + 91) (HasDerivAt.add_const (-27) (hasDerivAt_pow 10 x)))))
+

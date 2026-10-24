@@ -1,0 +1,12 @@
+Input: test98
+fun x => x ^ 7 + Real.log (x ^ 8 + (-51 - x ^ 4))
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1) + (↑8 * x ^ (8 - 1) + -(↑4 * x ^ (4 - 1))) / (x ^ 8 + (-51 - x ^ 4)),
+  domain := fun x => x ^ 8 + (-51 - x ^ 4) ≠ 0, proof := d_test98._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add (hasDerivAt_pow 7 x)
+    (HasDerivAt.log' a (HasDerivAt.fun_add (hasDerivAt_pow 8 x) (HasDerivAt.const_sub (-51) (hasDerivAt_pow 4 x))))
+

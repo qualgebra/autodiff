@@ -1,0 +1,17 @@
+Input: test381
+fun x => Real.cos (Real.tan (-5 - x ^ 10 + Real.log (-87) - -55))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.tan (-5 - x ^ 10 + Real.log (-87) - -55)) *
+      (1 / Real.cos (-5 - x ^ 10 + Real.log (-87) - -55) ^ 2 * -(↑10 * x ^ (10 - 1))),
+  domain := fun x => Real.cos (-5 - x ^ 10 + Real.log (-87) - -55) ≠ 0, proof := d_test381._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.tan' a
+      (HasDerivAt.sub_const (-55)
+        (HasDerivAt.add_const (Real.log (-87)) (HasDerivAt.const_sub (-5) (hasDerivAt_pow 10 x)))))
+

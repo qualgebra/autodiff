@@ -1,0 +1,21 @@
+Input: test286
+fun x => Real.cos (Real.sin (Real.log (Real.tan (x ^ 1)) - Real.cos 0 / Real.log (x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (Real.log (Real.tan (x ^ 1)) - Real.cos 0 / Real.log (x ^ 1))) *
+      (Real.cos (Real.log (Real.tan (x ^ 1)) - Real.cos 0 / Real.log (x ^ 1)) *
+        (1 / Real.cos (x ^ 1) ^ 2 * Real.one✝ / Real.tan (x ^ 1) -
+          Real.cos 0 * (-(Real.one✝ / x ^ 1) / Real.log (x ^ 1) ^ 2))),
+  domain := fun x => ((Real.log (x ^ 1) ≠ 0 ∧ x ^ 1 ≠ 0) ∧ Real.cos (x ^ 1) ≠ 0) ∧ Real.tan (x ^ 1) ≠ 0,
+  proof := d_test286._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sin
+      (HasDerivAt.sub (HasDerivAt.log' a.right (HasDerivAt.tan' a.left.right (hasDerivAt_const_mul Real.one✝)))
+        (HasDerivAt.const_mul (Real.cos 0)
+          (HasDerivAt.inv (HasDerivAt.log' a.left.left.right (hasDerivAt_const_mul Real.one✝)) a.left.left.left))))
+

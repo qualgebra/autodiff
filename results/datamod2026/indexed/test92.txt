@@ -1,0 +1,20 @@
+Input: test92
+fun x => Real.log (Real.sin (Real.cos (x ^ 5)) * Real.tan (Real.cos (x ^ 8))) - Real.sin 24
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (Real.cos (x ^ 5)) * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1))) * Real.tan (Real.cos (x ^ 8)) +
+        Real.sin (Real.cos (x ^ 5)) *
+          (1 / Real.cos (Real.cos (x ^ 8)) ^ 2 * (-Real.sin (x ^ 8) * (↑8 * x ^ (8 - 1))))) /
+      (Real.sin (Real.cos (x ^ 5)) * Real.tan (Real.cos (x ^ 8))),
+  domain := fun x => Real.cos (Real.cos (x ^ 8)) ≠ 0 ∧ Real.sin (Real.cos (x ^ 5)) * Real.tan (Real.cos (x ^ 8)) ≠ 0,
+  proof := d_test92._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.sin 24)
+    (HasDerivAt.log' a.right
+      (HasDerivAt.fun_mul (HasDerivAt.sin (HasDerivAt.cos (hasDerivAt_pow 5 x)))
+        (HasDerivAt.tan' a.left (HasDerivAt.cos (hasDerivAt_pow 8 x)))))
+

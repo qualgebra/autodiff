@@ -1,0 +1,18 @@
+Input: test452
+fun x => Real.cos (Real.tan 85) + (Real.sin (x ^ 6 - 48) / (x ^ 9 * (x ^ 7 + -15)) - Real.tan 89)
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (x ^ 6 - 48) * (↑6 * x ^ (6 - 1)) * (x ^ 9 * (x ^ 7 + -15)) -
+        Real.sin (x ^ 6 - 48) * (↑9 * x ^ (9 - 1) * (x ^ 7 + -15) + x ^ 9 * (↑7 * x ^ (7 - 1)))) /
+      (x ^ 9 * (x ^ 7 + -15)) ^ 2,
+  domain := fun x => x ^ 9 * (x ^ 7 + -15) ≠ 0, proof := d_test452._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (Real.cos (Real.tan 85))
+    (HasDerivAt.sub_const (Real.tan 89)
+      (HasDerivAt.fun_div (HasDerivAt.sin (HasDerivAt.sub_const 48 (hasDerivAt_pow 6 x)))
+        (HasDerivAt.fun_mul (hasDerivAt_pow 9 x) (HasDerivAt.add_const (-15) (hasDerivAt_pow 7 x))) a))
+

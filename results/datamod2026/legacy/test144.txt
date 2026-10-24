@@ -1,0 +1,9 @@
+Input: test144
+fun x => Real.log (x ^ 8)
+
+Result:
+{ f' := fun x => ↑8 * x ^ (8 - 1) / x ^ 8, domain := fun x => x ^ 8 ≠ 0, proof := d_test144._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (hasDerivAt_pow 8 x)
+

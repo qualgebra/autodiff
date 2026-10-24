@@ -1,0 +1,13 @@
+Input: test400
+fun x => 83 * (Real.tan (-21 + Real.sin (x ^ 6)) - Real.tan (Real.tan (Real.tan (-61))))
+
+Result:
+{ f' := fun x => 83 * (1 / Real.cos (-21 + Real.sin (x ^ 6)) ^ 2 * (Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1)))),
+  domain := fun x => Real.cos (-21 + Real.sin (x ^ 6)) ≠ 0, proof := d_test400._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 83
+    (HasDerivAt.add_const (-Real.tan (Real.tan (Real.tan (-61))))
+      (HasDerivAt.tan' a (HasDerivAt.const_add (-21) (HasDerivAt.sin (hasDerivAt_pow 6 x)))))
+

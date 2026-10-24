@@ -1,0 +1,19 @@
+Input: test207
+fun x => -37 + (x ^ 10 - x ^ 8) / (x ^ 5 - Real.log 43) * Real.tan (Real.tan (-38))
+
+Result:
+{
+  f' := fun x =>
+    ((↑10 * x ^ (10 - 1) - ↑8 * x ^ (8 - 1)) * (x ^ 5 - Real.log 43) - (x ^ 10 - x ^ 8) * (↑5 * x ^ (5 - 1))) /
+        (x ^ 5 - Real.log 43) ^ 2 *
+      Real.tan (Real.tan (-38)),
+  domain := fun x => x ^ 5 - Real.log 43 ≠ 0, proof := d_test207._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (-37)
+    (HasDerivAt.mul_const
+      (HasDerivAt.fun_div (HasDerivAt.sub (hasDerivAt_pow 10 x) (hasDerivAt_pow 8 x))
+        (HasDerivAt.sub_const (Real.log 43) (hasDerivAt_pow 5 x)) a)
+      (Real.tan (Real.tan (-38))))
+

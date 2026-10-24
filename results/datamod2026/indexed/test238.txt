@@ -1,0 +1,9 @@
+Input: test238
+fun x => Real.tan (-100) - x ^ 1
+
+Result:
+{ f' := fun x => -(↑1 * x ^ (1 - 1)), domain := fun x => True, proof := d_test238._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_sub (Real.tan (-100)) (hasDerivAt_pow 1 x)
+

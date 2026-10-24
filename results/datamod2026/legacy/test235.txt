@@ -1,0 +1,28 @@
+Input: test235
+fun x =>
+  Real.log (Real.tan 26 * Real.log (x ^ 5)) - Real.tan (Real.cos (x ^ 9) + 55 / -39) +
+    Real.cos (Real.log (-15 / -88 * (-64 / x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    Real.tan 26 * (↑5 * x ^ (5 - 1) / x ^ 5) / (Real.tan 26 * Real.log (x ^ 5)) -
+        1 / Real.cos (Real.cos (x ^ 9) + 55 / -39) ^ 2 * (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1))) +
+      -Real.sin (Real.log (-15 / -88 * (-64 / x ^ 8))) *
+        (-15 / -88 * (-64 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2)) / (-15 / -88 * (-64 / x ^ 8))),
+  domain := fun x =>
+    (((x ^ 8 ≠ 0 ∧ -15 / -88 * (-64 / x ^ 8) ≠ 0) ∧ Real.cos (Real.cos (x ^ 9) + 55 / -39) ≠ 0) ∧ x ^ 5 ≠ 0) ∧
+      Real.tan 26 * Real.log (x ^ 5) ≠ 0,
+  proof := d_test235._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.sub
+      (HasDerivAt.log' a.right (HasDerivAt.const_mul (Real.tan 26) (HasDerivAt.log' a.left.right (hasDerivAt_pow 5 x))))
+      (HasDerivAt.tan' a.left.left.right (HasDerivAt.add_const (55 / -39) (HasDerivAt.cos (hasDerivAt_pow 9 x)))))
+    (HasDerivAt.cos
+      (HasDerivAt.log' a.left.left.left.right
+        (HasDerivAt.const_mul (-15 / -88)
+          (HasDerivAt.const_mul (-64) (HasDerivAt.inv (hasDerivAt_pow 8 x) a.left.left.left.left)))))
+

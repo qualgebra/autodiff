@@ -1,0 +1,17 @@
+Input: test479
+fun x => -13 - Real.log (Real.cos (72 * x ^ 5)) - Real.tan (x ^ 3)
+
+Result:
+{
+  f' := fun x =>
+    -(-Real.sin (72 * x ^ 5) * (72 * (↑5 * x ^ (5 - 1))) / Real.cos (72 * x ^ 5)) -
+      1 / Real.cos (x ^ 3) ^ 2 * (↑3 * x ^ (3 - 1)),
+  domain := fun x => Real.cos (x ^ 3) ≠ 0 ∧ Real.cos (72 * x ^ 5) ≠ 0, proof := d_test479._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_sub (-13)
+      (HasDerivAt.log' a.right (HasDerivAt.cos (HasDerivAt.const_mul 72 (hasDerivAt_pow 5 x)))))
+    (HasDerivAt.tan' a.left (hasDerivAt_pow 3 x))
+

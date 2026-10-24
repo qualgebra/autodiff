@@ -1,0 +1,21 @@
+Input: test212
+fun x => Real.cos (-53 / x ^ 8 + (76 + 52) - Real.sin (x ^ 6)) / x ^ 2
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (-53 / x ^ 8 + (76 + 52) - Real.sin (x ^ 6)) *
+          (-53 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2) - Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1))) *
+        (x ^ 2)⁻¹ +
+      Real.cos (-53 / x ^ 8 + (76 + 52) - Real.sin (x ^ 6)) * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2),
+  domain := fun x => x ^ 2 ≠ 0 ∧ x ^ 8 ≠ 0, proof := d_test212._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.cos
+      (HasDerivAt.sub
+        (HasDerivAt.add_const (76 + 52) (HasDerivAt.const_mul (-53) (HasDerivAt.inv (hasDerivAt_pow 8 x) a.right)))
+        (HasDerivAt.sin (hasDerivAt_pow 6 x))))
+    (HasDerivAt.inv (hasDerivAt_pow 2 x) a.left)
+

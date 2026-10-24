@@ -1,0 +1,16 @@
+Input: test335
+fun x => Real.cos (Real.sin (Real.cos (Real.cos (-56))) + Real.log (Real.sin (Real.cos (x ^ 10))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (Real.cos (Real.cos (-56))) + Real.log (Real.sin (Real.cos (x ^ 10)))) *
+      (Real.cos (Real.cos (x ^ 10)) * (-Real.sin (x ^ 10) * (↑10 * x ^ (10 - 1))) / Real.sin (Real.cos (x ^ 10))),
+  domain := fun x => Real.sin (Real.cos (x ^ 10)) ≠ 0, proof := d_test335._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.const_add (Real.sin (Real.cos (Real.cos (-56))))
+      (HasDerivAt.log' a (HasDerivAt.sin (HasDerivAt.cos (hasDerivAt_pow 10 x)))))
+

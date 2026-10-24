@@ -1,0 +1,15 @@
+Input: test63
+fun x => Real.log (-20 / 52 * Real.sin (Real.sin (x ^ 10 + 16)))
+
+Result:
+{
+  f' := fun x =>
+    -20 / 52 * (Real.cos (Real.sin (x ^ 10 + 16)) * (Real.cos (x ^ 10 + 16) * (↑10 * x ^ (10 - 1)))) /
+      (-20 / 52 * Real.sin (Real.sin (x ^ 10 + 16))),
+  domain := fun x => -20 / 52 * Real.sin (Real.sin (x ^ 10 + 16)) ≠ 0, proof := d_test63._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.const_mul (-20 / 52) (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.add_const 16 (hasDerivAt_pow 10 x)))))
+

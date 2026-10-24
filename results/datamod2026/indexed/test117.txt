@@ -1,0 +1,20 @@
+Input: test117
+fun x => Real.tan (Real.cos (x ^ 7 / ((-52 + x ^ 6) * Real.tan 66)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.cos (x ^ 7 / ((-52 + x ^ 6) * Real.tan 66))) ^ 2 *
+      (-Real.sin (x ^ 7 / ((-52 + x ^ 6) * Real.tan 66)) *
+        ((↑7 * x ^ (7 - 1) * ((-52 + x ^ 6) * Real.tan 66) - x ^ 7 * (↑6 * x ^ (6 - 1) * Real.tan 66)) /
+          ((-52 + x ^ 6) * Real.tan 66) ^ 2)),
+  domain := fun x => (-52 + x ^ 6) * Real.tan 66 ≠ 0 ∧ Real.cos (Real.cos (x ^ 7 / ((-52 + x ^ 6) * Real.tan 66))) ≠ 0,
+  proof := d_test117._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.cos
+      (HasDerivAt.fun_div (hasDerivAt_pow 7 x)
+        (HasDerivAt.mul_const (HasDerivAt.const_add (-52) (hasDerivAt_pow 6 x)) (Real.tan 66)) a.left))
+

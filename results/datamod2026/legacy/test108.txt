@@ -1,0 +1,15 @@
+Input: test108
+fun x => Real.log (52 / 54 * 26 + x ^ 2 / -77 * (79 - -16 - 95 / -12))
+
+Result:
+{
+  f' := fun x =>
+    ↑2 * x ^ (2 - 1) * (-77)⁻¹ * (79 - -16 - 95 / -12) / (52 / 54 * 26 + x ^ 2 / -77 * (79 - -16 - 95 / -12)),
+  domain := fun x => 52 / 54 * 26 + x ^ 2 / -77 * (79 - -16 - 95 / -12) ≠ 0, proof := d_test108._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.const_add (52 / 54 * 26)
+      (HasDerivAt.mul_const (HasDerivAt.mul_const (hasDerivAt_pow 2 x) (-77)⁻¹) (79 - -16 - 95 / -12)))
+

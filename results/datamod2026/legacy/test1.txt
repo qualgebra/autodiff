@@ -1,0 +1,11 @@
+Input: test1
+fun x => Real.tan (-42) - x ^ 2 - x ^ 7 - (-79 - 13)
+
+Result:
+{ f' := fun x => -(↑2 * x ^ (2 - 1)) - ↑7 * x ^ (7 - 1), domain := fun x => True, proof := d_test1._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const (-(-79 - 13))
+    (HasDerivAt.sub (HasDerivAt.const_sub (Real.tan (-42)) (hasDerivAt_pow 2 x)) (hasDerivAt_pow 7 x))
+

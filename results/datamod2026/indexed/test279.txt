@@ -1,0 +1,19 @@
+Input: test279
+fun x => Real.log (Real.log (-88)) * Real.tan (80 / x ^ 10) - 8 * (Real.tan (x ^ 2) - -33) - Real.sin (-30)
+
+Result:
+{
+  f' := fun x =>
+    Real.log (Real.log (-88)) *
+        (1 / Real.cos (80 / x ^ 10) ^ 2 * ((0 * x ^ 10 - 80 * (↑10 * x ^ (10 - 1))) / (x ^ 10) ^ 2)) -
+      8 * (1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1))),
+  domain := fun x => (Real.cos (x ^ 2) ≠ 0 ∧ x ^ 10 ≠ 0) ∧ Real.cos (80 / x ^ 10) ≠ 0, proof := d_test279._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.sin (-30))
+    (HasDerivAt.sub
+      (HasDerivAt.const_mul (Real.log (Real.log (-88)))
+        (HasDerivAt.tan' a.right (HasDerivAt.fun_div (hasDerivAt_const x 80) (hasDerivAt_pow 10 x) a.left.right)))
+      (HasDerivAt.const_mul 8 (HasDerivAt.sub_const (-33) (HasDerivAt.tan' a.left.left (hasDerivAt_pow 2 x)))))
+

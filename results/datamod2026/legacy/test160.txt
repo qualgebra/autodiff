@@ -1,0 +1,17 @@
+Input: test160
+fun x => Real.cos (Real.log (x ^ 8 / -73) + (65 - Real.tan (x ^ 9)) - Real.sin (-2 - -35))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (x ^ 8 / -73) + (65 - Real.tan (x ^ 9)) - Real.sin (-2 - -35)) *
+      (↑8 * x ^ (8 - 1) * (-73)⁻¹ / (x ^ 8 / -73) + -(1 / Real.cos (x ^ 9) ^ 2 * (↑9 * x ^ (9 - 1)))),
+  domain := fun x => Real.cos (x ^ 9) ≠ 0 ∧ x ^ 8 / -73 ≠ 0, proof := d_test160._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.add_const (-Real.sin (-2 - -35))
+      (HasDerivAt.fun_add (HasDerivAt.log' a.right (HasDerivAt.mul_const (hasDerivAt_pow 8 x) (-73)⁻¹))
+        (HasDerivAt.const_sub 65 (HasDerivAt.tan' a.left (hasDerivAt_pow 9 x)))))
+

@@ -1,0 +1,21 @@
+Input: test361
+fun x => Real.cos (Real.cos (x ^ 5)) * (x ^ 5 / 4 - x ^ 6 / x ^ 2) + Real.sin (Real.log 30) - Real.log (x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.cos (x ^ 5)) * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1))) * (x ^ 5 / 4 - x ^ 6 / x ^ 2) +
+        Real.cos (Real.cos (x ^ 5)) *
+          (↑5 * x ^ (5 - 1) * 4⁻¹ - (↑6 * x ^ (6 - 1) * (x ^ 2)⁻¹ + x ^ 6 * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2))) -
+      ↑6 * x ^ (6 - 1) / x ^ 6,
+  domain := fun x => x ^ 6 ≠ 0 ∧ x ^ 2 ≠ 0, proof := d_test361._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.add_const (Real.sin (Real.log 30))
+      (HasDerivAt.fun_mul (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 5 x)))
+        (HasDerivAt.sub (HasDerivAt.mul_const (hasDerivAt_pow 5 x) 4⁻¹)
+          (HasDerivAt.fun_mul (hasDerivAt_pow 6 x) (HasDerivAt.inv (hasDerivAt_pow 2 x) a.right)))))
+    (HasDerivAt.log' a.left (hasDerivAt_pow 6 x))
+

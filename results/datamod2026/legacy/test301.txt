@@ -1,0 +1,17 @@
+Input: test301
+fun x => Real.sin (Real.cos (Real.tan (Real.cos 81 + (-46 - x ^ 5))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.tan (Real.cos 81 + (-46 - x ^ 5)))) *
+      (-Real.sin (Real.tan (Real.cos 81 + (-46 - x ^ 5))) *
+        (1 / Real.cos (Real.cos 81 + (-46 - x ^ 5)) ^ 2 * -(↑5 * x ^ (5 - 1)))),
+  domain := fun x => Real.cos (Real.cos 81 + (-46 - x ^ 5)) ≠ 0, proof := d_test301._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.cos
+      (HasDerivAt.tan' a (HasDerivAt.const_add (Real.cos 81) (HasDerivAt.const_sub (-46) (hasDerivAt_pow 5 x)))))
+

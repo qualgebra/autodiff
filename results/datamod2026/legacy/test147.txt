@@ -1,0 +1,17 @@
+Input: test147
+fun x => Real.sin (98 * Real.sin (Real.log (-5) + x ^ 3 * x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (98 * Real.sin (Real.log (-5) + x ^ 3 * x ^ 2)) *
+      (98 * (Real.cos (Real.log (-5) + x ^ 3 * x ^ 2) * (↑3 * x ^ (3 - 1) * x ^ 2 + x ^ 3 * (↑2 * x ^ (2 - 1))))),
+  domain := fun x => True, proof := d_test147._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.const_mul 98
+      (HasDerivAt.sin
+        (HasDerivAt.const_add (Real.log (-5)) (HasDerivAt.fun_mul (hasDerivAt_pow 3 x) (hasDerivAt_pow 2 x)))))
+

@@ -1,0 +1,15 @@
+Input: test441
+fun x => 80 + Real.log (x ^ 2) * Real.tan 40 * Real.log (Real.sin 0) - Real.sin (x ^ 7)
+
+Result:
+{ f' := fun x => ↑2 * x ^ (2 - 1) / x ^ 2 * Real.tan 40 * Real.log (Real.sin 0) - Real.cos (x ^ 7) * (↑7 * x ^ (7 - 1)),
+  domain := fun x => x ^ 2 ≠ 0, proof := d_test441._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_add 80
+      (HasDerivAt.mul_const (HasDerivAt.mul_const (HasDerivAt.log' a (hasDerivAt_pow 2 x)) (Real.tan 40))
+        (Real.log (Real.sin 0))))
+    (HasDerivAt.sin (hasDerivAt_pow 7 x))
+

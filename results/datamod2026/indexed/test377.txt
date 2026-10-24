@@ -1,0 +1,18 @@
+Input: test377
+fun x => (x ^ 2 / Real.cos (x ^ 5) + Real.cos (Real.tan (-70)) / Real.tan (64 / 55)) * (Real.sin 58 * x ^ 8)
+
+Result:
+{
+  f' := fun x =>
+    (↑2 * x ^ (2 - 1) * Real.cos (x ^ 5) - x ^ 2 * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)))) / Real.cos (x ^ 5) ^ 2 *
+        (Real.sin 58 * x ^ 8) +
+      (x ^ 2 / Real.cos (x ^ 5) + Real.cos (Real.tan (-70)) / Real.tan (64 / 55)) * (Real.sin 58 * (↑8 * x ^ (8 - 1))),
+  domain := fun x => Real.cos (x ^ 5) ≠ 0, proof := d_test377._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.add_const (Real.cos (Real.tan (-70)) / Real.tan (64 / 55))
+      (HasDerivAt.fun_div (hasDerivAt_pow 2 x) (HasDerivAt.cos (hasDerivAt_pow 5 x)) a))
+    (HasDerivAt.const_mul (Real.sin 58) (hasDerivAt_pow 8 x))
+

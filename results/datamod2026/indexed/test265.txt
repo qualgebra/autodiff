@@ -1,0 +1,18 @@
+Input: test265
+fun x => Real.log ((Real.log (Real.cos (x ^ 5)) + Real.cos (Real.cos 53)) / Real.log (-50))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) / Real.cos (x ^ 5) / Real.log (-50) /
+      ((Real.log (Real.cos (x ^ 5)) + Real.cos (Real.cos 53)) / Real.log (-50)),
+  domain := fun x => Real.cos (x ^ 5) ≠ 0 ∧ (Real.log (Real.cos (x ^ 5)) + Real.cos (Real.cos 53)) / Real.log (-50) ≠ 0,
+  proof := d_test265._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.div_const
+      (HasDerivAt.add_const (Real.cos (Real.cos 53)) (HasDerivAt.log' a.left (HasDerivAt.cos (hasDerivAt_pow 5 x))))
+      (Real.log (-50)))
+

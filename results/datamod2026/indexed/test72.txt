@@ -1,0 +1,10 @@
+Input: test72
+fun x => x ^ 9 * x ^ 1
+
+Result:
+{ f' := fun x => ↑9 * x ^ (9 - 1) * x ^ 1 + x ^ 9 * (↑1 * x ^ (1 - 1)), domain := fun x => True,
+  proof := d_test72._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.fun_mul (hasDerivAt_pow 9 x) (hasDerivAt_pow 1 x)
+

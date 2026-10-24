@@ -1,0 +1,10 @@
+Input: test93
+fun x => Real.cos (x ^ 10 / 53)
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 10 / 53) * (↑10 * x ^ (10 - 1) / 53), domain := fun x => True,
+  proof := d_test93._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.div_const (hasDerivAt_pow 10 x) 53)
+

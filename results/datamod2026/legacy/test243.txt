@@ -1,0 +1,21 @@
+Input: test243
+fun x => x ^ 10 - (Real.log (-16 * 34) * (Real.log (x ^ 5) / (-51 * x ^ 1)) + Real.log (41 + -21) * (-9 - 96 + x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    ↑10 * x ^ (10 - 1) -
+      (Real.log (-16 * 34) *
+          (↑5 * x ^ (5 - 1) / x ^ 5 * (-51 * x ^ 1)⁻¹ + Real.log (x ^ 5) * (-(-51 * Real.one✝) / (-51 * x ^ 1) ^ 2)) +
+        Real.log (41 + -21) * (↑2 * x ^ (2 - 1))),
+  domain := fun x => -51 * x ^ 1 ≠ 0 ∧ x ^ 5 ≠ 0, proof := d_test243._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub (hasDerivAt_pow 10 x)
+    (HasDerivAt.fun_add
+      (HasDerivAt.const_mul (Real.log (-16 * 34))
+        (HasDerivAt.fun_mul (HasDerivAt.log' a.right (hasDerivAt_pow 5 x))
+          (HasDerivAt.inv (HasDerivAt.const_mul (-51) (hasDerivAt_const_mul Real.one✝)) a.left)))
+      (HasDerivAt.const_mul (Real.log (41 + -21)) (HasDerivAt.const_add (-9 - 96) (hasDerivAt_pow 2 x))))
+

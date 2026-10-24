@@ -1,0 +1,20 @@
+Input: test445
+fun x => Real.cos (Real.tan 77 + (x ^ 3 / -40 + x ^ 8 / x ^ 4)) * 68
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.tan 77 + (x ^ 3 / -40 + x ^ 8 / x ^ 4)) *
+        (↑3 * x ^ (3 - 1) * (-40)⁻¹ + (↑8 * x ^ (8 - 1) * (x ^ 4)⁻¹ + x ^ 8 * (-(↑4 * x ^ (4 - 1)) / (x ^ 4) ^ 2))) *
+      68,
+  domain := fun x => x ^ 4 ≠ 0, proof := d_test445._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.cos
+      (HasDerivAt.const_add (Real.tan 77)
+        (HasDerivAt.fun_add (HasDerivAt.mul_const (hasDerivAt_pow 3 x) (-40)⁻¹)
+          (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (HasDerivAt.inv (hasDerivAt_pow 4 x) a)))))
+    68
+

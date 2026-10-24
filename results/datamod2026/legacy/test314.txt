@@ -1,0 +1,19 @@
+Input: test314
+fun x => Real.sin (Real.tan (Real.sin (Real.cos (x ^ 4) + Real.sin (x ^ 10))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan (Real.sin (Real.cos (x ^ 4) + Real.sin (x ^ 10)))) *
+      (1 / Real.cos (Real.sin (Real.cos (x ^ 4) + Real.sin (x ^ 10))) ^ 2 *
+        (Real.cos (Real.cos (x ^ 4) + Real.sin (x ^ 10)) *
+          (-Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1)) + Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1))))),
+  domain := fun x => Real.cos (Real.sin (Real.cos (x ^ 4) + Real.sin (x ^ 10))) ≠ 0, proof := d_test314._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.tan' a
+      (HasDerivAt.sin
+        (HasDerivAt.fun_add (HasDerivAt.cos (hasDerivAt_pow 4 x)) (HasDerivAt.sin (hasDerivAt_pow 10 x)))))
+

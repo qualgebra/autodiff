@@ -1,0 +1,19 @@
+Input: test140
+fun x => Real.log (Real.sin (Real.log (Real.log 80) / Real.log (x ^ 9)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.log (Real.log 80) / Real.log (x ^ 9)) *
+        (Real.log (Real.log 80) * (-(↑9 * x ^ (9 - 1) / x ^ 9) / Real.log (x ^ 9) ^ 2)) /
+      Real.sin (Real.log (Real.log 80) / Real.log (x ^ 9)),
+  domain := fun x => (Real.log (x ^ 9) ≠ 0 ∧ x ^ 9 ≠ 0) ∧ Real.sin (Real.log (Real.log 80) / Real.log (x ^ 9)) ≠ 0,
+  proof := d_test140._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.sin
+      (HasDerivAt.const_mul (Real.log (Real.log 80))
+        (HasDerivAt.inv (HasDerivAt.log' a.left.right (hasDerivAt_pow 9 x)) a.left.left)))
+

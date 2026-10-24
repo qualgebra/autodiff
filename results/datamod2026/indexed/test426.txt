@@ -1,0 +1,24 @@
+Input: test426
+fun x => Real.log (Real.tan (x ^ 2)) + Real.tan (Real.cos (Real.cos (x ^ 10)) / (x ^ 3 * 20 * Real.tan 43))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)) / Real.tan (x ^ 2) +
+      1 / Real.cos (Real.cos (Real.cos (x ^ 10)) / (x ^ 3 * 20 * Real.tan 43)) ^ 2 *
+        ((-Real.sin (Real.cos (x ^ 10)) * (-Real.sin (x ^ 10) * (↑10 * x ^ (10 - 1))) * (x ^ 3 * 20 * Real.tan 43) -
+            Real.cos (Real.cos (x ^ 10)) * (↑3 * x ^ (3 - 1) * 20 * Real.tan 43)) /
+          (x ^ 3 * 20 * Real.tan 43) ^ 2),
+  domain := fun x =>
+    ((x ^ 3 * 20 * Real.tan 43 ≠ 0 ∧ Real.cos (Real.cos (Real.cos (x ^ 10)) / (x ^ 3 * 20 * Real.tan 43)) ≠ 0) ∧
+        Real.cos (x ^ 2) ≠ 0) ∧
+      Real.tan (x ^ 2) ≠ 0,
+  proof := d_test426._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add (HasDerivAt.log' a.right (HasDerivAt.tan' a.left.right (hasDerivAt_pow 2 x)))
+    (HasDerivAt.tan' a.left.left.right
+      (HasDerivAt.fun_div (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 10 x)))
+        (HasDerivAt.mul_const (HasDerivAt.mul_const (hasDerivAt_pow 3 x) 20) (Real.tan 43)) a.left.left.left))
+

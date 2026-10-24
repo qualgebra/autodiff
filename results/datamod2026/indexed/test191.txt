@@ -1,0 +1,22 @@
+Input: test191
+fun x => Real.cos 21 / (Real.sin (-51) * Real.tan (Real.sin (x ^ 5))) * x ^ 8
+
+Result:
+{
+  f' := fun x =>
+    (0 * (Real.sin (-51) * Real.tan (Real.sin (x ^ 5))) -
+            Real.cos 21 *
+              (Real.sin (-51) * (1 / Real.cos (Real.sin (x ^ 5)) ^ 2 * (Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1)))))) /
+          (Real.sin (-51) * Real.tan (Real.sin (x ^ 5))) ^ 2 *
+        x ^ 8 +
+      Real.cos 21 / (Real.sin (-51) * Real.tan (Real.sin (x ^ 5))) * (↑8 * x ^ (8 - 1)),
+  domain := fun x => Real.sin (-51) * Real.tan (Real.sin (x ^ 5)) ≠ 0 ∧ Real.cos (Real.sin (x ^ 5)) ≠ 0,
+  proof := d_test191._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos 21))
+      (HasDerivAt.const_mul (Real.sin (-51)) (HasDerivAt.tan' a.right (HasDerivAt.sin (hasDerivAt_pow 5 x)))) a.left)
+    (hasDerivAt_pow 8 x)
+

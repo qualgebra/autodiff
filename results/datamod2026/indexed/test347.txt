@@ -1,0 +1,10 @@
+Input: test347
+fun x => Real.cos (Real.log (Real.sin (x ^ 4)))
+
+Result:
+{ f' := fun x => -Real.sin (Real.log (Real.sin (x ^ 4))) * (Real.cos (x ^ 4) * (↑4 * x ^ (4 - 1)) / Real.sin (x ^ 4)),
+  domain := fun x => Real.sin (x ^ 4) ≠ 0, proof := d_test347._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.log' a (HasDerivAt.sin (hasDerivAt_pow 4 x)))
+

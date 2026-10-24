@@ -1,0 +1,19 @@
+Input: test463
+fun x => 40 + Real.sin (Real.sin (x ^ 7 * x ^ 9)) - (-34 + Real.cos (Real.cos (Real.cos (x ^ 9))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (x ^ 7 * x ^ 9)) *
+        (Real.cos (x ^ 7 * x ^ 9) * (↑7 * x ^ (7 - 1) * x ^ 9 + x ^ 7 * (↑9 * x ^ (9 - 1)))) -
+      -Real.sin (Real.cos (Real.cos (x ^ 9))) *
+        (-Real.sin (Real.cos (x ^ 9)) * (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)))),
+  domain := fun x => True, proof := d_test463._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_add 40
+      (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.fun_mul (hasDerivAt_pow 7 x) (hasDerivAt_pow 9 x)))))
+    (HasDerivAt.const_add (-34) (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 9 x)))))
+

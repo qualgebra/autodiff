@@ -1,0 +1,12 @@
+Input: test336
+fun x => Real.log (Real.log (x ^ 2)) - (51 + 25) - Real.log (Real.sin (Real.tan (Real.cos (-76))))
+
+Result:
+{ f' := fun x => ↑2 * x ^ (2 - 1) / x ^ 2 / Real.log (x ^ 2), domain := fun x => x ^ 2 ≠ 0 ∧ Real.log (x ^ 2) ≠ 0,
+  proof := d_test336._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.log (Real.sin (Real.tan (Real.cos (-76)))))
+    (HasDerivAt.sub_const (51 + 25) (HasDerivAt.log' a.right (HasDerivAt.log' a.left (hasDerivAt_pow 2 x))))
+

@@ -1,0 +1,31 @@
+Input: test170
+fun x =>
+  Real.sin (Real.cos (-93)) / (Real.log (Real.cos (x ^ 4)) * Real.sin (-1)) *
+    Real.sin (Real.sin (x ^ 2) * Real.log (x ^ 9) / Real.log (Real.cos (-56)))
+
+Result:
+{
+  f' := fun x =>
+    Real.sin (Real.cos (-93)) *
+          (-(-Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1)) / Real.cos (x ^ 4) * Real.sin (-1)) /
+            (Real.log (Real.cos (x ^ 4)) * Real.sin (-1)) ^ 2) *
+        Real.sin (Real.sin (x ^ 2) * Real.log (x ^ 9) / Real.log (Real.cos (-56))) +
+      Real.sin (Real.cos (-93)) / (Real.log (Real.cos (x ^ 4)) * Real.sin (-1)) *
+        (Real.cos (Real.sin (x ^ 2) * Real.log (x ^ 9) / Real.log (Real.cos (-56))) *
+          ((Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)) * Real.log (x ^ 9) + Real.sin (x ^ 2) * (↑9 * x ^ (9 - 1) / x ^ 9)) *
+            (Real.log (Real.cos (-56)))⁻¹)),
+  domain := fun x => (x ^ 9 ≠ 0 ∧ Real.log (Real.cos (x ^ 4)) * Real.sin (-1) ≠ 0) ∧ Real.cos (x ^ 4) ≠ 0,
+  proof := d_test170._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.const_mul (Real.sin (Real.cos (-93)))
+      (HasDerivAt.inv
+        (HasDerivAt.mul_const (HasDerivAt.log' a.right (HasDerivAt.cos (hasDerivAt_pow 4 x))) (Real.sin (-1)))
+        a.left.right))
+    (HasDerivAt.sin
+      (HasDerivAt.mul_const
+        (HasDerivAt.fun_mul (HasDerivAt.sin (hasDerivAt_pow 2 x)) (HasDerivAt.log' a.left.left (hasDerivAt_pow 9 x)))
+        (Real.log (Real.cos (-56)))⁻¹))
+

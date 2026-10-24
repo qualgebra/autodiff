@@ -1,0 +1,44 @@
+Input: test302
+fun x =>
+  Real.cos (Real.log ((x ^ 1 - -17) / Real.log (x ^ 2))) /
+    Real.log (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6)))
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (Real.log ((x ^ 1 - -17) / Real.log (x ^ 2))) *
+            ((↑1 * x ^ (1 - 1) * Real.log (x ^ 2) - (x ^ 1 - -17) * (↑2 * x ^ (2 - 1) / x ^ 2)) / Real.log (x ^ 2) ^ 2 /
+              ((x ^ 1 - -17) / Real.log (x ^ 2))) *
+          Real.log (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6))) -
+        Real.cos (Real.log ((x ^ 1 - -17) / Real.log (x ^ 2))) *
+          ((-Real.sin (x ^ 10 / 11) * (↑10 * x ^ (10 - 1) / 11) * (Real.log (x ^ 9) * Real.sin (x ^ 6)) -
+                Real.cos (x ^ 10 / 11) *
+                  (↑9 * x ^ (9 - 1) / x ^ 9 * Real.sin (x ^ 6) +
+                    Real.log (x ^ 9) * (Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1))))) /
+              (Real.log (x ^ 9) * Real.sin (x ^ 6)) ^ 2 /
+            (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6))))) /
+      Real.log (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6))) ^ 2,
+  domain := fun x =>
+    (((((Real.log (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6))) ≠ 0 ∧
+                Real.log (x ^ 9) * Real.sin (x ^ 6) ≠ 0) ∧
+              x ^ 9 ≠ 0) ∧
+            Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6)) ≠ 0) ∧
+          Real.log (x ^ 2) ≠ 0) ∧
+        x ^ 2 ≠ 0) ∧
+      (x ^ 1 - -17) / Real.log (x ^ 2) ≠ 0,
+  proof := d_test302._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.cos
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_div (HasDerivAt.sub_const (-17) (hasDerivAt_pow 1 x))
+          (HasDerivAt.log' a.left.right (hasDerivAt_pow 2 x)) a.left.left.right)))
+    (HasDerivAt.log' a.left.left.left.right
+      (HasDerivAt.fun_div (HasDerivAt.cos (HasDerivAt.div_const (hasDerivAt_pow 10 x) 11))
+        (HasDerivAt.fun_mul (HasDerivAt.log' a.left.left.left.left.right (hasDerivAt_pow 9 x))
+          (HasDerivAt.sin (hasDerivAt_pow 6 x)))
+        a.left.left.left.left.left.right))
+    a.left.left.left.left.left.left
+

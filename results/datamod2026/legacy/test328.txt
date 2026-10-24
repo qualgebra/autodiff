@@ -1,0 +1,21 @@
+Input: test328
+fun x => Real.log (Real.tan ((x ^ 10 - x ^ 9) * x ^ 7) + Real.log (Real.log (-59) + (-55 + 8)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos ((x ^ 10 - x ^ 9) * x ^ 7) ^ 2 *
+        ((↑10 * x ^ (10 - 1) - ↑9 * x ^ (9 - 1)) * x ^ 7 + (x ^ 10 - x ^ 9) * (↑7 * x ^ (7 - 1))) /
+      (Real.tan ((x ^ 10 - x ^ 9) * x ^ 7) + Real.log (Real.log (-59) + (-55 + 8))),
+  domain := fun x =>
+    Real.cos ((x ^ 10 - x ^ 9) * x ^ 7) ≠ 0 ∧
+      Real.tan ((x ^ 10 - x ^ 9) * x ^ 7) + Real.log (Real.log (-59) + (-55 + 8)) ≠ 0,
+  proof := d_test328._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.add_const (Real.log (Real.log (-59) + (-55 + 8)))
+      (HasDerivAt.tan' a.left
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 10 x) (hasDerivAt_pow 9 x)) (hasDerivAt_pow 7 x))))
+

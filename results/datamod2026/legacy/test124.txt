@@ -1,0 +1,16 @@
+Input: test124
+fun x => Real.cos (Real.sin (Real.sin (Real.sin (x ^ 7)) * Real.cos 6))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (Real.sin (Real.sin (x ^ 7)) * Real.cos 6)) *
+      (Real.cos (Real.sin (Real.sin (x ^ 7)) * Real.cos 6) *
+        (Real.cos (Real.sin (x ^ 7)) * (Real.cos (x ^ 7) * (↑7 * x ^ (7 - 1))) * Real.cos 6)),
+  domain := fun x => True, proof := d_test124._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sin (HasDerivAt.mul_const (HasDerivAt.sin (HasDerivAt.sin (hasDerivAt_pow 7 x))) (Real.cos 6)))
+

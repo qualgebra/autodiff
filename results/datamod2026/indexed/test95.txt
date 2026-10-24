@@ -1,0 +1,21 @@
+Input: test95
+fun x => Real.log (Real.log (Real.log (x ^ 9)) + (Real.cos 17 - (80 + x ^ 8)) + (Real.sin (x ^ 8) - 12))
+
+Result:
+{
+  f' := fun x =>
+    (↑9 * x ^ (9 - 1) / x ^ 9 / Real.log (x ^ 9) + -(↑8 * x ^ (8 - 1)) + Real.cos (x ^ 8) * (↑8 * x ^ (8 - 1))) /
+      (Real.log (Real.log (x ^ 9)) + (Real.cos 17 - (80 + x ^ 8)) + (Real.sin (x ^ 8) - 12)),
+  domain := fun x =>
+    (x ^ 9 ≠ 0 ∧ Real.log (x ^ 9) ≠ 0) ∧
+      Real.log (Real.log (x ^ 9)) + (Real.cos 17 - (80 + x ^ 8)) + (Real.sin (x ^ 8) - 12) ≠ 0,
+  proof := d_test95._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_add
+      (HasDerivAt.fun_add (HasDerivAt.log' a.left.right (HasDerivAt.log' a.left.left (hasDerivAt_pow 9 x)))
+        (HasDerivAt.const_sub (Real.cos 17) (HasDerivAt.const_add 80 (hasDerivAt_pow 8 x))))
+      (HasDerivAt.sub_const 12 (HasDerivAt.sin (hasDerivAt_pow 8 x))))
+

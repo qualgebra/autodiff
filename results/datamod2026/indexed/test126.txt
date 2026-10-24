@@ -1,0 +1,14 @@
+Input: test126
+fun x => (Real.cos (Real.tan (-89 + x ^ 8)) + (84 - Real.tan (Real.tan 45))) / -93
+
+Result:
+{ f' := fun x => -Real.sin (Real.tan (-89 + x ^ 8)) * (1 / Real.cos (-89 + x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1))) / -93,
+  domain := fun x => Real.cos (-89 + x ^ 8) ≠ 0, proof := d_test126._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.div_const
+    (HasDerivAt.add_const (84 - Real.tan (Real.tan 45))
+      (HasDerivAt.cos (HasDerivAt.tan' a (HasDerivAt.const_add (-89) (hasDerivAt_pow 8 x)))))
+    (-93)
+

@@ -1,0 +1,27 @@
+Input: test280
+fun x =>
+  x ^ 8 + x ^ 7 * ((x ^ 4 - x ^ 7) / x ^ 1) - Real.sin (Real.log (-20) / (x ^ 3 - -61)) * Real.tan (Real.log (-3 * -36))
+
+Result:
+{
+  f' := fun x =>
+    ↑8 * x ^ (8 - 1) +
+        (↑7 * x ^ (7 - 1) * ((x ^ 4 - x ^ 7) / x ^ 1) +
+          x ^ 7 * ((↑4 * x ^ (4 - 1) - ↑7 * x ^ (7 - 1)) * (x ^ 1)⁻¹ + (x ^ 4 - x ^ 7) * (-Real.one✝ / (x ^ 1) ^ 2))) -
+      Real.cos (Real.log (-20) / (x ^ 3 - -61)) * (Real.log (-20) * (-(↑3 * x ^ (3 - 1)) / (x ^ 3 - -61) ^ 2)) *
+        Real.tan (Real.log (-3 * -36)),
+  domain := fun x => x ^ 3 - -61 ≠ 0 ∧ x ^ 1 ≠ 0, proof := d_test280._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.fun_add (hasDerivAt_pow 8 x)
+      (HasDerivAt.fun_mul (hasDerivAt_pow 7 x)
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 4 x) (hasDerivAt_pow 7 x))
+          (HasDerivAt.inv (hasDerivAt_const_mul Real.one✝) a.right))))
+    (HasDerivAt.mul_const
+      (HasDerivAt.sin
+        (HasDerivAt.const_mul (Real.log (-20))
+          (HasDerivAt.inv (HasDerivAt.add_const (- -61) (hasDerivAt_pow 3 x)) a.left)))
+      (Real.tan (Real.log (-3 * -36))))
+

@@ -1,0 +1,24 @@
+Input: test254
+fun x =>
+  Real.log (Real.sin (Real.sin (x ^ 10)) - Real.cos (x ^ 7) * (-31 - x ^ 6) - Real.sin (Real.cos (Real.cos (x ^ 5))))
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (Real.sin (x ^ 10)) * (Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1))) -
+          (-Real.sin (x ^ 7) * (↑7 * x ^ (7 - 1)) * (-31 - x ^ 6) + Real.cos (x ^ 7) * -(↑6 * x ^ (6 - 1))) -
+        Real.cos (Real.cos (Real.cos (x ^ 5))) *
+          (-Real.sin (Real.cos (x ^ 5)) * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1))))) /
+      (Real.sin (Real.sin (x ^ 10)) - Real.cos (x ^ 7) * (-31 - x ^ 6) - Real.sin (Real.cos (Real.cos (x ^ 5)))),
+  domain := fun x =>
+    Real.sin (Real.sin (x ^ 10)) - Real.cos (x ^ 7) * (-31 - x ^ 6) - Real.sin (Real.cos (Real.cos (x ^ 5))) ≠ 0,
+  proof := d_test254._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.sub
+      (HasDerivAt.sub (HasDerivAt.sin (HasDerivAt.sin (hasDerivAt_pow 10 x)))
+        (HasDerivAt.fun_mul (HasDerivAt.cos (hasDerivAt_pow 7 x)) (HasDerivAt.const_sub (-31) (hasDerivAt_pow 6 x))))
+      (HasDerivAt.sin (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 5 x)))))
+

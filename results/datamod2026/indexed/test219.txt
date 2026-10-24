@@ -1,0 +1,16 @@
+Input: test219
+fun x => Real.sin (Real.log (Real.cos (Real.sin (-22) - (76 + x ^ 4))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.log (Real.cos (Real.sin (-22) - (76 + x ^ 4)))) *
+      (-Real.sin (Real.sin (-22) - (76 + x ^ 4)) * -(↑4 * x ^ (4 - 1)) / Real.cos (Real.sin (-22) - (76 + x ^ 4))),
+  domain := fun x => Real.cos (Real.sin (-22) - (76 + x ^ 4)) ≠ 0, proof := d_test219._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.log' a
+      (HasDerivAt.cos (HasDerivAt.const_sub (Real.sin (-22)) (HasDerivAt.const_add 76 (hasDerivAt_pow 4 x)))))
+

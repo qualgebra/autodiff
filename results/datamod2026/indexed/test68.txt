@@ -1,0 +1,24 @@
+Input: test68
+fun x =>
+  Real.cos
+    (Real.sin (Real.tan 75) + (x ^ 8 - -20 - Real.sin 36) - (x ^ 6 + 10 - Real.cos (x ^ 5) - (x ^ 8 - Real.log 56)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin
+          (Real.sin (Real.tan 75) + (x ^ 8 - -20 - Real.sin 36) -
+            (x ^ 6 + 10 - Real.cos (x ^ 5) - (x ^ 8 - Real.log 56))) *
+      (↑8 * x ^ (8 - 1) - (↑6 * x ^ (6 - 1) - -Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) - ↑8 * x ^ (8 - 1))),
+  domain := fun x => True, proof := d_test68._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sub
+      (HasDerivAt.const_add (Real.sin (Real.tan 75))
+        (HasDerivAt.sub_const (Real.sin 36) (HasDerivAt.sub_const (-20) (hasDerivAt_pow 8 x))))
+      (HasDerivAt.sub
+        (HasDerivAt.sub (HasDerivAt.add_const 10 (hasDerivAt_pow 6 x)) (HasDerivAt.cos (hasDerivAt_pow 5 x)))
+        (HasDerivAt.sub_const (Real.log 56) (hasDerivAt_pow 8 x))))
+

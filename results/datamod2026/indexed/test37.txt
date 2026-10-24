@@ -1,0 +1,9 @@
+Input: test37
+fun x => Real.log (x ^ 9)
+
+Result:
+{ f' := fun x => ↑9 * x ^ (9 - 1) / x ^ 9, domain := fun x => x ^ 9 ≠ 0, proof := d_test37._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (hasDerivAt_pow 9 x)
+

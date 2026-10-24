@@ -1,0 +1,32 @@
+Input: test341
+fun x => x ^ 5 / ((Real.sin 4 + 41) / (-64 + 70 + x ^ 5)) * Real.cos (x ^ 8 / (90 * -59) / (-98 - x ^ 1 - x ^ 8))
+
+Result:
+{
+  f' := fun x =>
+    (↑5 * x ^ (5 - 1) * ((Real.sin 4 + 41) / (-64 + 70 + x ^ 5))⁻¹ +
+          x ^ 5 *
+            (-((Real.sin 4 + 41) * (-(↑5 * x ^ (5 - 1)) / (-64 + 70 + x ^ 5) ^ 2)) /
+              ((Real.sin 4 + 41) / (-64 + 70 + x ^ 5)) ^ 2)) *
+        Real.cos (x ^ 8 / (90 * -59) / (-98 - x ^ 1 - x ^ 8)) +
+      x ^ 5 / ((Real.sin 4 + 41) / (-64 + 70 + x ^ 5)) *
+        (-Real.sin (x ^ 8 / (90 * -59) / (-98 - x ^ 1 - x ^ 8)) *
+          (↑8 * x ^ (8 - 1) * (90 * -59)⁻¹ * (-98 - x ^ 1 - x ^ 8)⁻¹ +
+            x ^ 8 / (90 * -59) * (-(-Real.one✝ - ↑8 * x ^ (8 - 1)) / (-98 - x ^ 1 - x ^ 8) ^ 2))),
+  domain := fun x => (-98 - x ^ 1 - x ^ 8 ≠ 0 ∧ (Real.sin 4 + 41) / (-64 + 70 + x ^ 5) ≠ 0) ∧ -64 + 70 + x ^ 5 ≠ 0,
+  proof := d_test341._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.fun_mul (hasDerivAt_pow 5 x)
+      (HasDerivAt.inv
+        (HasDerivAt.const_mul (Real.sin 4 + 41)
+          (HasDerivAt.inv (HasDerivAt.const_add (-64 + 70) (hasDerivAt_pow 5 x)) a.right))
+        a.left.right))
+    (HasDerivAt.cos
+      (HasDerivAt.fun_mul (HasDerivAt.mul_const (hasDerivAt_pow 8 x) (90 * -59)⁻¹)
+        (HasDerivAt.inv
+          (HasDerivAt.sub (HasDerivAt.const_sub (-98) (hasDerivAt_const_mul Real.one✝)) (hasDerivAt_pow 8 x))
+          a.left.left)))
+

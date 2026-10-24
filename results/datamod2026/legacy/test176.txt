@@ -1,0 +1,9 @@
+Input: test176
+fun x => x ^ 7 + 14
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1), domain := fun x => True, proof := d_test176._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.add_const 14 (hasDerivAt_pow 7 x)
+

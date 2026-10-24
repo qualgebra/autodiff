@@ -1,0 +1,19 @@
+Input: test45
+fun x => Real.log (Real.log (Real.log (Real.cos (x ^ 2 / 35))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 2 / 35) * (↑2 * x ^ (2 - 1) * 35⁻¹) / Real.cos (x ^ 2 / 35) / Real.log (Real.cos (x ^ 2 / 35)) /
+      Real.log (Real.log (Real.cos (x ^ 2 / 35))),
+  domain := fun x =>
+    (Real.cos (x ^ 2 / 35) ≠ 0 ∧ Real.log (Real.cos (x ^ 2 / 35)) ≠ 0) ∧
+      Real.log (Real.log (Real.cos (x ^ 2 / 35))) ≠ 0,
+  proof := d_test45._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.log' a.left.right
+      (HasDerivAt.log' a.left.left (HasDerivAt.cos (HasDerivAt.mul_const (hasDerivAt_pow 2 x) 35⁻¹))))
+

@@ -1,0 +1,13 @@
+Input: test413
+fun x => x ^ 1 / Real.cos (x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    Real.one✝ * (Real.cos (x ^ 6))⁻¹ + x ^ 1 * (-(-Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1))) / Real.cos (x ^ 6) ^ 2),
+  domain := fun x => Real.cos (x ^ 6) ≠ 0, proof := d_test413._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_const_mul Real.one✝) (HasDerivAt.inv (HasDerivAt.cos (hasDerivAt_pow 6 x)) a)
+

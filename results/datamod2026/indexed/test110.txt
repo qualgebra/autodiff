@@ -1,0 +1,24 @@
+Input: test110
+fun x => Real.log ((Real.cos (x ^ 6) + x ^ 1 - (x ^ 6 / x ^ 8 + Real.cos (x ^ 1))) * x ^ 1)
+
+Result:
+{
+  f' := fun x =>
+    ((-Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1)) + ↑1 * x ^ (1 - 1) -
+            ((↑6 * x ^ (6 - 1) * x ^ 8 - x ^ 6 * (↑8 * x ^ (8 - 1))) / (x ^ 8) ^ 2 +
+              -Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)))) *
+          x ^ 1 +
+        (Real.cos (x ^ 6) + x ^ 1 - (x ^ 6 / x ^ 8 + Real.cos (x ^ 1))) * (↑1 * x ^ (1 - 1))) /
+      ((Real.cos (x ^ 6) + x ^ 1 - (x ^ 6 / x ^ 8 + Real.cos (x ^ 1))) * x ^ 1),
+  domain := fun x => x ^ 8 ≠ 0 ∧ (Real.cos (x ^ 6) + x ^ 1 - (x ^ 6 / x ^ 8 + Real.cos (x ^ 1))) * x ^ 1 ≠ 0,
+  proof := d_test110._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_mul
+      (HasDerivAt.sub (HasDerivAt.fun_add (HasDerivAt.cos (hasDerivAt_pow 6 x)) (hasDerivAt_pow 1 x))
+        (HasDerivAt.fun_add (HasDerivAt.fun_div (hasDerivAt_pow 6 x) (hasDerivAt_pow 8 x) a.left)
+          (HasDerivAt.cos (hasDerivAt_pow 1 x))))
+      (hasDerivAt_pow 1 x))
+

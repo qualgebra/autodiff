@@ -1,0 +1,9 @@
+Input: test476
+fun x => Real.cos (Real.log (12 / 36)) - x ^ 2
+
+Result:
+{ f' := fun x => -(↑2 * x ^ (2 - 1)), domain := fun x => True, proof := d_test476._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_sub (Real.cos (Real.log (12 / 36))) (hasDerivAt_pow 2 x)
+

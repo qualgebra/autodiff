@@ -1,0 +1,20 @@
+Input: test492
+fun x => Real.tan (x ^ 4 + x ^ 10) / Real.tan (Real.log 3) / Real.sin (Real.tan (51 / 2)) + x ^ 9
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (x ^ 4 + x ^ 10) ^ 2 * (↑4 * x ^ (4 - 1) + ↑10 * x ^ (10 - 1)) * (Real.tan (Real.log 3))⁻¹ *
+        (Real.sin (Real.tan (51 / 2)))⁻¹ +
+      ↑9 * x ^ (9 - 1),
+  domain := fun x => Real.cos (x ^ 4 + x ^ 10) ≠ 0, proof := d_test492._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.mul_const
+      (HasDerivAt.mul_const (HasDerivAt.tan' a (HasDerivAt.fun_add (hasDerivAt_pow 4 x) (hasDerivAt_pow 10 x)))
+        (Real.tan (Real.log 3))⁻¹)
+      (Real.sin (Real.tan (51 / 2)))⁻¹)
+    (hasDerivAt_pow 9 x)
+

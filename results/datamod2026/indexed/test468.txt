@@ -1,0 +1,20 @@
+Input: test468
+fun x => x ^ 8 - (Real.tan ((x ^ 10 - x ^ 2) * (x ^ 5 - x ^ 9)) - -31)
+
+Result:
+{
+  f' := fun x =>
+    ↑8 * x ^ (8 - 1) -
+      1 / Real.cos ((x ^ 10 - x ^ 2) * (x ^ 5 - x ^ 9)) ^ 2 *
+        ((↑10 * x ^ (10 - 1) - ↑2 * x ^ (2 - 1)) * (x ^ 5 - x ^ 9) +
+          (x ^ 10 - x ^ 2) * (↑5 * x ^ (5 - 1) - ↑9 * x ^ (9 - 1))),
+  domain := fun x => Real.cos ((x ^ 10 - x ^ 2) * (x ^ 5 - x ^ 9)) ≠ 0, proof := d_test468._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub (hasDerivAt_pow 8 x)
+    (HasDerivAt.sub_const (-31)
+      (HasDerivAt.tan' a
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 10 x) (hasDerivAt_pow 2 x))
+          (HasDerivAt.sub (hasDerivAt_pow 5 x) (hasDerivAt_pow 9 x)))))
+

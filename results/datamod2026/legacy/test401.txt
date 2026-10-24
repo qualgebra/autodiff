@@ -1,0 +1,9 @@
+Input: test401
+fun x => Real.cos (x ^ 1)
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 1) * Real.one✝, domain := fun x => True, proof := d_test401._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (hasDerivAt_const_mul Real.one✝)
+

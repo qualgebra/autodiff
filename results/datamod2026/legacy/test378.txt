@@ -1,0 +1,21 @@
+Input: test378
+fun x => Real.log (25 / (x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31)))
+
+Result:
+{
+  f' := fun x =>
+    25 * (-(↑7 * x ^ (7 - 1) - ↑9 * x ^ (9 - 1)) / (x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31)) ^ 2) /
+      (25 / (x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31))),
+  domain := fun x =>
+    x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31) ≠ 0 ∧ 25 / (x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31)) ≠ 0,
+  proof := d_test378._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.const_mul 25
+      (HasDerivAt.inv
+        (HasDerivAt.sub (HasDerivAt.add_const (-44 * 97) (hasDerivAt_pow 7 x))
+          (HasDerivAt.add_const (-Real.tan 31) (HasDerivAt.const_add 21 (hasDerivAt_pow 9 x))))
+        a.left))
+

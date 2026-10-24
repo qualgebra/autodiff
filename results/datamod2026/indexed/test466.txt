@@ -1,0 +1,14 @@
+Input: test466
+fun x => Real.cos ((54 + -58) / Real.tan 19) * (Real.log (x ^ 10) + 29 + -96) - x ^ 5
+
+Result:
+{ f' := fun x => Real.cos ((54 + -58) / Real.tan 19) * (↑10 * x ^ (10 - 1) / x ^ 10) - ↑5 * x ^ (5 - 1),
+  domain := fun x => x ^ 10 ≠ 0, proof := d_test466._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_mul (Real.cos ((54 + -58) / Real.tan 19))
+      (HasDerivAt.add_const (-96) (HasDerivAt.add_const 29 (HasDerivAt.log' a (hasDerivAt_pow 10 x)))))
+    (hasDerivAt_pow 5 x)
+

@@ -1,0 +1,16 @@
+Input: test125
+fun x => 98 * ((Real.cos 4 + 80 / x ^ 4) * -56 + (Real.tan (Real.cos (-97)) - (x ^ 6 - 74) * Real.cos 42))
+
+Result:
+{ f' := fun x => 98 * (80 * (-(↑4 * x ^ (4 - 1)) / (x ^ 4) ^ 2) * -56 + -(↑6 * x ^ (6 - 1) * Real.cos 42)),
+  domain := fun x => x ^ 4 ≠ 0, proof := d_test125._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 98
+    (HasDerivAt.fun_add
+      (HasDerivAt.mul_const
+        (HasDerivAt.const_add (Real.cos 4) (HasDerivAt.const_mul 80 (HasDerivAt.inv (hasDerivAt_pow 4 x) a))) (-56))
+      (HasDerivAt.const_sub (Real.tan (Real.cos (-97)))
+        (HasDerivAt.mul_const (HasDerivAt.add_const (-74) (hasDerivAt_pow 6 x)) (Real.cos 42))))
+

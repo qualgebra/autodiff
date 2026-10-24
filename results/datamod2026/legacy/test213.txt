@@ -1,0 +1,9 @@
+Input: test213
+fun x => Real.sin (x ^ 10)
+
+Result:
+{ f' := fun x => Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1)), domain := fun x => True, proof := d_test213._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (hasDerivAt_pow 10 x)
+

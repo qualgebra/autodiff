@@ -1,0 +1,28 @@
+Input: test40
+fun x =>
+  (Real.log (22 * (x ^ 1 + 21)) - Real.sin (Real.sin (-40 / x ^ 3))) / Real.log (Real.sin 66 / Real.log (-71) * x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    ((22 * (↑1 * x ^ (1 - 1)) / (22 * (x ^ 1 + 21)) -
+            Real.cos (Real.sin (-40 / x ^ 3)) *
+              (Real.cos (-40 / x ^ 3) * ((0 * x ^ 3 - -40 * (↑3 * x ^ (3 - 1))) / (x ^ 3) ^ 2))) *
+          Real.log (Real.sin 66 / Real.log (-71) * x ^ 6) -
+        (Real.log (22 * (x ^ 1 + 21)) - Real.sin (Real.sin (-40 / x ^ 3))) *
+          (Real.sin 66 / Real.log (-71) * (↑6 * x ^ (6 - 1)) / (Real.sin 66 / Real.log (-71) * x ^ 6))) /
+      Real.log (Real.sin 66 / Real.log (-71) * x ^ 6) ^ 2,
+  domain := fun x =>
+    ((Real.log (Real.sin 66 / Real.log (-71) * x ^ 6) ≠ 0 ∧ Real.sin 66 / Real.log (-71) * x ^ 6 ≠ 0) ∧ x ^ 3 ≠ 0) ∧
+      22 * (x ^ 1 + 21) ≠ 0,
+  proof := d_test40._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.sub (HasDerivAt.log' a.right (HasDerivAt.const_mul 22 (HasDerivAt.add_const 21 (hasDerivAt_pow 1 x))))
+      (HasDerivAt.sin
+        (HasDerivAt.sin (HasDerivAt.fun_div (hasDerivAt_const x (-40)) (hasDerivAt_pow 3 x) a.left.right))))
+    (HasDerivAt.log' a.left.left.right (HasDerivAt.const_mul (Real.sin 66 / Real.log (-71)) (hasDerivAt_pow 6 x)))
+    a.left.left.left
+

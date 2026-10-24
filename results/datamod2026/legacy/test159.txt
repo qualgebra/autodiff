@@ -1,0 +1,21 @@
+Input: test159
+fun x => x ^ 8 / Real.sin (Real.sin (Real.sin 80 / x ^ 3))
+
+Result:
+{
+  f' := fun x =>
+    ↑8 * x ^ (8 - 1) * (Real.sin (Real.sin (Real.sin 80 / x ^ 3)))⁻¹ +
+      x ^ 8 *
+        (-(Real.cos (Real.sin (Real.sin 80 / x ^ 3)) *
+              (Real.cos (Real.sin 80 / x ^ 3) * (Real.sin 80 * (-(↑3 * x ^ (3 - 1)) / (x ^ 3) ^ 2)))) /
+          Real.sin (Real.sin (Real.sin 80 / x ^ 3)) ^ 2),
+  domain := fun x => Real.sin (Real.sin (Real.sin 80 / x ^ 3)) ≠ 0 ∧ x ^ 3 ≠ 0, proof := d_test159._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_pow 8 x)
+    (HasDerivAt.inv
+      (HasDerivAt.sin
+        (HasDerivAt.sin (HasDerivAt.const_mul (Real.sin 80) (HasDerivAt.inv (hasDerivAt_pow 3 x) a.right))))
+      a.left)
+

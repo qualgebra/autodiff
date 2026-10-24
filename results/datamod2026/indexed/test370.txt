@@ -1,0 +1,10 @@
+Input: test370
+fun x => Real.tan (x ^ 5)
+
+Result:
+{ f' := fun x => 1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1)), domain := fun x => Real.cos (x ^ 5) ≠ 0,
+  proof := d_test370._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.tan' a (hasDerivAt_pow 5 x)
+

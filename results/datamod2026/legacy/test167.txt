@@ -1,0 +1,24 @@
+Input: test167
+fun x => Real.cos (x ^ 5 * (13 - -66) - (x ^ 9 - Real.cos (-70)) - Real.log (Real.tan (x ^ 6 / x ^ 7)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 5 * (13 - -66) - (x ^ 9 - Real.cos (-70)) - Real.log (Real.tan (x ^ 6 / x ^ 7))) *
+      (↑5 * x ^ (5 - 1) * (13 - -66) - ↑9 * x ^ (9 - 1) -
+        1 / Real.cos (x ^ 6 / x ^ 7) ^ 2 *
+            (↑6 * x ^ (6 - 1) * (x ^ 7)⁻¹ + x ^ 6 * (-(↑7 * x ^ (7 - 1)) / (x ^ 7) ^ 2)) /
+          Real.tan (x ^ 6 / x ^ 7)),
+  domain := fun x => (x ^ 7 ≠ 0 ∧ Real.cos (x ^ 6 / x ^ 7) ≠ 0) ∧ Real.tan (x ^ 6 / x ^ 7) ≠ 0,
+  proof := d_test167._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sub
+      (HasDerivAt.sub (HasDerivAt.mul_const (hasDerivAt_pow 5 x) (13 - -66))
+        (HasDerivAt.add_const (-Real.cos (-70)) (hasDerivAt_pow 9 x)))
+      (HasDerivAt.log' a.right
+        (HasDerivAt.tan' a.left.right
+          (HasDerivAt.fun_mul (hasDerivAt_pow 6 x) (HasDerivAt.inv (hasDerivAt_pow 7 x) a.left.left)))))
+

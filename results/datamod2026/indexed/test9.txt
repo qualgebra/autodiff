@@ -1,0 +1,15 @@
+Input: test9
+fun x => Real.sin (Real.sin (Real.tan 33)) / 44 + (x ^ 4 - Real.tan (Real.sin (x ^ 8 + -82)))
+
+Result:
+{
+  f' := fun x =>
+    ↑4 * x ^ (4 - 1) - 1 / Real.cos (Real.sin (x ^ 8 + -82)) ^ 2 * (Real.cos (x ^ 8 + -82) * (↑8 * x ^ (8 - 1))),
+  domain := fun x => Real.cos (Real.sin (x ^ 8 + -82)) ≠ 0, proof := d_test9._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (Real.sin (Real.sin (Real.tan 33)) / 44)
+    (HasDerivAt.sub (hasDerivAt_pow 4 x)
+      (HasDerivAt.tan' a (HasDerivAt.sin (HasDerivAt.add_const (-82) (hasDerivAt_pow 8 x)))))
+

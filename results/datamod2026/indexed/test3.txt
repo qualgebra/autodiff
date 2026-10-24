@@ -1,0 +1,27 @@
+Input: test3
+fun x =>
+  Real.cos (x ^ 5) * (30 + x ^ 9) - (x ^ 3 - -87) - (x ^ 4 + Real.cos (x ^ 2 * x ^ 2)) -
+    (Real.tan (-2) / Real.cos (-5) + (-15 - x ^ 7 - -50)) / Real.log 91
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) * (30 + x ^ 9) + Real.cos (x ^ 5) * (↑9 * x ^ (9 - 1)) - ↑3 * x ^ (3 - 1) -
+        (↑4 * x ^ (4 - 1) + -Real.sin (x ^ 2 * x ^ 2) * (↑2 * x ^ (2 - 1) * x ^ 2 + x ^ 2 * (↑2 * x ^ (2 - 1)))) -
+      -(↑7 * x ^ (7 - 1)) / Real.log 91,
+  domain := fun x => True, proof := d_test3._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.sub
+      (HasDerivAt.sub
+        (HasDerivAt.fun_mul (HasDerivAt.cos (hasDerivAt_pow 5 x)) (HasDerivAt.const_add 30 (hasDerivAt_pow 9 x)))
+        (HasDerivAt.sub_const (-87) (hasDerivAt_pow 3 x)))
+      (HasDerivAt.fun_add (hasDerivAt_pow 4 x)
+        (HasDerivAt.cos (HasDerivAt.fun_mul (hasDerivAt_pow 2 x) (hasDerivAt_pow 2 x)))))
+    (HasDerivAt.div_const
+      (HasDerivAt.const_add (Real.tan (-2) / Real.cos (-5))
+        (HasDerivAt.sub_const (-50) (HasDerivAt.const_sub (-15) (hasDerivAt_pow 7 x))))
+      (Real.log 91))
+

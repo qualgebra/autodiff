@@ -1,0 +1,18 @@
+Input: test232
+fun x => 42 - Real.tan (Real.sin (x ^ 9 / -41) - (Real.sin (-46) + (x ^ 9 + x ^ 2)))
+
+Result:
+{
+  f' := fun x =>
+    -(1 / Real.cos (Real.sin (x ^ 9 / -41) - (Real.sin (-46) + (x ^ 9 + x ^ 2))) ^ 2 *
+        (Real.cos (x ^ 9 / -41) * (↑9 * x ^ (9 - 1) / -41) - (↑9 * x ^ (9 - 1) + ↑2 * x ^ (2 - 1)))),
+  domain := fun x => Real.cos (Real.sin (x ^ 9 / -41) - (Real.sin (-46) + (x ^ 9 + x ^ 2))) ≠ 0,
+  proof := d_test232._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_sub 42
+    (HasDerivAt.tan' a
+      (HasDerivAt.sub (HasDerivAt.sin (HasDerivAt.div_const (hasDerivAt_pow 9 x) (-41)))
+        (HasDerivAt.const_add (Real.sin (-46)) (HasDerivAt.fun_add (hasDerivAt_pow 9 x) (hasDerivAt_pow 2 x)))))
+

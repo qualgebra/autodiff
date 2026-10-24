@@ -1,0 +1,18 @@
+Input: test434
+fun x => Real.sin (11 - Real.tan (-8 * x ^ 6 - x ^ 8 * 14))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (11 - Real.tan (-8 * x ^ 6 - x ^ 8 * 14)) *
+      -(1 / Real.cos (-8 * x ^ 6 - x ^ 8 * 14) ^ 2 * (-8 * (↑6 * x ^ (6 - 1)) - ↑8 * x ^ (8 - 1) * 14)),
+  domain := fun x => Real.cos (-8 * x ^ 6 - x ^ 8 * 14) ≠ 0, proof := d_test434._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.const_sub 11
+      (HasDerivAt.tan' a
+        (HasDerivAt.sub (HasDerivAt.const_mul (-8) (hasDerivAt_pow 6 x))
+          (HasDerivAt.mul_const (hasDerivAt_pow 8 x) 14))))
+

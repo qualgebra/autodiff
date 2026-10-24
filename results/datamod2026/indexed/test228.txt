@@ -1,0 +1,18 @@
+Input: test228
+fun x => Real.log (Real.cos (Real.cos (Real.tan 13)) / ((51 - -95) * x ^ 6 - 9))
+
+Result:
+{
+  f' := fun x =>
+    (0 * ((51 - -95) * x ^ 6 - 9) - Real.cos (Real.cos (Real.tan 13)) * ((51 - -95) * (↑6 * x ^ (6 - 1)))) /
+        ((51 - -95) * x ^ 6 - 9) ^ 2 /
+      (Real.cos (Real.cos (Real.tan 13)) / ((51 - -95) * x ^ 6 - 9)),
+  domain := fun x => (51 - -95) * x ^ 6 - 9 ≠ 0 ∧ Real.cos (Real.cos (Real.tan 13)) / ((51 - -95) * x ^ 6 - 9) ≠ 0,
+  proof := d_test228._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (Real.cos (Real.tan 13))))
+      (HasDerivAt.sub_const 9 (HasDerivAt.const_mul (51 - -95) (hasDerivAt_pow 6 x))) a.left)
+

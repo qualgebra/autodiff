@@ -1,0 +1,24 @@
+Input: test354
+fun x => Real.log (Real.tan (Real.tan (x ^ 5)) + Real.sin (-95) / Real.sin (x ^ 2) - x ^ 4)
+
+Result:
+{
+  f' := fun x =>
+    (1 / Real.cos (Real.tan (x ^ 5)) ^ 2 * (1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1))) +
+          (0 * Real.sin (x ^ 2) - Real.sin (-95) * (Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)))) / Real.sin (x ^ 2) ^ 2 -
+        ↑4 * x ^ (4 - 1)) /
+      (Real.tan (Real.tan (x ^ 5)) + Real.sin (-95) / Real.sin (x ^ 2) - x ^ 4),
+  domain := fun x =>
+    ((Real.sin (x ^ 2) ≠ 0 ∧ Real.cos (x ^ 5) ≠ 0) ∧ Real.cos (Real.tan (x ^ 5)) ≠ 0) ∧
+      Real.tan (Real.tan (x ^ 5)) + Real.sin (-95) / Real.sin (x ^ 2) - x ^ 4 ≠ 0,
+  proof := d_test354._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.sub
+      (HasDerivAt.fun_add (HasDerivAt.tan' a.left.right (HasDerivAt.tan' a.left.left.right (hasDerivAt_pow 5 x)))
+        (HasDerivAt.fun_div (hasDerivAt_const x (Real.sin (-95))) (HasDerivAt.sin (hasDerivAt_pow 2 x))
+          a.left.left.left))
+      (hasDerivAt_pow 4 x))
+

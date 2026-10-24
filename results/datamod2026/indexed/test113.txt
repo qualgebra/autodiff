@@ -1,0 +1,17 @@
+Input: test113
+fun x => Real.log (Real.sin 5 * x ^ 10) * Real.sin (Real.sin (Real.tan (x ^ 5 / 36)))
+
+Result:
+{
+  f' := fun x =>
+    Real.sin 5 * (↑10 * x ^ (10 - 1)) / (Real.sin 5 * x ^ 10) * Real.sin (Real.sin (Real.tan (x ^ 5 / 36))) +
+      Real.log (Real.sin 5 * x ^ 10) *
+        (Real.cos (Real.sin (Real.tan (x ^ 5 / 36))) *
+          (Real.cos (Real.tan (x ^ 5 / 36)) * (1 / Real.cos (x ^ 5 / 36) ^ 2 * (↑5 * x ^ (5 - 1) / 36)))),
+  domain := fun x => Real.cos (x ^ 5 / 36) ≠ 0 ∧ Real.sin 5 * x ^ 10 ≠ 0, proof := d_test113._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.log' a.right (HasDerivAt.const_mul (Real.sin 5) (hasDerivAt_pow 10 x)))
+    (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.tan' a.left (HasDerivAt.div_const (hasDerivAt_pow 5 x) 36))))
+

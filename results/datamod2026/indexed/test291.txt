@@ -1,0 +1,9 @@
+Input: test291
+fun x => x ^ 5 / Real.sin (-42) * 30
+
+Result:
+{ f' := fun x => ↑5 * x ^ (5 - 1) / Real.sin (-42) * 30, domain := fun x => True, proof := d_test291._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (HasDerivAt.div_const (hasDerivAt_pow 5 x) (Real.sin (-42))) 30
+

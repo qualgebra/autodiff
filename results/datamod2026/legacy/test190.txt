@@ -1,0 +1,16 @@
+Input: test190
+fun x => Real.sin (Real.sin (Real.sin (Real.sin (59 / x ^ 8))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (Real.sin (Real.sin (59 / x ^ 8)))) *
+      (Real.cos (Real.sin (Real.sin (59 / x ^ 8))) *
+        (Real.cos (Real.sin (59 / x ^ 8)) * (Real.cos (59 / x ^ 8) * (59 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2))))),
+  domain := fun x => x ^ 8 ≠ 0, proof := d_test190._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.const_mul 59 (HasDerivAt.inv (hasDerivAt_pow 8 x) a)))))
+

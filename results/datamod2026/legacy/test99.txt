@@ -1,0 +1,9 @@
+Input: test99
+fun x => Real.log (x ^ 6)
+
+Result:
+{ f' := fun x => ↑6 * x ^ (6 - 1) / x ^ 6, domain := fun x => x ^ 6 ≠ 0, proof := d_test99._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (hasDerivAt_pow 6 x)
+

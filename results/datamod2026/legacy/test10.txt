@@ -1,0 +1,15 @@
+Input: test10
+fun x => Real.log (Real.sin (Real.tan 3 * (-76 + -18) / x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan 3 * (-76 + -18) / x ^ 2) * (Real.tan 3 * (-76 + -18) * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2)) /
+      Real.sin (Real.tan 3 * (-76 + -18) / x ^ 2),
+  domain := fun x => x ^ 2 ≠ 0 ∧ Real.sin (Real.tan 3 * (-76 + -18) / x ^ 2) ≠ 0, proof := d_test10._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.sin (HasDerivAt.const_mul (Real.tan 3 * (-76 + -18)) (HasDerivAt.inv (hasDerivAt_pow 2 x) a.left)))
+

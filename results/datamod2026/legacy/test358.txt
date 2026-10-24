@@ -1,0 +1,10 @@
+Input: test358
+fun x => Real.tan (x ^ 8) * Real.sin (Real.tan (Real.tan (-45 / -71)))
+
+Result:
+{ f' := fun x => 1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1)) * Real.sin (Real.tan (Real.tan (-45 / -71))),
+  domain := fun x => Real.cos (x ^ 8) ≠ 0, proof := d_test358._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (HasDerivAt.tan' a (hasDerivAt_pow 8 x)) (Real.sin (Real.tan (Real.tan (-45 / -71))))
+

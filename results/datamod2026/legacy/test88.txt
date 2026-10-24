@@ -1,0 +1,10 @@
+Input: test88
+fun x => 0 * (Real.tan (-39) / x ^ 2)
+
+Result:
+{ f' := fun x => 0 * (Real.tan (-39) * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2)), domain := fun x => x ^ 2 ≠ 0,
+  proof := d_test88._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_mul 0 (HasDerivAt.const_mul (Real.tan (-39)) (HasDerivAt.inv (hasDerivAt_pow 2 x) a))
+

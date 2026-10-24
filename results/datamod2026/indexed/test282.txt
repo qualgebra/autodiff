@@ -1,0 +1,22 @@
+Input: test282
+fun x => Real.cos (Real.log (Real.tan (x ^ 7) * (x ^ 6 * x ^ 1))) * Real.log (-30)
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (Real.tan (x ^ 7) * (x ^ 6 * x ^ 1))) *
+        ((1 / Real.cos (x ^ 7) ^ 2 * (↑7 * x ^ (7 - 1)) * (x ^ 6 * x ^ 1) +
+            Real.tan (x ^ 7) * (↑6 * x ^ (6 - 1) * x ^ 1 + x ^ 6 * (↑1 * x ^ (1 - 1)))) /
+          (Real.tan (x ^ 7) * (x ^ 6 * x ^ 1))) *
+      Real.log (-30),
+  domain := fun x => Real.cos (x ^ 7) ≠ 0 ∧ Real.tan (x ^ 7) * (x ^ 6 * x ^ 1) ≠ 0, proof := d_test282._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.cos
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_mul (HasDerivAt.tan' a.left (hasDerivAt_pow 7 x))
+          (HasDerivAt.fun_mul (hasDerivAt_pow 6 x) (hasDerivAt_pow 1 x)))))
+    (Real.log (-30))
+

@@ -1,0 +1,20 @@
+Input: test403
+fun x => Real.log (x ^ 1) * (Real.log (Real.sin 82 + x ^ 3) * (41 / Real.cos (x ^ 7 / 74)))
+
+Result:
+{
+  f' := fun x =>
+    Real.one✝ / x ^ 1 * (Real.log (Real.sin 82 + x ^ 3) * (41 / Real.cos (x ^ 7 / 74))) +
+      Real.log (x ^ 1) *
+        (↑3 * x ^ (3 - 1) / (Real.sin 82 + x ^ 3) * (41 / Real.cos (x ^ 7 / 74)) +
+          Real.log (Real.sin 82 + x ^ 3) *
+            (41 * (-(-Real.sin (x ^ 7 / 74) * (↑7 * x ^ (7 - 1) * 74⁻¹)) / Real.cos (x ^ 7 / 74) ^ 2))),
+  domain := fun x => (Real.cos (x ^ 7 / 74) ≠ 0 ∧ Real.sin 82 + x ^ 3 ≠ 0) ∧ x ^ 1 ≠ 0, proof := d_test403._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.log' a.right (hasDerivAt_const_mul Real.one✝))
+    (HasDerivAt.fun_mul (HasDerivAt.log' a.left.right (HasDerivAt.const_add (Real.sin 82) (hasDerivAt_pow 3 x)))
+      (HasDerivAt.const_mul 41
+        (HasDerivAt.inv (HasDerivAt.cos (HasDerivAt.mul_const (hasDerivAt_pow 7 x) 74⁻¹)) a.left.left)))
+

@@ -1,0 +1,17 @@
+Input: test342
+fun x => (Real.log 23 + Real.cos (-98 - x ^ 8 / -57)) * x ^ 1
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (-98 - x ^ 8 / -57) * -(↑8 * x ^ (8 - 1) / -57) * x ^ 1 +
+      (Real.log 23 + Real.cos (-98 - x ^ 8 / -57)) * (↑1 * x ^ (1 - 1)),
+  domain := fun x => True, proof := d_test342._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.const_add (Real.log 23)
+      (HasDerivAt.cos (HasDerivAt.const_sub (-98) (HasDerivAt.div_const (hasDerivAt_pow 8 x) (-57)))))
+    (hasDerivAt_pow 1 x)
+

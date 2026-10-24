@@ -1,0 +1,15 @@
+Input: test264
+fun x => Real.log (Real.sin (Real.cos (Real.cos (x ^ 2 + 84))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.cos (x ^ 2 + 84))) *
+        (-Real.sin (Real.cos (x ^ 2 + 84)) * (-Real.sin (x ^ 2 + 84) * (↑2 * x ^ (2 - 1)))) /
+      Real.sin (Real.cos (Real.cos (x ^ 2 + 84))),
+  domain := fun x => Real.sin (Real.cos (Real.cos (x ^ 2 + 84))) ≠ 0, proof := d_test264._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a (HasDerivAt.sin (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.add_const 84 (hasDerivAt_pow 2 x)))))
+

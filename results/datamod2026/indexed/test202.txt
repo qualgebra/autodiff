@@ -1,0 +1,17 @@
+Input: test202
+fun x => Real.log (Real.cos ((x ^ 6 + x ^ 9 + -100) * (12 - 84 + -4)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin ((x ^ 6 + x ^ 9 + -100) * (12 - 84 + -4)) * ((↑6 * x ^ (6 - 1) + ↑9 * x ^ (9 - 1)) * (12 - 84 + -4)) /
+      Real.cos ((x ^ 6 + x ^ 9 + -100) * (12 - 84 + -4)),
+  domain := fun x => Real.cos ((x ^ 6 + x ^ 9 + -100) * (12 - 84 + -4)) ≠ 0, proof := d_test202._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.cos
+      (HasDerivAt.mul_const (HasDerivAt.add_const (-100) (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 9 x)))
+        (12 - 84 + -4)))
+

@@ -1,0 +1,18 @@
+Input: test379
+fun x => Real.cos (90 / -5 * Real.sin 83 * Real.sin (Real.sin (x ^ 7))) - Real.log (x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (90 / -5 * Real.sin 83 * Real.sin (Real.sin (x ^ 7))) *
+        (90 / -5 * Real.sin 83 * (Real.cos (Real.sin (x ^ 7)) * (Real.cos (x ^ 7) * (↑7 * x ^ (7 - 1))))) -
+      ↑6 * x ^ (6 - 1) / x ^ 6,
+  domain := fun x => x ^ 6 ≠ 0, proof := d_test379._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.cos
+      (HasDerivAt.const_mul (90 / -5 * Real.sin 83) (HasDerivAt.sin (HasDerivAt.sin (hasDerivAt_pow 7 x)))))
+    (HasDerivAt.log' a (hasDerivAt_pow 6 x))
+

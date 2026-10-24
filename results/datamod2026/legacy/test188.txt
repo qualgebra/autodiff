@@ -1,0 +1,19 @@
+Input: test188
+fun x => Real.cos (61 - 76 - 67 * x ^ 1 - 13 + Real.tan (Real.log (x ^ 4 + x ^ 3)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (61 - 76 - 67 * x ^ 1 - 13 + Real.tan (Real.log (x ^ 4 + x ^ 3))) *
+      (-(67 * Real.one✝) +
+        1 / Real.cos (Real.log (x ^ 4 + x ^ 3)) ^ 2 * ((↑4 * x ^ (4 - 1) + ↑3 * x ^ (3 - 1)) / (x ^ 4 + x ^ 3))),
+  domain := fun x => x ^ 4 + x ^ 3 ≠ 0 ∧ Real.cos (Real.log (x ^ 4 + x ^ 3)) ≠ 0, proof := d_test188._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.fun_add
+      (HasDerivAt.add_const (-13)
+        (HasDerivAt.const_sub (61 - 76) (HasDerivAt.const_mul 67 (hasDerivAt_const_mul Real.one✝))))
+      (HasDerivAt.tan' a.right (HasDerivAt.log' a.left (HasDerivAt.fun_add (hasDerivAt_pow 4 x) (hasDerivAt_pow 3 x)))))
+

@@ -1,0 +1,11 @@
+Input: test130
+fun x => Real.log (x ^ 7 - Real.log (x ^ 9))
+
+Result:
+{ f' := fun x => (↑7 * x ^ (7 - 1) - ↑9 * x ^ (9 - 1) / x ^ 9) / (x ^ 7 - Real.log (x ^ 9)),
+  domain := fun x => x ^ 9 ≠ 0 ∧ x ^ 7 - Real.log (x ^ 9) ≠ 0, proof := d_test130._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right (HasDerivAt.sub (hasDerivAt_pow 7 x) (HasDerivAt.log' a.left (hasDerivAt_pow 9 x)))
+

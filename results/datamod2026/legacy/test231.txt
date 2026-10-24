@@ -1,0 +1,17 @@
+Input: test231
+fun x => Real.tan (18 - Real.cos (Real.cos (-88)) - (x ^ 7 / Real.cos 24 - Real.cos 59 * -96))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (18 - Real.cos (Real.cos (-88)) - (x ^ 7 / Real.cos 24 - Real.cos 59 * -96)) ^ 2 *
+      -(↑7 * x ^ (7 - 1) * (Real.cos 24)⁻¹),
+  domain := fun x => Real.cos (18 - Real.cos (Real.cos (-88)) - (x ^ 7 / Real.cos 24 - Real.cos 59 * -96)) ≠ 0,
+  proof := d_test231._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a
+    (HasDerivAt.const_sub (18 - Real.cos (Real.cos (-88)))
+      (HasDerivAt.add_const (-(Real.cos 59 * -96)) (HasDerivAt.mul_const (hasDerivAt_pow 7 x) (Real.cos 24)⁻¹)))
+

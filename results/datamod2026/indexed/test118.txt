@@ -1,0 +1,17 @@
+Input: test118
+fun x => (Real.tan (-25) + 10 * x ^ 4) * (x ^ 2 * (Real.log (64 + x ^ 3) + 86 / (17 * -30)))
+
+Result:
+{
+  f' := fun x =>
+    10 * (↑4 * x ^ (4 - 1)) * (x ^ 2 * (Real.log (64 + x ^ 3) + 86 / (17 * -30))) +
+      (Real.tan (-25) + 10 * x ^ 4) *
+        (↑2 * x ^ (2 - 1) * (Real.log (64 + x ^ 3) + 86 / (17 * -30)) + x ^ 2 * (↑3 * x ^ (3 - 1) / (64 + x ^ 3))),
+  domain := fun x => 64 + x ^ 3 ≠ 0, proof := d_test118._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.const_add (Real.tan (-25)) (HasDerivAt.const_mul 10 (hasDerivAt_pow 4 x)))
+    (HasDerivAt.fun_mul (hasDerivAt_pow 2 x)
+      (HasDerivAt.add_const (86 / (17 * -30)) (HasDerivAt.log' a (HasDerivAt.const_add 64 (hasDerivAt_pow 3 x)))))
+

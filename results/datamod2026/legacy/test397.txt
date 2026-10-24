@@ -1,0 +1,19 @@
+Input: test397
+fun x => Real.sin (Real.sin (43 * x ^ 1 + (36 - -20)) + Real.cos (Real.tan (Real.tan (x ^ 7))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (43 * x ^ 1 + (36 - -20)) + Real.cos (Real.tan (Real.tan (x ^ 7)))) *
+      (Real.cos (43 * x ^ 1 + (36 - -20)) * (43 * Real.one✝) +
+        -Real.sin (Real.tan (Real.tan (x ^ 7))) *
+          (1 / Real.cos (Real.tan (x ^ 7)) ^ 2 * (1 / Real.cos (x ^ 7) ^ 2 * (↑7 * x ^ (7 - 1))))),
+  domain := fun x => Real.cos (x ^ 7) ≠ 0 ∧ Real.cos (Real.tan (x ^ 7)) ≠ 0, proof := d_test397._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.fun_add
+      (HasDerivAt.sin (HasDerivAt.add_const (36 - -20) (HasDerivAt.const_mul 43 (hasDerivAt_const_mul Real.one✝))))
+      (HasDerivAt.cos (HasDerivAt.tan' a.right (HasDerivAt.tan' a.left (hasDerivAt_pow 7 x)))))
+

@@ -1,0 +1,17 @@
+Input: test428
+fun x => Real.log (Real.sin ((32 / 42 + Real.tan 95) * Real.sin (Real.sin (x ^ 2))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((32 / 42 + Real.tan 95) * Real.sin (Real.sin (x ^ 2))) *
+        ((32 / 42 + Real.tan 95) * (Real.cos (Real.sin (x ^ 2)) * (Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1))))) /
+      Real.sin ((32 / 42 + Real.tan 95) * Real.sin (Real.sin (x ^ 2))),
+  domain := fun x => Real.sin ((32 / 42 + Real.tan 95) * Real.sin (Real.sin (x ^ 2))) ≠ 0, proof := d_test428._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.sin
+      (HasDerivAt.const_mul (32 / 42 + Real.tan 95) (HasDerivAt.sin (HasDerivAt.sin (hasDerivAt_pow 2 x)))))
+

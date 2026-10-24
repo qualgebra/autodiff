@@ -1,0 +1,19 @@
+Input: test418
+fun x => Real.cos (Real.cos ((Real.sin (-98) - -13 / x ^ 2) * x ^ 4))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.cos ((Real.sin (-98) - -13 / x ^ 2) * x ^ 4)) *
+      (-Real.sin ((Real.sin (-98) - -13 / x ^ 2) * x ^ 4) *
+        (-(-13 * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2)) * x ^ 4 + (Real.sin (-98) - -13 / x ^ 2) * (↑4 * x ^ (4 - 1)))),
+  domain := fun x => x ^ 2 ≠ 0, proof := d_test418._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.cos
+      (HasDerivAt.fun_mul
+        (HasDerivAt.const_sub (Real.sin (-98)) (HasDerivAt.const_mul (-13) (HasDerivAt.inv (hasDerivAt_pow 2 x) a)))
+        (hasDerivAt_pow 4 x)))
+

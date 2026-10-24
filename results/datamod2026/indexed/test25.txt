@@ -1,0 +1,22 @@
+Input: test25
+fun x => Real.sin (-66 + Real.cos (75 - x ^ 4) * (Real.tan (x ^ 3) / Real.cos (x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (-66 + Real.cos (75 - x ^ 4) * (Real.tan (x ^ 3) / Real.cos (x ^ 1))) *
+      (-Real.sin (75 - x ^ 4) * -(↑4 * x ^ (4 - 1)) * (Real.tan (x ^ 3) / Real.cos (x ^ 1)) +
+        Real.cos (75 - x ^ 4) *
+          ((1 / Real.cos (x ^ 3) ^ 2 * (↑3 * x ^ (3 - 1)) * Real.cos (x ^ 1) -
+              Real.tan (x ^ 3) * (-Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)))) /
+            Real.cos (x ^ 1) ^ 2)),
+  domain := fun x => Real.cos (x ^ 1) ≠ 0 ∧ Real.cos (x ^ 3) ≠ 0, proof := d_test25._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.const_add (-66)
+      (HasDerivAt.fun_mul (HasDerivAt.cos (HasDerivAt.const_sub 75 (hasDerivAt_pow 4 x)))
+        (HasDerivAt.fun_div (HasDerivAt.tan' a.right (hasDerivAt_pow 3 x)) (HasDerivAt.cos (hasDerivAt_pow 1 x))
+          a.left)))
+

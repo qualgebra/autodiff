@@ -1,0 +1,9 @@
+Input: test385
+fun x => Real.cos (Real.tan (94 - -37)) - 36 - x ^ 7
+
+Result:
+{ f' := fun x => -(↑7 * x ^ (7 - 1)), domain := fun x => True, proof := d_test385._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_sub (Real.cos (Real.tan (94 - -37)) - 36) (hasDerivAt_pow 7 x)
+

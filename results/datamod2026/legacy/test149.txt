@@ -1,0 +1,14 @@
+Input: test149
+fun x => Real.cos (x ^ 1 * (Real.log (-9 + 76) * Real.log (Real.sin 37)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 1 * (Real.log (-9 + 76) * Real.log (Real.sin 37))) *
+      (Real.one✝ * (Real.log (-9 + 76) * Real.log (Real.sin 37))),
+  domain := fun x => True, proof := d_test149._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos (HasDerivAt.mul_const (hasDerivAt_const_mul Real.one✝) (Real.log (-9 + 76) * Real.log (Real.sin 37)))
+

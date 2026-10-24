@@ -1,0 +1,11 @@
+Input: test91
+fun x => Real.cos (x ^ 5) * Real.tan (Real.cos (Real.sin (-82)) - Real.log (6 - -77))
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) * Real.tan (Real.cos (Real.sin (-82)) - Real.log (6 - -77)),
+  domain := fun x => True, proof := d_test91._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const (HasDerivAt.cos (hasDerivAt_pow 5 x)) (Real.tan (Real.cos (Real.sin (-82)) - Real.log (6 - -77)))
+

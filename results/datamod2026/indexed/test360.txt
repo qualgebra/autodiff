@@ -1,0 +1,15 @@
+Input: test360
+fun x => 99 + Real.cos (Real.cos (Real.sin (x ^ 1) / (-7 - -95)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.cos (Real.sin (x ^ 1) / (-7 - -95))) *
+      (-Real.sin (Real.sin (x ^ 1) / (-7 - -95)) * (Real.cos (x ^ 1) * (↑1 * x ^ (1 - 1)) / (-7 - -95))),
+  domain := fun x => True, proof := d_test360._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add 99
+    (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.div_const (HasDerivAt.sin (hasDerivAt_pow 1 x)) (-7 - -95))))
+

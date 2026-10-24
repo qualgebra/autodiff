@@ -1,0 +1,20 @@
+Input: test420
+fun x =>
+  Real.log (Real.tan (Real.cos 53) + Real.log (-84) * Real.tan (-10)) *
+    ((-22 * Real.log 23 - Real.sin (-35) * (-84 - x ^ 10)) * 88)
+
+Result:
+{
+  f' := fun x =>
+    Real.log (Real.tan (Real.cos 53) + Real.log (-84) * Real.tan (-10)) *
+      (-(Real.sin (-35) * -(↑10 * x ^ (10 - 1))) * 88),
+  domain := fun x => True, proof := d_test420._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (Real.log (Real.tan (Real.cos 53) + Real.log (-84) * Real.tan (-10)))
+    (HasDerivAt.mul_const
+      (HasDerivAt.const_sub (-22 * Real.log 23)
+        (HasDerivAt.const_mul (Real.sin (-35)) (HasDerivAt.const_sub (-84) (hasDerivAt_pow 10 x))))
+      88)
+

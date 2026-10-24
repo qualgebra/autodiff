@@ -1,0 +1,19 @@
+Input: test402
+fun x =>
+  Real.log (Real.sin (Real.cos (-16))) + Real.sin ((x ^ 8 - x ^ 1) * (-29 * x ^ 1)) - Real.sin (89 / (Real.tan 49 - 53))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((x ^ 8 - x ^ 1) * (-29 * x ^ 1)) *
+      ((↑8 * x ^ (8 - 1) - ↑1 * x ^ (1 - 1)) * (-29 * x ^ 1) + (x ^ 8 - x ^ 1) * (-29 * (↑1 * x ^ (1 - 1)))),
+  domain := fun x => True, proof := d_test402._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.sin (89 / (Real.tan 49 - 53)))
+    (HasDerivAt.const_add (Real.log (Real.sin (Real.cos (-16))))
+      (HasDerivAt.sin
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 1 x))
+          (HasDerivAt.const_mul (-29) (hasDerivAt_pow 1 x)))))
+

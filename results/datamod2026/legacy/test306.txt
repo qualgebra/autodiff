@@ -1,0 +1,19 @@
+Input: test306
+fun x => Real.sin (Real.log (x ^ 2 / 41 * (2 / x ^ 4)) - Real.sin (Real.sin 66))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.log (x ^ 2 / 41 * (2 / x ^ 4)) - Real.sin (Real.sin 66)) *
+      ((↑2 * x ^ (2 - 1) * 41⁻¹ * (2 / x ^ 4) + x ^ 2 / 41 * (2 * (-(↑4 * x ^ (4 - 1)) / (x ^ 4) ^ 2))) /
+        (x ^ 2 / 41 * (2 / x ^ 4))),
+  domain := fun x => x ^ 4 ≠ 0 ∧ x ^ 2 / 41 * (2 / x ^ 4) ≠ 0, proof := d_test306._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.add_const (-Real.sin (Real.sin 66))
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_mul (HasDerivAt.mul_const (hasDerivAt_pow 2 x) 41⁻¹)
+          (HasDerivAt.const_mul 2 (HasDerivAt.inv (hasDerivAt_pow 4 x) a.left)))))
+

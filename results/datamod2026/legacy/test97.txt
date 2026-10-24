@@ -1,0 +1,10 @@
+Input: test97
+fun x => Real.cos (x ^ 8 * -20)
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 8 * -20) * (↑8 * x ^ (8 - 1) * -20), domain := fun x => True,
+  proof := d_test97._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.mul_const (hasDerivAt_pow 8 x) (-20))
+

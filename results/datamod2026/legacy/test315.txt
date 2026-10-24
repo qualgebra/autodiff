@@ -1,0 +1,12 @@
+Input: test315
+fun x => Real.log (Real.sin (x ^ 5)) + Real.log (Real.log (x ^ 5))
+
+Result:
+{ f' := fun x => Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1)) / Real.sin (x ^ 5) + ↑5 * x ^ (5 - 1) / x ^ 5 / Real.log (x ^ 5),
+  domain := fun x => (x ^ 5 ≠ 0 ∧ Real.log (x ^ 5) ≠ 0) ∧ Real.sin (x ^ 5) ≠ 0, proof := d_test315._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add (HasDerivAt.log' a.right (HasDerivAt.sin (hasDerivAt_pow 5 x)))
+    (HasDerivAt.log' a.left.right (HasDerivAt.log' a.left.left (hasDerivAt_pow 5 x)))
+

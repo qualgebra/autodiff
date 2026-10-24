@@ -1,0 +1,23 @@
+Input: test384
+fun x => 63 / Real.log (Real.cos (Real.tan (x ^ 2) + x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    63 *
+      (-(-Real.sin (Real.tan (x ^ 2) + x ^ 2) * (1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)) + ↑2 * x ^ (2 - 1)) /
+            Real.cos (Real.tan (x ^ 2) + x ^ 2)) /
+        Real.log (Real.cos (Real.tan (x ^ 2) + x ^ 2)) ^ 2),
+  domain := fun x =>
+    (Real.log (Real.cos (Real.tan (x ^ 2) + x ^ 2)) ≠ 0 ∧ Real.cos (x ^ 2) ≠ 0) ∧
+      Real.cos (Real.tan (x ^ 2) + x ^ 2) ≠ 0,
+  proof := d_test384._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 63
+    (HasDerivAt.inv
+      (HasDerivAt.log' a.right
+        (HasDerivAt.cos (HasDerivAt.fun_add (HasDerivAt.tan' a.left.right (hasDerivAt_pow 2 x)) (hasDerivAt_pow 2 x))))
+      a.left.left)
+

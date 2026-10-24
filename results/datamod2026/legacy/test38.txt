@@ -1,0 +1,21 @@
+Input: test38
+fun x =>
+  Real.sin (-86 + Real.log 32) * (61 * (-52 + -44) + (Real.sin 47 - -35) - Real.tan (1 / x ^ 10 * (x ^ 3 - x ^ 10)))
+
+Result:
+{
+  f' := fun x =>
+    Real.sin (-86 + Real.log 32) *
+      -(1 / Real.cos (1 / x ^ 10 * (x ^ 3 - x ^ 10)) ^ 2 *
+          (1 * (-(↑10 * x ^ (10 - 1)) / (x ^ 10) ^ 2) * (x ^ 3 - x ^ 10) +
+            1 / x ^ 10 * (↑3 * x ^ (3 - 1) - ↑10 * x ^ (10 - 1)))),
+  domain := fun x => x ^ 10 ≠ 0 ∧ Real.cos (1 / x ^ 10 * (x ^ 3 - x ^ 10)) ≠ 0, proof := d_test38._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (Real.sin (-86 + Real.log 32))
+    (HasDerivAt.const_sub (61 * (-52 + -44) + (Real.sin 47 - -35))
+      (HasDerivAt.tan' a.right
+        (HasDerivAt.fun_mul (HasDerivAt.const_mul 1 (HasDerivAt.inv (hasDerivAt_pow 10 x) a.left))
+          (HasDerivAt.sub (hasDerivAt_pow 3 x) (hasDerivAt_pow 10 x)))))
+

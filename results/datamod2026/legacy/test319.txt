@@ -1,0 +1,16 @@
+Input: test319
+fun x => Real.sin (Real.log (Real.tan (-91 + x ^ 6)) - Real.cos (Real.log (-36) * Real.tan (-47)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.log (Real.tan (-91 + x ^ 6)) - Real.cos (Real.log (-36) * Real.tan (-47))) *
+      (1 / Real.cos (-91 + x ^ 6) ^ 2 * (↑6 * x ^ (6 - 1)) / Real.tan (-91 + x ^ 6)),
+  domain := fun x => Real.cos (-91 + x ^ 6) ≠ 0 ∧ Real.tan (-91 + x ^ 6) ≠ 0, proof := d_test319._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.add_const (-Real.cos (Real.log (-36) * Real.tan (-47)))
+      (HasDerivAt.log' a.right (HasDerivAt.tan' a.left (HasDerivAt.const_add (-91) (hasDerivAt_pow 6 x)))))
+

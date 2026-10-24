@@ -1,0 +1,9 @@
+Input: test174
+fun x => Real.sin (x ^ 5)
+
+Result:
+{ f' := fun x => Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1)), domain := fun x => True, proof := d_test174._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (hasDerivAt_pow 5 x)
+

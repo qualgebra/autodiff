@@ -1,0 +1,9 @@
+Input: test255
+fun x => 52 + x ^ 6
+
+Result:
+{ f' := fun x => ↑6 * x ^ (6 - 1), domain := fun x => True, proof := d_test255._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_add 52 (hasDerivAt_pow 6 x)
+

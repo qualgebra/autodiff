@@ -1,0 +1,20 @@
+Input: test203
+fun x => Real.log (Real.log ((84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    ((84 + -84) * -(↑6 * x ^ (6 - 1)) * (29 - x ^ 1) + (84 + -84) * (-98 - x ^ 6) * -Real.one✝) /
+        ((84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1)) /
+      Real.log ((84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1)),
+  domain := fun x =>
+    (84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1) ≠ 0 ∧ Real.log ((84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1)) ≠ 0,
+  proof := d_test203._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.log' a.left
+      (HasDerivAt.fun_mul (HasDerivAt.const_mul (84 + -84) (HasDerivAt.const_sub (-98) (hasDerivAt_pow 6 x)))
+        (HasDerivAt.const_sub 29 (hasDerivAt_const_mul Real.one✝))))
+

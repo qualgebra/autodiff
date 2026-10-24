@@ -1,0 +1,18 @@
+Input: test154
+fun x => x ^ 4 - Real.cos (Real.cos 11 * (Real.sin (x ^ 6) - (99 + x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    ↑4 * x ^ (4 - 1) -
+      -Real.sin (Real.cos 11 * (Real.sin (x ^ 6) - (99 + x ^ 1))) *
+        (Real.cos 11 * (Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1)) - ↑1 * x ^ (1 - 1))),
+  domain := fun x => True, proof := d_test154._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub (hasDerivAt_pow 4 x)
+    (HasDerivAt.cos
+      (HasDerivAt.const_mul (Real.cos 11)
+        (HasDerivAt.sub (HasDerivAt.sin (hasDerivAt_pow 6 x)) (HasDerivAt.const_add 99 (hasDerivAt_pow 1 x)))))
+

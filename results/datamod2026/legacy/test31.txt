@@ -1,0 +1,9 @@
+Input: test31
+fun x => x ^ 7 - -47 + x ^ 1
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1) + Real.one✝, domain := fun x => True, proof := d_test31._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.fun_add (HasDerivAt.add_const (- -47) (hasDerivAt_pow 7 x)) (hasDerivAt_const_mul Real.one✝)
+

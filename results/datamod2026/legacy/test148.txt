@@ -1,0 +1,14 @@
+Input: test148
+fun x => (89 / (-87 / Real.log 87) + x ^ 1) * (x ^ 10 + Real.sin (-77 * -82))
+
+Result:
+{
+  f' := fun x =>
+    Real.one✝ * (x ^ 10 + Real.sin (-77 * -82)) + (89 / (-87 / Real.log 87) + x ^ 1) * (↑10 * x ^ (10 - 1)),
+  domain := fun x => True, proof := d_test148._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.const_add (89 / (-87 / Real.log 87)) (hasDerivAt_const_mul Real.one✝))
+    (HasDerivAt.add_const (Real.sin (-77 * -82)) (hasDerivAt_pow 10 x))
+

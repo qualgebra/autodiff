@@ -1,0 +1,12 @@
+Input: test107
+fun x => -9 / Real.log (Real.sin (-86) + x ^ 10)
+
+Result:
+{ f' := fun x => -9 * (-(↑10 * x ^ (10 - 1) / (Real.sin (-86) + x ^ 10)) / Real.log (Real.sin (-86) + x ^ 10) ^ 2),
+  domain := fun x => Real.log (Real.sin (-86) + x ^ 10) ≠ 0 ∧ Real.sin (-86) + x ^ 10 ≠ 0, proof := d_test107._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (-9)
+    (HasDerivAt.inv (HasDerivAt.log' a.right (HasDerivAt.const_add (Real.sin (-86)) (hasDerivAt_pow 10 x))) a.left)
+

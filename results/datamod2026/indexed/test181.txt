@@ -1,0 +1,20 @@
+Input: test181
+fun x => Real.log (Real.log ((x ^ 7 + 24) * 47)) * Real.sin (Real.sin (Real.sin (x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    ↑7 * x ^ (7 - 1) * 47 / ((x ^ 7 + 24) * 47) / Real.log ((x ^ 7 + 24) * 47) *
+        Real.sin (Real.sin (Real.sin (x ^ 1))) +
+      Real.log (Real.log ((x ^ 7 + 24) * 47)) *
+        (Real.cos (Real.sin (Real.sin (x ^ 1))) *
+          (Real.cos (Real.sin (x ^ 1)) * (Real.cos (x ^ 1) * (↑1 * x ^ (1 - 1))))),
+  domain := fun x => (x ^ 7 + 24) * 47 ≠ 0 ∧ Real.log ((x ^ 7 + 24) * 47) ≠ 0, proof := d_test181._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.log' a.right
+      (HasDerivAt.log' a.left (HasDerivAt.mul_const (HasDerivAt.add_const 24 (hasDerivAt_pow 7 x)) 47)))
+    (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.sin (hasDerivAt_pow 1 x))))
+

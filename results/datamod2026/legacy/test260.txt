@@ -1,0 +1,20 @@
+Input: test260
+fun x => Real.tan (Real.tan (Real.cos (x ^ 4 + 43))) * Real.cos (Real.cos ((x ^ 9 + -9) * 17))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.tan (Real.cos (x ^ 4 + 43))) ^ 2 *
+          (1 / Real.cos (Real.cos (x ^ 4 + 43)) ^ 2 * (-Real.sin (x ^ 4 + 43) * (↑4 * x ^ (4 - 1)))) *
+        Real.cos (Real.cos ((x ^ 9 + -9) * 17)) +
+      Real.tan (Real.tan (Real.cos (x ^ 4 + 43))) *
+        (-Real.sin (Real.cos ((x ^ 9 + -9) * 17)) * (-Real.sin ((x ^ 9 + -9) * 17) * (↑9 * x ^ (9 - 1) * 17))),
+  domain := fun x => Real.cos (Real.cos (x ^ 4 + 43)) ≠ 0 ∧ Real.cos (Real.tan (Real.cos (x ^ 4 + 43))) ≠ 0,
+  proof := d_test260._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.tan' a.right (HasDerivAt.tan' a.left (HasDerivAt.cos (HasDerivAt.add_const 43 (hasDerivAt_pow 4 x)))))
+    (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.mul_const (HasDerivAt.add_const (-9) (hasDerivAt_pow 9 x)) 17)))
+

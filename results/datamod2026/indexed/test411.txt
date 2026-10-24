@@ -1,0 +1,26 @@
+Input: test411
+fun x =>
+  (Real.cos (Real.log (x ^ 1)) + (Real.cos (-7) - x ^ 4)) * Real.log (Real.sin (-13)) -
+    Real.log ((-10 * x ^ 2 + x ^ 9 / -95) / Real.log (-88 + 45))
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (Real.log (x ^ 1)) * (↑1 * x ^ (1 - 1) / x ^ 1) + -(↑4 * x ^ (4 - 1))) * Real.log (Real.sin (-13)) -
+      (-10 * (↑2 * x ^ (2 - 1)) + ↑9 * x ^ (9 - 1) / -95) / Real.log (-88 + 45) /
+        ((-10 * x ^ 2 + x ^ 9 / -95) / Real.log (-88 + 45)),
+  domain := fun x => (-10 * x ^ 2 + x ^ 9 / -95) / Real.log (-88 + 45) ≠ 0 ∧ x ^ 1 ≠ 0, proof := d_test411._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.mul_const
+      (HasDerivAt.fun_add (HasDerivAt.cos (HasDerivAt.log' a.right (hasDerivAt_pow 1 x)))
+        (HasDerivAt.const_sub (Real.cos (-7)) (hasDerivAt_pow 4 x)))
+      (Real.log (Real.sin (-13))))
+    (HasDerivAt.log' a.left
+      (HasDerivAt.div_const
+        (HasDerivAt.fun_add (HasDerivAt.const_mul (-10) (hasDerivAt_pow 2 x))
+          (HasDerivAt.div_const (hasDerivAt_pow 9 x) (-95)))
+        (Real.log (-88 + 45))))
+

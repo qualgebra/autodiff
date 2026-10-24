@@ -1,0 +1,15 @@
+Input: test79
+fun x => Real.cos (Real.tan (Real.sin 71)) * ((-32 + 92 + -45) / -71) / Real.log (x ^ 8)
+
+Result:
+{
+  f' := fun x =>
+    (0 * Real.log (x ^ 8) - Real.cos (Real.tan (Real.sin 71)) * ((-32 + 92 + -45) / -71) * (↑8 * x ^ (8 - 1) / x ^ 8)) /
+      Real.log (x ^ 8) ^ 2,
+  domain := fun x => Real.log (x ^ 8) ≠ 0 ∧ x ^ 8 ≠ 0, proof := d_test79._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (Real.tan (Real.sin 71)) * ((-32 + 92 + -45) / -71)))
+    (HasDerivAt.log' a.right (hasDerivAt_pow 8 x)) a.left
+

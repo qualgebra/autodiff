@@ -1,0 +1,9 @@
+Input: test28
+fun x => Real.cos (x ^ 9 + -50)
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 9 + -50) * (↑9 * x ^ (9 - 1)), domain := fun x => True, proof := d_test28._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.add_const (-50) (hasDerivAt_pow 9 x))
+

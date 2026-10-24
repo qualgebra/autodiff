@@ -1,0 +1,35 @@
+Input: test177
+fun x =>
+  67 - (Real.log (Real.tan (x ^ 8)) + Real.tan (x ^ 4 + -76)) +
+    x ^ 1 / Real.log 96 / Real.tan (x ^ 8 / (x ^ 8 + x ^ 10))
+
+Result:
+{
+  f' := fun x =>
+    -(1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1)) / Real.tan (x ^ 8) +
+          1 / Real.cos (x ^ 4 + -76) ^ 2 * (↑4 * x ^ (4 - 1))) +
+      (↑1 * x ^ (1 - 1) / Real.log 96 * Real.tan (x ^ 8 / (x ^ 8 + x ^ 10)) -
+          x ^ 1 / Real.log 96 *
+            (1 / Real.cos (x ^ 8 / (x ^ 8 + x ^ 10)) ^ 2 *
+              ((↑8 * x ^ (8 - 1) * (x ^ 8 + x ^ 10) - x ^ 8 * (↑8 * x ^ (8 - 1) + ↑10 * x ^ (10 - 1))) /
+                (x ^ 8 + x ^ 10) ^ 2))) /
+        Real.tan (x ^ 8 / (x ^ 8 + x ^ 10)) ^ 2,
+  domain := fun x =>
+    ((((Real.tan (x ^ 8 / (x ^ 8 + x ^ 10)) ≠ 0 ∧ x ^ 8 + x ^ 10 ≠ 0) ∧ Real.cos (x ^ 8 / (x ^ 8 + x ^ 10)) ≠ 0) ∧
+          Real.cos (x ^ 4 + -76) ≠ 0) ∧
+        Real.cos (x ^ 8) ≠ 0) ∧
+      Real.tan (x ^ 8) ≠ 0,
+  proof := d_test177._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.const_sub 67
+      (HasDerivAt.fun_add (HasDerivAt.log' a.right (HasDerivAt.tan' a.left.right (hasDerivAt_pow 8 x)))
+        (HasDerivAt.tan' a.left.left.right (HasDerivAt.add_const (-76) (hasDerivAt_pow 4 x)))))
+    (HasDerivAt.fun_div (HasDerivAt.div_const (hasDerivAt_pow 1 x) (Real.log 96))
+      (HasDerivAt.tan' a.left.left.left.right
+        (HasDerivAt.fun_div (hasDerivAt_pow 8 x) (HasDerivAt.fun_add (hasDerivAt_pow 8 x) (hasDerivAt_pow 10 x))
+          a.left.left.left.left.right))
+      a.left.left.left.left.left)
+

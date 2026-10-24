@@ -1,0 +1,10 @@
+Input: test71
+fun x => x ^ 2 / Real.tan (-12 + 92 + (-5 + -15) - Real.sin (Real.sin 94))
+
+Result:
+{ f' := fun x => ↑2 * x ^ (2 - 1) / Real.tan (-12 + 92 + (-5 + -15) - Real.sin (Real.sin 94)), domain := fun x => True,
+  proof := d_test71._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.div_const (hasDerivAt_pow 2 x) (Real.tan (-12 + 92 + (-5 + -15) - Real.sin (Real.sin 94)))
+

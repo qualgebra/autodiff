@@ -1,0 +1,17 @@
+Input: test267
+fun x => Real.sin (Real.cos (Real.tan (x ^ 8) / (-12 + 7)) + Real.tan (x ^ 8))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.tan (x ^ 8) / (-12 + 7)) + Real.tan (x ^ 8)) *
+      (-Real.sin (Real.tan (x ^ 8) / (-12 + 7)) * (1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1)) / (-12 + 7)) +
+        1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1))),
+  domain := fun x => Real.cos (x ^ 8) ≠ 0, proof := d_test267._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.fun_add (HasDerivAt.cos (HasDerivAt.div_const (HasDerivAt.tan' a (hasDerivAt_pow 8 x)) (-12 + 7)))
+      (HasDerivAt.tan' a (hasDerivAt_pow 8 x)))
+

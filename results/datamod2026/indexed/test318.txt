@@ -1,0 +1,20 @@
+Input: test318
+fun x => Real.log (Real.sin (Real.tan 42 * Real.sin (x ^ 4)) / (10 + x ^ 9))
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (Real.tan 42 * Real.sin (x ^ 4)) * (Real.tan 42 * (Real.cos (x ^ 4) * (↑4 * x ^ (4 - 1)))) *
+            (10 + x ^ 9) -
+          Real.sin (Real.tan 42 * Real.sin (x ^ 4)) * (↑9 * x ^ (9 - 1))) /
+        (10 + x ^ 9) ^ 2 /
+      (Real.sin (Real.tan 42 * Real.sin (x ^ 4)) / (10 + x ^ 9)),
+  domain := fun x => 10 + x ^ 9 ≠ 0 ∧ Real.sin (Real.tan 42 * Real.sin (x ^ 4)) / (10 + x ^ 9) ≠ 0,
+  proof := d_test318._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_div (HasDerivAt.sin (HasDerivAt.const_mul (Real.tan 42) (HasDerivAt.sin (hasDerivAt_pow 4 x))))
+      (HasDerivAt.const_add 10 (hasDerivAt_pow 9 x)) a.left)
+

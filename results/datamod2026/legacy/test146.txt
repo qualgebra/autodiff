@@ -1,0 +1,23 @@
+Input: test146
+fun x => Real.log (Real.log (Real.sin (22 / x ^ 8)) - Real.log (Real.log (-89)) / Real.sin (x ^ 8))
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (22 / x ^ 8) * (22 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2)) / Real.sin (22 / x ^ 8) -
+        Real.log (Real.log (-89)) * (-(Real.cos (x ^ 8) * (↑8 * x ^ (8 - 1))) / Real.sin (x ^ 8) ^ 2)) /
+      (Real.log (Real.sin (22 / x ^ 8)) - Real.log (Real.log (-89)) / Real.sin (x ^ 8)),
+  domain := fun x =>
+    ((Real.sin (x ^ 8) ≠ 0 ∧ x ^ 8 ≠ 0) ∧ Real.sin (22 / x ^ 8) ≠ 0) ∧
+      Real.log (Real.sin (22 / x ^ 8)) - Real.log (Real.log (-89)) / Real.sin (x ^ 8) ≠ 0,
+  proof := d_test146._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.sub
+      (HasDerivAt.log' a.left.right
+        (HasDerivAt.sin (HasDerivAt.const_mul 22 (HasDerivAt.inv (hasDerivAt_pow 8 x) a.left.left.right))))
+      (HasDerivAt.const_mul (Real.log (Real.log (-89)))
+        (HasDerivAt.inv (HasDerivAt.sin (hasDerivAt_pow 8 x)) a.left.left.left)))
+

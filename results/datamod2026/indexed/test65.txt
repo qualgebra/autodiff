@@ -1,0 +1,13 @@
+Input: test65
+fun x => Real.sin (Real.tan (Real.sin (x ^ 3)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan (Real.sin (x ^ 3))) *
+      (1 / Real.cos (Real.sin (x ^ 3)) ^ 2 * (Real.cos (x ^ 3) * (↑3 * x ^ (3 - 1)))),
+  domain := fun x => Real.cos (Real.sin (x ^ 3)) ≠ 0, proof := d_test65._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (HasDerivAt.tan' a (HasDerivAt.sin (hasDerivAt_pow 3 x)))
+

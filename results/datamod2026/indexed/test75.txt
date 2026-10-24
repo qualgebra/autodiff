@@ -1,0 +1,17 @@
+Input: test75
+fun x => 46 + Real.tan (Real.sin (Real.tan (x ^ 10)) + x ^ 10)
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.sin (Real.tan (x ^ 10)) + x ^ 10) ^ 2 *
+      (Real.cos (Real.tan (x ^ 10)) * (1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1))) + ↑10 * x ^ (10 - 1)),
+  domain := fun x => Real.cos (x ^ 10) ≠ 0 ∧ Real.cos (Real.sin (Real.tan (x ^ 10)) + x ^ 10) ≠ 0,
+  proof := d_test75._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add 46
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.fun_add (HasDerivAt.sin (HasDerivAt.tan' a.left (hasDerivAt_pow 10 x))) (hasDerivAt_pow 10 x)))
+

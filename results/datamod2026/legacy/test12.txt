@@ -1,0 +1,42 @@
+Input: test12
+fun x =>
+  (x ^ 8 * 82 + Real.sin (x ^ 2) - Real.tan (x ^ 5 / x ^ 2)) / (Real.sin (-40) / (99 + Real.tan (x ^ 2))) *
+    Real.tan ((Real.log (-19) + x ^ 2) * Real.tan (-100))
+
+Result:
+{
+  f' := fun x =>
+    ((↑8 * x ^ (8 - 1) * 82 + Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)) -
+              1 / Real.cos (x ^ 5 / x ^ 2) ^ 2 *
+                (↑5 * x ^ (5 - 1) * (x ^ 2)⁻¹ + x ^ 5 * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2))) *
+            (Real.sin (-40) / (99 + Real.tan (x ^ 2)))⁻¹ +
+          (x ^ 8 * 82 + Real.sin (x ^ 2) - Real.tan (x ^ 5 / x ^ 2)) *
+            (-(Real.sin (-40) * (-(1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1))) / (99 + Real.tan (x ^ 2)) ^ 2)) /
+              (Real.sin (-40) / (99 + Real.tan (x ^ 2))) ^ 2)) *
+        Real.tan ((Real.log (-19) + x ^ 2) * Real.tan (-100)) +
+      (x ^ 8 * 82 + Real.sin (x ^ 2) - Real.tan (x ^ 5 / x ^ 2)) / (Real.sin (-40) / (99 + Real.tan (x ^ 2))) *
+        (1 / Real.cos ((Real.log (-19) + x ^ 2) * Real.tan (-100)) ^ 2 * (↑2 * x ^ (2 - 1) * Real.tan (-100))),
+  domain := fun x =>
+    ((((Real.cos ((Real.log (-19) + x ^ 2) * Real.tan (-100)) ≠ 0 ∧ Real.sin (-40) / (99 + Real.tan (x ^ 2)) ≠ 0) ∧
+            99 + Real.tan (x ^ 2) ≠ 0) ∧
+          Real.cos (x ^ 2) ≠ 0) ∧
+        x ^ 2 ≠ 0) ∧
+      Real.cos (x ^ 5 / x ^ 2) ≠ 0,
+  proof := d_test12._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.fun_mul
+      (HasDerivAt.sub
+        (HasDerivAt.fun_add (HasDerivAt.mul_const (hasDerivAt_pow 8 x) 82) (HasDerivAt.sin (hasDerivAt_pow 2 x)))
+        (HasDerivAt.tan' a.right
+          (HasDerivAt.fun_mul (hasDerivAt_pow 5 x) (HasDerivAt.inv (hasDerivAt_pow 2 x) a.left.right))))
+      (HasDerivAt.inv
+        (HasDerivAt.const_mul (Real.sin (-40))
+          (HasDerivAt.inv (HasDerivAt.const_add 99 (HasDerivAt.tan' a.left.left.right (hasDerivAt_pow 2 x)))
+            a.left.left.left.right))
+        a.left.left.left.left.right))
+    (HasDerivAt.tan' a.left.left.left.left.left
+      (HasDerivAt.mul_const (HasDerivAt.const_add (Real.log (-19)) (hasDerivAt_pow 2 x)) (Real.tan (-100))))
+

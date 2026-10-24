@@ -1,0 +1,25 @@
+Input: test331
+fun x => Real.sin (5 / (x ^ 5 - x ^ 9)) + Real.sin (Real.cos (x ^ 1 * x ^ 8 / Real.sin (x ^ 7)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (5 / (x ^ 5 - x ^ 9)) *
+        ((0 * (x ^ 5 - x ^ 9) - 5 * (↑5 * x ^ (5 - 1) - ↑9 * x ^ (9 - 1))) / (x ^ 5 - x ^ 9) ^ 2) +
+      Real.cos (Real.cos (x ^ 1 * x ^ 8 / Real.sin (x ^ 7))) *
+        (-Real.sin (x ^ 1 * x ^ 8 / Real.sin (x ^ 7)) *
+          (((↑1 * x ^ (1 - 1) * x ^ 8 + x ^ 1 * (↑8 * x ^ (8 - 1))) * Real.sin (x ^ 7) -
+              x ^ 1 * x ^ 8 * (Real.cos (x ^ 7) * (↑7 * x ^ (7 - 1)))) /
+            Real.sin (x ^ 7) ^ 2)),
+  domain := fun x => Real.sin (x ^ 7) ≠ 0 ∧ x ^ 5 - x ^ 9 ≠ 0, proof := d_test331._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.sin
+      (HasDerivAt.fun_div (hasDerivAt_const x 5) (HasDerivAt.sub (hasDerivAt_pow 5 x) (hasDerivAt_pow 9 x)) a.right))
+    (HasDerivAt.sin
+      (HasDerivAt.cos
+        (HasDerivAt.fun_div (HasDerivAt.fun_mul (hasDerivAt_pow 1 x) (hasDerivAt_pow 8 x))
+          (HasDerivAt.sin (hasDerivAt_pow 7 x)) a.left)))
+

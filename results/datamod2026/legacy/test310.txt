@@ -1,0 +1,22 @@
+Input: test310
+fun x => Real.log (Real.sin ((x ^ 8 - -36) * (x ^ 9 + -56)) / x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos ((x ^ 8 - -36) * (x ^ 9 + -56)) *
+            (↑8 * x ^ (8 - 1) * (x ^ 9 + -56) + (x ^ 8 - -36) * (↑9 * x ^ (9 - 1))) *
+          (x ^ 6)⁻¹ +
+        Real.sin ((x ^ 8 - -36) * (x ^ 9 + -56)) * (-(↑6 * x ^ (6 - 1)) / (x ^ 6) ^ 2)) /
+      (Real.sin ((x ^ 8 - -36) * (x ^ 9 + -56)) / x ^ 6),
+  domain := fun x => x ^ 6 ≠ 0 ∧ Real.sin ((x ^ 8 - -36) * (x ^ 9 + -56)) / x ^ 6 ≠ 0, proof := d_test310._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_mul
+      (HasDerivAt.sin
+        (HasDerivAt.fun_mul (HasDerivAt.add_const (- -36) (hasDerivAt_pow 8 x))
+          (HasDerivAt.add_const (-56) (hasDerivAt_pow 9 x))))
+      (HasDerivAt.inv (hasDerivAt_pow 6 x) a.left))
+

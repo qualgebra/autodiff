@@ -1,0 +1,25 @@
+Input: test393
+fun x => Real.cos (Real.tan (62 * x ^ 5 * (x ^ 9 / x ^ 3) / x ^ 10))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.tan (62 * x ^ 5 * (x ^ 9 / x ^ 3) / x ^ 10)) *
+      (1 / Real.cos (62 * x ^ 5 * (x ^ 9 / x ^ 3) / x ^ 10) ^ 2 *
+        (((62 * (↑5 * x ^ (5 - 1)) * (x ^ 9 / x ^ 3) +
+                62 * x ^ 5 * ((↑9 * x ^ (9 - 1) * x ^ 3 - x ^ 9 * (↑3 * x ^ (3 - 1))) / (x ^ 3) ^ 2)) *
+              x ^ 10 -
+            62 * x ^ 5 * (x ^ 9 / x ^ 3) * (↑10 * x ^ (10 - 1))) /
+          (x ^ 10) ^ 2)),
+  domain := fun x => (x ^ 10 ≠ 0 ∧ x ^ 3 ≠ 0) ∧ Real.cos (62 * x ^ 5 * (x ^ 9 / x ^ 3) / x ^ 10) ≠ 0,
+  proof := d_test393._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.fun_div
+        (HasDerivAt.fun_mul (HasDerivAt.const_mul 62 (hasDerivAt_pow 5 x))
+          (HasDerivAt.fun_div (hasDerivAt_pow 9 x) (hasDerivAt_pow 3 x) a.left.right))
+        (hasDerivAt_pow 10 x) a.left.left))
+

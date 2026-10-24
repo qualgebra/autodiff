@@ -1,0 +1,50 @@
+Input: test199
+fun x =>
+  (Real.cos (Real.tan (Real.log (x ^ 4))) + 100) /
+    (Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) / ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.tan (Real.log (x ^ 4))) * (1 / Real.cos (Real.log (x ^ 4)) ^ 2 * (↑4 * x ^ (4 - 1) / x ^ 4)) *
+        (Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) / ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3))⁻¹ +
+      (Real.cos (Real.tan (Real.log (x ^ 4))) + 100) *
+        (-((↑5 * x ^ (5 - 1) / x ^ 5 * (x ^ 7 * x ^ 10)⁻¹ +
+                    Real.log (x ^ 5) *
+                      (-(↑7 * x ^ (7 - 1) * x ^ 10 + x ^ 7 * (↑10 * x ^ (10 - 1))) / (x ^ 7 * x ^ 10) ^ 2)) /
+                  (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) *
+                ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3)⁻¹ +
+              Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) *
+                (-((↑3 * x ^ (3 - 1) * x ^ 2 + x ^ 3 * (↑2 * x ^ (2 - 1)) + ↑10 * x ^ (10 - 1)) * (x ^ 3)⁻¹ +
+                      (x ^ 3 * x ^ 2 + x ^ 10) * (-(↑3 * x ^ (3 - 1)) / (x ^ 3) ^ 2)) /
+                  ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3) ^ 2)) /
+          (Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) / ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3)) ^ 2),
+  domain := fun x =>
+    ((((((Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) / ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3) ≠ 0 ∧
+                  (x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3 ≠ 0) ∧
+                x ^ 3 ≠ 0) ∧
+              x ^ 7 * x ^ 10 ≠ 0) ∧
+            x ^ 5 ≠ 0) ∧
+          Real.log (x ^ 5) / (x ^ 7 * x ^ 10) ≠ 0) ∧
+        x ^ 4 ≠ 0) ∧
+      Real.cos (Real.log (x ^ 4)) ≠ 0,
+  proof := d_test199._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.add_const 100
+      (HasDerivAt.cos (HasDerivAt.tan' a.right (HasDerivAt.log' a.left.right (hasDerivAt_pow 4 x)))))
+    (HasDerivAt.inv
+      (HasDerivAt.fun_mul
+        (HasDerivAt.log' a.left.left.right
+          (HasDerivAt.fun_mul (HasDerivAt.log' a.left.left.left.right (hasDerivAt_pow 5 x))
+            (HasDerivAt.inv (HasDerivAt.fun_mul (hasDerivAt_pow 7 x) (hasDerivAt_pow 10 x))
+              a.left.left.left.left.right)))
+        (HasDerivAt.inv
+          (HasDerivAt.fun_mul
+            (HasDerivAt.fun_add (HasDerivAt.fun_mul (hasDerivAt_pow 3 x) (hasDerivAt_pow 2 x)) (hasDerivAt_pow 10 x))
+            (HasDerivAt.inv (hasDerivAt_pow 3 x) a.left.left.left.left.left.right))
+          a.left.left.left.left.left.left.right))
+      a.left.left.left.left.left.left.left)
+

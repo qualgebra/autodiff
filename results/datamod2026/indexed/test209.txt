@@ -1,0 +1,9 @@
+Input: test209
+fun x => x ^ 7 - x ^ 4
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1) - ↑4 * x ^ (4 - 1), domain := fun x => True, proof := d_test209._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sub (hasDerivAt_pow 7 x) (hasDerivAt_pow 4 x)
+

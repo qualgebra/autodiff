@@ -1,0 +1,9 @@
+Input: test17
+fun x => x ^ 1 * -47
+
+Result:
+{ f' := fun x => ↑1 * x ^ (1 - 1) * -47, domain := fun x => True, proof := d_test17._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (hasDerivAt_pow 1 x) (-47)
+

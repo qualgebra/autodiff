@@ -1,0 +1,9 @@
+Input: test101
+fun x => x ^ 8 / Real.tan 33
+
+Result:
+{ f' := fun x => ↑8 * x ^ (8 - 1) * (Real.tan 33)⁻¹, domain := fun x => True, proof := d_test101._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (hasDerivAt_pow 8 x) (Real.tan 33)⁻¹
+

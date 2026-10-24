@@ -1,0 +1,9 @@
+Input: test178
+fun x => Real.sin (x ^ 6)
+
+Result:
+{ f' := fun x => Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1)), domain := fun x => True, proof := d_test178._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (hasDerivAt_pow 6 x)
+

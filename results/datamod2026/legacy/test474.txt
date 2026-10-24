@@ -1,0 +1,19 @@
+Input: test474
+fun x => -10 + (Real.log (Real.sin 48) - (Real.tan (x ^ 4) - 99 / x ^ 6) * Real.tan (x ^ 5))
+
+Result:
+{
+  f' := fun x =>
+    -((1 / Real.cos (x ^ 4) ^ 2 * (↑4 * x ^ (4 - 1)) - 99 * (-(↑6 * x ^ (6 - 1)) / (x ^ 6) ^ 2)) * Real.tan (x ^ 5) +
+        (Real.tan (x ^ 4) - 99 / x ^ 6) * (1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1)))),
+  domain := fun x => (Real.cos (x ^ 5) ≠ 0 ∧ x ^ 6 ≠ 0) ∧ Real.cos (x ^ 4) ≠ 0, proof := d_test474._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (-10)
+    (HasDerivAt.const_sub (Real.log (Real.sin 48))
+      (HasDerivAt.fun_mul
+        (HasDerivAt.sub (HasDerivAt.tan' a.right (hasDerivAt_pow 4 x))
+          (HasDerivAt.const_mul 99 (HasDerivAt.inv (hasDerivAt_pow 6 x) a.left.right)))
+        (HasDerivAt.tan' a.left.left (hasDerivAt_pow 5 x))))
+

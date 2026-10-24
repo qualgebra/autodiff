@@ -1,0 +1,21 @@
+Input: test85
+fun x => Real.sin (76 * x ^ 4 - Real.sin (x ^ 2)) * x ^ 10 * Real.sin (Real.log (-86) - Real.sin (Real.sin 79))
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (76 * x ^ 4 - Real.sin (x ^ 2)) * (76 * (↑4 * x ^ (4 - 1)) - Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1))) *
+          x ^ 10 +
+        Real.sin (76 * x ^ 4 - Real.sin (x ^ 2)) * (↑10 * x ^ (10 - 1))) *
+      Real.sin (Real.log (-86) - Real.sin (Real.sin 79)),
+  domain := fun x => True, proof := d_test85._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.fun_mul
+      (HasDerivAt.sin
+        (HasDerivAt.sub (HasDerivAt.const_mul 76 (hasDerivAt_pow 4 x)) (HasDerivAt.sin (hasDerivAt_pow 2 x))))
+      (hasDerivAt_pow 10 x))
+    (Real.sin (Real.log (-86) - Real.sin (Real.sin 79)))
+

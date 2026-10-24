@@ -1,0 +1,14 @@
+Input: test268
+fun x => -60 * (Real.tan (99 + x ^ 2) - Real.cos (x ^ 1) - Real.tan (Real.cos (-6) + -89))
+
+Result:
+{ f' := fun x => -60 * (1 / Real.cos (99 + x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)) - -Real.sin (x ^ 1) * Real.one✝),
+  domain := fun x => Real.cos (99 + x ^ 2) ≠ 0, proof := d_test268._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (-60)
+    (HasDerivAt.add_const (-Real.tan (Real.cos (-6) + -89))
+      (HasDerivAt.sub (HasDerivAt.tan' a (HasDerivAt.const_add 99 (hasDerivAt_pow 2 x)))
+        (HasDerivAt.cos (hasDerivAt_const_mul Real.one✝))))
+

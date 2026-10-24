@@ -1,0 +1,22 @@
+Input: test467
+fun x => Real.tan (Real.cos 88) * (Real.sin (-69) * (61 - x ^ 7)) * (Real.sin (-36 / x ^ 9) + 62) + Real.tan (x ^ 4)
+
+Result:
+{
+  f' := fun x =>
+    Real.tan (Real.cos 88) * (Real.sin (-69) * -(↑7 * x ^ (7 - 1))) * (Real.sin (-36 / x ^ 9) + 62) +
+        Real.tan (Real.cos 88) * (Real.sin (-69) * (61 - x ^ 7)) *
+          (Real.cos (-36 / x ^ 9) * (-36 * (-(↑9 * x ^ (9 - 1)) / (x ^ 9) ^ 2))) +
+      1 / Real.cos (x ^ 4) ^ 2 * (↑4 * x ^ (4 - 1)),
+  domain := fun x => Real.cos (x ^ 4) ≠ 0 ∧ x ^ 9 ≠ 0, proof := d_test467._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_mul
+      (HasDerivAt.const_mul (Real.tan (Real.cos 88))
+        (HasDerivAt.const_mul (Real.sin (-69)) (HasDerivAt.const_sub 61 (hasDerivAt_pow 7 x))))
+      (HasDerivAt.add_const 62
+        (HasDerivAt.sin (HasDerivAt.const_mul (-36) (HasDerivAt.inv (hasDerivAt_pow 9 x) a.right)))))
+    (HasDerivAt.tan' a.left (hasDerivAt_pow 4 x))
+

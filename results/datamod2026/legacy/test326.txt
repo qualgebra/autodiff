@@ -1,0 +1,27 @@
+Input: test326
+fun x =>
+  Real.log (-92 / -99 / (67 + x ^ 10) + -87 * (-90 - 75)) -
+    Real.log (Real.cos (x ^ 3) - x ^ 9 - Real.log (-2) * Real.cos (-14))
+
+Result:
+{
+  f' := fun x =>
+    -92 / -99 * (-(↑10 * x ^ (10 - 1)) / (67 + x ^ 10) ^ 2) / (-92 / -99 / (67 + x ^ 10) + -87 * (-90 - 75)) -
+      (-Real.sin (x ^ 3) * (↑3 * x ^ (3 - 1)) - ↑9 * x ^ (9 - 1)) /
+        (Real.cos (x ^ 3) - x ^ 9 - Real.log (-2) * Real.cos (-14)),
+  domain := fun x =>
+    (Real.cos (x ^ 3) - x ^ 9 - Real.log (-2) * Real.cos (-14) ≠ 0 ∧ 67 + x ^ 10 ≠ 0) ∧
+      -92 / -99 / (67 + x ^ 10) + -87 * (-90 - 75) ≠ 0,
+  proof := d_test326._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.log' a.right
+      (HasDerivAt.add_const (-87 * (-90 - 75))
+        (HasDerivAt.const_mul (-92 / -99)
+          (HasDerivAt.inv (HasDerivAt.const_add 67 (hasDerivAt_pow 10 x)) a.left.right))))
+    (HasDerivAt.log' a.left.left
+      (HasDerivAt.add_const (-(Real.log (-2) * Real.cos (-14)))
+        (HasDerivAt.sub (HasDerivAt.cos (hasDerivAt_pow 3 x)) (hasDerivAt_pow 9 x))))
+

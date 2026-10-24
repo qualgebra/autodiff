@@ -1,0 +1,15 @@
+Input: test425
+fun x => -86 + Real.cos (Real.log (x ^ 3)) * x ^ 3
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (x ^ 3)) * (↑3 * x ^ (3 - 1) / x ^ 3) * x ^ 3 +
+      Real.cos (Real.log (x ^ 3)) * (↑3 * x ^ (3 - 1)),
+  domain := fun x => x ^ 3 ≠ 0, proof := d_test425._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (-86)
+    (HasDerivAt.fun_mul (HasDerivAt.cos (HasDerivAt.log' a (hasDerivAt_pow 3 x))) (hasDerivAt_pow 3 x))
+

@@ -1,0 +1,27 @@
+Input: test102
+fun x => Real.tan (Real.tan (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.tan (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7)) ^ 2 *
+      (1 / Real.cos (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7) ^ 2 *
+        ((-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)) * (x ^ 4 / x ^ 2) -
+                Real.cos (x ^ 9) * ((↑4 * x ^ (4 - 1) * x ^ 2 - x ^ 4 * (↑2 * x ^ (2 - 1))) / (x ^ 2) ^ 2)) /
+              (x ^ 4 / x ^ 2) ^ 2 *
+            x ^ 7 +
+          Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * (↑7 * x ^ (7 - 1)))),
+  domain := fun x =>
+    ((x ^ 4 / x ^ 2 ≠ 0 ∧ x ^ 2 ≠ 0) ∧ Real.cos (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7) ≠ 0) ∧
+      Real.cos (Real.tan (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7)) ≠ 0,
+  proof := d_test102._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.tan' a.left.right
+      (HasDerivAt.fun_mul
+        (HasDerivAt.fun_div (HasDerivAt.cos (hasDerivAt_pow 9 x))
+          (HasDerivAt.fun_div (hasDerivAt_pow 4 x) (hasDerivAt_pow 2 x) a.left.left.right) a.left.left.left)
+        (hasDerivAt_pow 7 x)))
+

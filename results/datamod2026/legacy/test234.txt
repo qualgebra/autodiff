@@ -1,0 +1,10 @@
+Input: test234
+fun x => Real.log (x ^ 2 - Real.tan (-93))
+
+Result:
+{ f' := fun x => ↑2 * x ^ (2 - 1) / (x ^ 2 - Real.tan (-93)), domain := fun x => x ^ 2 - Real.tan (-93) ≠ 0,
+  proof := d_test234._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (HasDerivAt.add_const (-Real.tan (-93)) (hasDerivAt_pow 2 x))
+

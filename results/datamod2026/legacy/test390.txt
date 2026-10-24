@@ -1,0 +1,30 @@
+Input: test390
+fun x =>
+  Real.tan ((-100 - Real.tan 5 - Real.sin (x ^ 1) / Real.cos (x ^ 6)) / (Real.tan (58 * -70) / Real.tan (-68 * 25)))
+
+Result:
+{
+  f' := fun x =>
+    1 /
+        Real.cos
+            ((-100 - Real.tan 5 - Real.sin (x ^ 1) / Real.cos (x ^ 6)) / (Real.tan (58 * -70) / Real.tan (-68 * 25))) ^
+          2 *
+      (-(Real.cos (x ^ 1) * Real.one✝ * (Real.cos (x ^ 6))⁻¹ +
+            Real.sin (x ^ 1) * (-(-Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1))) / Real.cos (x ^ 6) ^ 2)) *
+        (Real.tan (58 * -70) / Real.tan (-68 * 25))⁻¹),
+  domain := fun x =>
+    Real.cos (x ^ 6) ≠ 0 ∧
+      Real.cos
+          ((-100 - Real.tan 5 - Real.sin (x ^ 1) / Real.cos (x ^ 6)) / (Real.tan (58 * -70) / Real.tan (-68 * 25))) ≠
+        0,
+  proof := d_test390._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.mul_const
+      (HasDerivAt.const_sub (-100 - Real.tan 5)
+        (HasDerivAt.fun_mul (HasDerivAt.sin (hasDerivAt_const_mul Real.one✝))
+          (HasDerivAt.inv (HasDerivAt.cos (hasDerivAt_pow 6 x)) a.left)))
+      (Real.tan (58 * -70) / Real.tan (-68 * 25))⁻¹)
+

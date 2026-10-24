@@ -1,0 +1,22 @@
+Input: test275
+fun x => 97 / (Real.tan (Real.cos (x ^ 4 - x ^ 8)) - -98 / Real.sin (Real.tan 95))
+
+Result:
+{
+  f' := fun x =>
+    97 *
+      (-(1 / Real.cos (Real.cos (x ^ 4 - x ^ 8)) ^ 2 *
+            (-Real.sin (x ^ 4 - x ^ 8) * (↑4 * x ^ (4 - 1) - ↑8 * x ^ (8 - 1)))) /
+        (Real.tan (Real.cos (x ^ 4 - x ^ 8)) - -98 / Real.sin (Real.tan 95)) ^ 2),
+  domain := fun x =>
+    Real.tan (Real.cos (x ^ 4 - x ^ 8)) - -98 / Real.sin (Real.tan 95) ≠ 0 ∧ Real.cos (Real.cos (x ^ 4 - x ^ 8)) ≠ 0,
+  proof := d_test275._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 97
+    (HasDerivAt.inv
+      (HasDerivAt.add_const (-(-98 / Real.sin (Real.tan 95)))
+        (HasDerivAt.tan' a.right (HasDerivAt.cos (HasDerivAt.sub (hasDerivAt_pow 4 x) (hasDerivAt_pow 8 x)))))
+      a.left)
+

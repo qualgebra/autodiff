@@ -1,0 +1,34 @@
+Input: test290
+fun x =>
+  Real.tan
+    (Real.sin (Real.log (x ^ 3) - -52 / x ^ 10) - (Real.tan 68 - Real.cos 76 - Real.sin (-66) * Real.cos (x ^ 2)))
+
+Result:
+{
+  f' := fun x =>
+    1 /
+        Real.cos
+            (Real.sin (Real.log (x ^ 3) - -52 / x ^ 10) -
+              (Real.tan 68 - Real.cos 76 - Real.sin (-66) * Real.cos (x ^ 2))) ^
+          2 *
+      (Real.cos (Real.log (x ^ 3) - -52 / x ^ 10) *
+          (↑3 * x ^ (3 - 1) / x ^ 3 - (0 * x ^ 10 - -52 * (↑10 * x ^ (10 - 1))) / (x ^ 10) ^ 2) -
+        -(Real.sin (-66) * (-Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1))))),
+  domain := fun x =>
+    (x ^ 10 ≠ 0 ∧ x ^ 3 ≠ 0) ∧
+      Real.cos
+          (Real.sin (Real.log (x ^ 3) - -52 / x ^ 10) -
+            (Real.tan 68 - Real.cos 76 - Real.sin (-66) * Real.cos (x ^ 2))) ≠
+        0,
+  proof := d_test290._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sub
+      (HasDerivAt.sin
+        (HasDerivAt.sub (HasDerivAt.log' a.left.right (hasDerivAt_pow 3 x))
+          (HasDerivAt.fun_div (hasDerivAt_const x (-52)) (hasDerivAt_pow 10 x) a.left.left)))
+      (HasDerivAt.const_sub (Real.tan 68 - Real.cos 76)
+        (HasDerivAt.const_mul (Real.sin (-66)) (HasDerivAt.cos (hasDerivAt_pow 2 x)))))
+

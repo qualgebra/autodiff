@@ -1,0 +1,27 @@
+Input: test240
+fun x =>
+  Real.sin (Real.cos (Real.log (-64))) / (Real.sin (87 + x ^ 1) / -14) +
+    Real.log (Real.sin (Real.cos (x ^ 10))) * Real.sin (Real.cos (x ^ 1 - x ^ 1))
+
+Result:
+{
+  f' := fun x =>
+    Real.sin (Real.cos (Real.log (-64))) *
+        (-(Real.cos (87 + x ^ 1) * Real.one✝ * (-14)⁻¹) / (Real.sin (87 + x ^ 1) / -14) ^ 2) +
+      (Real.cos (Real.cos (x ^ 10)) * (-Real.sin (x ^ 10) * (↑10 * x ^ (10 - 1))) / Real.sin (Real.cos (x ^ 10)) *
+          Real.sin (Real.cos (x ^ 1 - x ^ 1)) +
+        Real.log (Real.sin (Real.cos (x ^ 10))) *
+          (Real.cos (Real.cos (x ^ 1 - x ^ 1)) * (-Real.sin (x ^ 1 - x ^ 1) * (Real.one✝ - Real.one✝)))),
+  domain := fun x => Real.sin (Real.cos (x ^ 10)) ≠ 0 ∧ Real.sin (87 + x ^ 1) / -14 ≠ 0, proof := d_test240._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.const_mul (Real.sin (Real.cos (Real.log (-64))))
+      (HasDerivAt.inv
+        (HasDerivAt.mul_const (HasDerivAt.sin (HasDerivAt.const_add 87 (hasDerivAt_const_mul Real.one✝))) (-14)⁻¹)
+        a.right))
+    (HasDerivAt.fun_mul (HasDerivAt.log' a.left (HasDerivAt.sin (HasDerivAt.cos (hasDerivAt_pow 10 x))))
+      (HasDerivAt.sin
+        (HasDerivAt.cos (HasDerivAt.sub (hasDerivAt_const_mul Real.one✝) (hasDerivAt_const_mul Real.one✝)))))
+

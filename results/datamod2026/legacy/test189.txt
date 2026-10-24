@@ -1,0 +1,20 @@
+Input: test189
+fun x => Real.cos (x ^ 1) - Real.log (Real.tan (x ^ 5)) + Real.log (0 + x ^ 10) + x ^ 2
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 1) * Real.one✝ - 1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1)) / Real.tan (x ^ 5) +
+        ↑10 * x ^ (10 - 1) / (0 + x ^ 10) +
+      ↑2 * x ^ (2 - 1),
+  domain := fun x => (0 + x ^ 10 ≠ 0 ∧ Real.cos (x ^ 5) ≠ 0) ∧ Real.tan (x ^ 5) ≠ 0, proof := d_test189._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_add
+      (HasDerivAt.sub (HasDerivAt.cos (hasDerivAt_const_mul Real.one✝))
+        (HasDerivAt.log' a.right (HasDerivAt.tan' a.left.right (hasDerivAt_pow 5 x))))
+      (HasDerivAt.log' a.left.left (HasDerivAt.const_add 0 (hasDerivAt_pow 10 x))))
+    (hasDerivAt_pow 2 x)
+

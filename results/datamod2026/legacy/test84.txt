@@ -1,0 +1,15 @@
+Input: test84
+fun x => Real.cos (Real.cos (x ^ 8) - -28) / x ^ 7
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.cos (x ^ 8) - -28) * (-Real.sin (x ^ 8) * (↑8 * x ^ (8 - 1))) * (x ^ 7)⁻¹ +
+      Real.cos (Real.cos (x ^ 8) - -28) * (-(↑7 * x ^ (7 - 1)) / (x ^ 7) ^ 2),
+  domain := fun x => x ^ 7 ≠ 0, proof := d_test84._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.cos (HasDerivAt.add_const (- -28) (HasDerivAt.cos (hasDerivAt_pow 8 x))))
+    (HasDerivAt.inv (hasDerivAt_pow 7 x) a)
+

@@ -1,0 +1,14 @@
+Input: test74
+fun x => Real.log (Real.sin (-51)) * Real.cos (x ^ 2 / -15) - -13 + Real.tan (Real.tan (Real.log (51 * -92)))
+
+Result:
+{ f' := fun x => Real.log (Real.sin (-51)) * (-Real.sin (x ^ 2 / -15) * (↑2 * x ^ (2 - 1) / -15)),
+  domain := fun x => True, proof := d_test74._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const (Real.tan (Real.tan (Real.log (51 * -92))))
+    (HasDerivAt.sub_const (-13)
+      (HasDerivAt.const_mul (Real.log (Real.sin (-51)))
+        (HasDerivAt.cos (HasDerivAt.div_const (hasDerivAt_pow 2 x) (-15)))))
+

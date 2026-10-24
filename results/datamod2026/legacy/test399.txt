@@ -1,0 +1,10 @@
+Input: test399
+fun x => Real.log (x ^ 9 + Real.cos (-42))
+
+Result:
+{ f' := fun x => ↑9 * x ^ (9 - 1) / (x ^ 9 + Real.cos (-42)), domain := fun x => x ^ 9 + Real.cos (-42) ≠ 0,
+  proof := d_test399._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (HasDerivAt.add_const (Real.cos (-42)) (hasDerivAt_pow 9 x))
+

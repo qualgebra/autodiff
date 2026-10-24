@@ -1,0 +1,28 @@
+Input: test304
+fun x => Real.tan (-57 - Real.log (Real.log (x ^ 1))) + Real.log (x ^ 4 / x ^ 1 * Real.log (x ^ 3)) * 54
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (-57 - Real.log (Real.log (x ^ 1))) ^ 2 * -(↑1 * x ^ (1 - 1) / x ^ 1 / Real.log (x ^ 1)) +
+      ((↑4 * x ^ (4 - 1) * x ^ 1 - x ^ 4 * (↑1 * x ^ (1 - 1))) / (x ^ 1) ^ 2 * Real.log (x ^ 3) +
+            x ^ 4 / x ^ 1 * (↑3 * x ^ (3 - 1) / x ^ 3)) /
+          (x ^ 4 / x ^ 1 * Real.log (x ^ 3)) *
+        54,
+  domain := fun x =>
+    ((((x ^ 3 ≠ 0 ∧ x ^ 1 ≠ 0) ∧ x ^ 4 / x ^ 1 * Real.log (x ^ 3) ≠ 0) ∧ x ^ 1 ≠ 0) ∧ Real.log (x ^ 1) ≠ 0) ∧
+      Real.cos (-57 - Real.log (Real.log (x ^ 1))) ≠ 0,
+  proof := d_test304._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.const_sub (-57)
+        (HasDerivAt.log' a.left.right (HasDerivAt.log' a.left.left.left.left.right (hasDerivAt_pow 1 x)))))
+    (HasDerivAt.mul_const
+      (HasDerivAt.log' a.left.left.left.right
+        (HasDerivAt.fun_mul (HasDerivAt.fun_div (hasDerivAt_pow 4 x) (hasDerivAt_pow 1 x) a.left.left.left.left.right)
+          (HasDerivAt.log' a.left.left.left.left.left (hasDerivAt_pow 3 x))))
+      54)
+

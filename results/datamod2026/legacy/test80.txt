@@ -1,0 +1,16 @@
+Input: test80
+fun x => 46 + (x ^ 1 - 65 - Real.tan (-37) - x ^ 8 + 56 * x ^ 4)
+
+Result:
+{ f' := fun x => Real.one✝ - ↑8 * x ^ (8 - 1) + 56 * (↑4 * x ^ (4 - 1)), domain := fun x => True,
+  proof := d_test80._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add 46
+    (HasDerivAt.fun_add
+      (HasDerivAt.sub
+        (HasDerivAt.add_const (-Real.tan (-37)) (HasDerivAt.add_const (-65) (hasDerivAt_const_mul Real.one✝)))
+        (hasDerivAt_pow 8 x))
+      (HasDerivAt.const_mul 56 (hasDerivAt_pow 4 x)))
+

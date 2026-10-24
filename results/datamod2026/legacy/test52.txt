@@ -1,0 +1,9 @@
+Input: test52
+fun x => Real.log 53 + Real.cos (73 - x ^ 7)
+
+Result:
+{ f' := fun x => -Real.sin (73 - x ^ 7) * -(↑7 * x ^ (7 - 1)), domain := fun x => True, proof := d_test52._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.const_add (Real.log 53) (HasDerivAt.cos (HasDerivAt.const_sub 73 (hasDerivAt_pow 7 x)))
+

@@ -1,0 +1,18 @@
+Input: test350
+fun x => 87 + (Real.log (x ^ 8 - x ^ 5) + Real.log (-99 / 23) + Real.cos (Real.sin (x ^ 8 - 53)))
+
+Result:
+{
+  f' := fun x =>
+    (↑8 * x ^ (8 - 1) - ↑5 * x ^ (5 - 1)) / (x ^ 8 - x ^ 5) +
+      -Real.sin (Real.sin (x ^ 8 - 53)) * (Real.cos (x ^ 8 - 53) * (↑8 * x ^ (8 - 1))),
+  domain := fun x => x ^ 8 - x ^ 5 ≠ 0, proof := d_test350._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add 87
+    (HasDerivAt.fun_add
+      (HasDerivAt.add_const (Real.log (-99 / 23))
+        (HasDerivAt.log' a (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 5 x))))
+      (HasDerivAt.cos (HasDerivAt.sin (HasDerivAt.add_const (-53) (hasDerivAt_pow 8 x)))))
+

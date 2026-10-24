@@ -1,0 +1,25 @@
+Input: test443
+fun x =>
+  Real.log (Real.sin (Real.tan (-71)) + (Real.cos (x ^ 8) - Real.sin (-80))) -
+    Real.log (Real.sin (Real.cos (x ^ 5 * x ^ 6)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 8) * (↑8 * x ^ (8 - 1)) / (Real.sin (Real.tan (-71)) + (Real.cos (x ^ 8) - Real.sin (-80))) -
+      Real.cos (Real.cos (x ^ 5 * x ^ 6)) *
+          (-Real.sin (x ^ 5 * x ^ 6) * (↑5 * x ^ (5 - 1) * x ^ 6 + x ^ 5 * (↑6 * x ^ (6 - 1)))) /
+        Real.sin (Real.cos (x ^ 5 * x ^ 6)),
+  domain := fun x =>
+    Real.sin (Real.cos (x ^ 5 * x ^ 6)) ≠ 0 ∧ Real.sin (Real.tan (-71)) + (Real.cos (x ^ 8) - Real.sin (-80)) ≠ 0,
+  proof := d_test443._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.log' a.right
+      (HasDerivAt.const_add (Real.sin (Real.tan (-71)))
+        (HasDerivAt.sub_const (Real.sin (-80)) (HasDerivAt.cos (hasDerivAt_pow 8 x)))))
+    (HasDerivAt.log' a.left
+      (HasDerivAt.sin (HasDerivAt.cos (HasDerivAt.fun_mul (hasDerivAt_pow 5 x) (hasDerivAt_pow 6 x)))))
+

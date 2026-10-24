@@ -1,0 +1,24 @@
+Input: test246
+fun x => (-18 + (Real.cos (Real.cos 89) + -37)) / (Real.cos (x ^ 2 * -39 * (4 - x ^ 2)) - x ^ 2)
+
+Result:
+{
+  f' := fun x =>
+    (0 * (Real.cos (x ^ 2 * -39 * (4 - x ^ 2)) - x ^ 2) -
+        (-18 + (Real.cos (Real.cos 89) + -37)) *
+          (-Real.sin (x ^ 2 * -39 * (4 - x ^ 2)) *
+              (↑2 * x ^ (2 - 1) * -39 * (4 - x ^ 2) + x ^ 2 * -39 * -(↑2 * x ^ (2 - 1))) -
+            ↑2 * x ^ (2 - 1))) /
+      (Real.cos (x ^ 2 * -39 * (4 - x ^ 2)) - x ^ 2) ^ 2,
+  domain := fun x => Real.cos (x ^ 2 * -39 * (4 - x ^ 2)) - x ^ 2 ≠ 0, proof := d_test246._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x (-18 + (Real.cos (Real.cos 89) + -37)))
+    (HasDerivAt.sub
+      (HasDerivAt.cos
+        (HasDerivAt.fun_mul (HasDerivAt.mul_const (hasDerivAt_pow 2 x) (-39))
+          (HasDerivAt.const_sub 4 (hasDerivAt_pow 2 x))))
+      (hasDerivAt_pow 2 x))
+    a
+

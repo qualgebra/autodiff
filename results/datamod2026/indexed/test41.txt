@@ -1,0 +1,22 @@
+Input: test41
+fun x => 55 / Real.sin (x ^ 4 + Real.tan (x ^ 10) / Real.log 83)
+
+Result:
+{
+  f' := fun x =>
+    (0 * Real.sin (x ^ 4 + Real.tan (x ^ 10) / Real.log 83) -
+        55 *
+          (Real.cos (x ^ 4 + Real.tan (x ^ 10) / Real.log 83) *
+            (↑4 * x ^ (4 - 1) + 1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1)) / Real.log 83))) /
+      Real.sin (x ^ 4 + Real.tan (x ^ 10) / Real.log 83) ^ 2,
+  domain := fun x => Real.sin (x ^ 4 + Real.tan (x ^ 10) / Real.log 83) ≠ 0 ∧ Real.cos (x ^ 10) ≠ 0,
+  proof := d_test41._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x 55)
+    (HasDerivAt.sin
+      (HasDerivAt.fun_add (hasDerivAt_pow 4 x)
+        (HasDerivAt.div_const (HasDerivAt.tan' a.right (hasDerivAt_pow 10 x)) (Real.log 83))))
+    a.left
+

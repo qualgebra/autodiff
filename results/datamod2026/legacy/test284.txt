@@ -1,0 +1,14 @@
+Input: test284
+fun x => x ^ 1 + Real.log (Real.log (Real.log (x ^ 2))) + x ^ 1
+
+Result:
+{ f' := fun x => Real.one✝ + ↑2 * x ^ (2 - 1) / x ^ 2 / Real.log (x ^ 2) / Real.log (Real.log (x ^ 2)) + Real.one✝,
+  domain := fun x => (x ^ 2 ≠ 0 ∧ Real.log (x ^ 2) ≠ 0) ∧ Real.log (Real.log (x ^ 2)) ≠ 0, proof := d_test284._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_add (hasDerivAt_const_mul Real.one✝)
+      (HasDerivAt.log' a.right (HasDerivAt.log' a.left.right (HasDerivAt.log' a.left.left (hasDerivAt_pow 2 x)))))
+    (hasDerivAt_const_mul Real.one✝)
+

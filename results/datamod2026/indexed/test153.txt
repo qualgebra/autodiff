@@ -1,0 +1,21 @@
+Input: test153
+fun x => Real.sin (Real.log (Real.sin (Real.tan (-14)) - (x ^ 8 * x ^ 6 + -53 / x ^ 10)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.log (Real.sin (Real.tan (-14)) - (x ^ 8 * x ^ 6 + -53 / x ^ 10))) *
+      (-(↑8 * x ^ (8 - 1) * x ^ 6 + x ^ 8 * (↑6 * x ^ (6 - 1)) +
+            (0 * x ^ 10 - -53 * (↑10 * x ^ (10 - 1))) / (x ^ 10) ^ 2) /
+        (Real.sin (Real.tan (-14)) - (x ^ 8 * x ^ 6 + -53 / x ^ 10))),
+  domain := fun x => x ^ 10 ≠ 0 ∧ Real.sin (Real.tan (-14)) - (x ^ 8 * x ^ 6 + -53 / x ^ 10) ≠ 0,
+  proof := d_test153._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.log' a.right
+      (HasDerivAt.const_sub (Real.sin (Real.tan (-14)))
+        (HasDerivAt.fun_add (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (hasDerivAt_pow 6 x))
+          (HasDerivAt.fun_div (hasDerivAt_const x (-53)) (hasDerivAt_pow 10 x) a.left))))
+

@@ -1,0 +1,17 @@
+Input: test106
+fun x => Real.sin (x ^ 7 * Real.log (Real.sin (-59) * x ^ 8))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (x ^ 7 * Real.log (Real.sin (-59) * x ^ 8)) *
+      (↑7 * x ^ (7 - 1) * Real.log (Real.sin (-59) * x ^ 8) +
+        x ^ 7 * (Real.sin (-59) * (↑8 * x ^ (8 - 1)) / (Real.sin (-59) * x ^ 8))),
+  domain := fun x => Real.sin (-59) * x ^ 8 ≠ 0, proof := d_test106._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.fun_mul (hasDerivAt_pow 7 x)
+      (HasDerivAt.log' a (HasDerivAt.const_mul (Real.sin (-59)) (hasDerivAt_pow 8 x))))
+

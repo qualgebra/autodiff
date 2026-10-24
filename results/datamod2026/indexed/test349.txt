@@ -1,0 +1,9 @@
+Input: test349
+fun x => Real.log (x ^ 2)
+
+Result:
+{ f' := fun x => ↑2 * x ^ (2 - 1) / x ^ 2, domain := fun x => x ^ 2 ≠ 0, proof := d_test349._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.log' a (hasDerivAt_pow 2 x)
+

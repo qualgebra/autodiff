@@ -1,0 +1,24 @@
+Input: test151
+fun x => Real.tan (Real.log (-48 - 2) / x ^ 2 - -53 / (x ^ 1 + -25 + x ^ 3 / -53))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.log (-48 - 2) / x ^ 2 - -53 / (x ^ 1 + -25 + x ^ 3 / -53)) ^ 2 *
+      (Real.log (-48 - 2) * (-(↑2 * x ^ (2 - 1)) / (x ^ 2) ^ 2) -
+        -53 * (-(Real.one✝ + ↑3 * x ^ (3 - 1) * (-53)⁻¹) / (x ^ 1 + -25 + x ^ 3 / -53) ^ 2)),
+  domain := fun x =>
+    (x ^ 1 + -25 + x ^ 3 / -53 ≠ 0 ∧ x ^ 2 ≠ 0) ∧
+      Real.cos (Real.log (-48 - 2) / x ^ 2 - -53 / (x ^ 1 + -25 + x ^ 3 / -53)) ≠ 0,
+  proof := d_test151._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sub (HasDerivAt.const_mul (Real.log (-48 - 2)) (HasDerivAt.inv (hasDerivAt_pow 2 x) a.left.right))
+      (HasDerivAt.const_mul (-53)
+        (HasDerivAt.inv
+          (HasDerivAt.fun_add (HasDerivAt.add_const (-25) (hasDerivAt_const_mul Real.one✝))
+            (HasDerivAt.mul_const (hasDerivAt_pow 3 x) (-53)⁻¹))
+          a.left.left)))
+

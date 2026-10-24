@@ -1,0 +1,26 @@
+Input: test414
+fun x => Real.tan (Real.log (x ^ 9 + x ^ 10 * -46) - Real.sin (x ^ 6 / x ^ 3 - (x ^ 1 - x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.log (x ^ 9 + x ^ 10 * -46) - Real.sin (x ^ 6 / x ^ 3 - (x ^ 1 - x ^ 8))) ^ 2 *
+      ((↑9 * x ^ (9 - 1) + ↑10 * x ^ (10 - 1) * -46) / (x ^ 9 + x ^ 10 * -46) -
+        Real.cos (x ^ 6 / x ^ 3 - (x ^ 1 - x ^ 8)) *
+          ((↑6 * x ^ (6 - 1) * x ^ 3 - x ^ 6 * (↑3 * x ^ (3 - 1))) / (x ^ 3) ^ 2 -
+            (↑1 * x ^ (1 - 1) - ↑8 * x ^ (8 - 1)))),
+  domain := fun x =>
+    (x ^ 3 ≠ 0 ∧ x ^ 9 + x ^ 10 * -46 ≠ 0) ∧
+      Real.cos (Real.log (x ^ 9 + x ^ 10 * -46) - Real.sin (x ^ 6 / x ^ 3 - (x ^ 1 - x ^ 8))) ≠ 0,
+  proof := d_test414._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sub
+      (HasDerivAt.log' a.left.right
+        (HasDerivAt.fun_add (hasDerivAt_pow 9 x) (HasDerivAt.mul_const (hasDerivAt_pow 10 x) (-46))))
+      (HasDerivAt.sin
+        (HasDerivAt.sub (HasDerivAt.fun_div (hasDerivAt_pow 6 x) (hasDerivAt_pow 3 x) a.left.left)
+          (HasDerivAt.sub (hasDerivAt_pow 1 x) (hasDerivAt_pow 8 x)))))
+

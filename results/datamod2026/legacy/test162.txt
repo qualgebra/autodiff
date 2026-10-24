@@ -1,0 +1,29 @@
+Input: test162
+fun x => x ^ 7 * ((Real.log (-1) / Real.sin (x ^ 9) - 6) / (64 / Real.cos (x ^ 6 + x ^ 7)))
+
+Result:
+{
+  f' := fun x =>
+    ↑7 * x ^ (7 - 1) * ((Real.log (-1) / Real.sin (x ^ 9) - 6) / (64 / Real.cos (x ^ 6 + x ^ 7))) +
+      x ^ 7 *
+        (Real.log (-1) * (-(Real.cos (x ^ 9) * (↑9 * x ^ (9 - 1))) / Real.sin (x ^ 9) ^ 2) *
+            (64 / Real.cos (x ^ 6 + x ^ 7))⁻¹ +
+          (Real.log (-1) / Real.sin (x ^ 9) - 6) *
+            (-(64 *
+                  (-(-Real.sin (x ^ 6 + x ^ 7) * (↑6 * x ^ (6 - 1) + ↑7 * x ^ (7 - 1))) /
+                    Real.cos (x ^ 6 + x ^ 7) ^ 2)) /
+              (64 / Real.cos (x ^ 6 + x ^ 7)) ^ 2)),
+  domain := fun x => (64 / Real.cos (x ^ 6 + x ^ 7) ≠ 0 ∧ Real.cos (x ^ 6 + x ^ 7) ≠ 0) ∧ Real.sin (x ^ 9) ≠ 0,
+  proof := d_test162._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_pow 7 x)
+    (HasDerivAt.fun_mul
+      (HasDerivAt.add_const (-6)
+        (HasDerivAt.const_mul (Real.log (-1)) (HasDerivAt.inv (HasDerivAt.sin (hasDerivAt_pow 9 x)) a.right)))
+      (HasDerivAt.inv
+        (HasDerivAt.const_mul 64
+          (HasDerivAt.inv (HasDerivAt.cos (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 7 x))) a.left.right))
+        a.left.left))
+

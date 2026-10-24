@@ -1,0 +1,9 @@
+Input: test429
+fun x => Real.sin (x ^ 3)
+
+Result:
+{ f' := fun x => Real.cos (x ^ 3) * (↑3 * x ^ (3 - 1)), domain := fun x => True, proof := d_test429._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.sin (hasDerivAt_pow 3 x)
+

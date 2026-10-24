@@ -1,0 +1,572 @@
+1, fun x => Real.tan (-42) - x ^ 2 - x ^ 7 - (-79 - 13), 14, 5, 654.600000ms, 675.500000ms, 650.000000ms, 677.200000ms
+2, fun x => 17 / ((Real.sin (-65) + Real.sin (x ^ 1) + Real.log (x ^ 1)) / Real.cos (-63 - -17 + Real.tan (x ^ 10))), 24, 7, 4021.800000ms, 3877.100000ms, 4019.600000ms, 3960.600000ms
+3, fun x => Real.cos (x ^ 5) * (30 + x ^ 9) - (x ^ 3 - -87) - (x ^ 4 + Real.cos (x ^ 2 * x ^ 2)) - (Real.tan (-2) / Real.cos (-5) + (-15 - x ^ 7 - -50)) / Real.log 91, 46, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+3, EXIT 1
+4, fun x => Real.cos (Real.cos (Real.log (Real.tan (Real.tan (x ^ 7))))), 8, 7, 4786.200000ms, 4756.200000ms, 4579.000000ms, 4795.200000ms
+5, fun x => Real.tan (Real.tan (-24 - x ^ 6) / ((x ^ 2 + x ^ 2) * x ^ 4)) * (100 / Real.log (Real.cos (21 + 65))), 27, 7, 6025.000000ms, 6327.700000ms, 6323.500000ms, 5807.500000ms
+6, fun x => Real.cos (Real.cos (x ^ 7) - -86 / 29 - x ^ 10) + (-70 - (Real.sin (x ^ 5) / (-73 / 68) + Real.cos 22 * (x ^ 10 - -44))), 33, 7, 2583.500000ms, 2410.300000ms, 2319.900000ms, 2289.000000ms
+7, fun x => Real.tan (Real.tan (Real.tan (-13 + -70) * (64 * (x ^ 6 / x ^ 5)))), 16, 7, 5312.600000ms, 5852.700000ms, 5360.900000ms, 5754.800000ms
+8, fun x => Real.tan (Real.tan ((x ^ 2 - x ^ 3) * Real.tan 26 + Real.log (x ^ 8))), 17, 7, 5774.200000ms, 6100.300000ms, 5937.200000ms, 6098.900000ms
+9, fun x => Real.sin (Real.sin (Real.tan 33)) / 44 + (x ^ 4 - Real.tan (Real.sin (x ^ 8 + -82))), 18, 7, 3544.900000ms, 3604.100000ms, 3581.100000ms, 4120.700000ms
+10, fun x => Real.log (Real.sin (Real.tan 3 * (-76 + -18) / x ^ 2)), 12, 6, 367.800000ms, 353.700000ms, 389.100000ms, 369.800000ms
+11, fun x => Real.cos (x ^ 2), 4, 3, 142.500000ms, 142.000000ms, 150.100000ms, 145.500000ms
+12, fun x => (x ^ 8 * 82 + Real.sin (x ^ 2) - Real.tan (x ^ 5 / x ^ 2)) / (Real.sin (-40) / (99 + Real.tan (x ^ 2))) * Real.tan ((Real.log (-19) + x ^ 2) * Real.tan (-100)), 40, 7, 10332.600000ms, 9860.100000ms, 10760.000000ms, 10191.300000ms
+13, fun x => -89 / x ^ 6, 5, 3, 358.200000ms, 354.500000ms, 334.100000ms, 357.300000ms
+14, fun x => x ^ 8 / Real.tan (Real.sin (Real.tan (x ^ 8))), 10, 6, 5494.300000ms, 5456.400000ms, 5016.800000ms, 4971.500000ms
+15, fun x => Real.log (Real.sin (-10) * (x ^ 6 + x ^ 1) + Real.cos (Real.cos 15)) / Real.log (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98)), 29, 7, 1890.100000ms, 1821.700000ms, 1865.900000ms, 1778.200000ms
+16, fun x => Real.sin (Real.log (Real.tan (Real.cos 26))) / ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1))), 29, 7, 3688.800000ms, 3416.200000ms, 3398.000000ms, 3410.200000ms
+17, fun x => x ^ 1 * -47, 5, 3, 181.100000ms, 180.400000ms, 177.300000ms, 163.500000ms
+18, fun x => Real.sin (Real.sin (x ^ 4)), 5, 4, 104.000000ms, 103.600000ms, 102.900000ms, 103.300000ms
+19, fun x => Real.cos (-89 * ((Real.tan (x ^ 7) + (x ^ 2 - 81)) * Real.log (94 * -71))), 18, 7, 3282.400000ms, 3125.500000ms, 3098.300000ms, 3103.300000ms
+20, fun x => Real.log (-96 - (79 + Real.sin (x ^ 5 - x ^ 7))), 13, 7, 774.400000ms, 791.200000ms, 784.400000ms, 800.700000ms
+21, fun x => Real.tan 56 / (Real.tan (x ^ 7) + Real.log (-46 / x ^ 1)) - Real.log (x ^ 1), 19, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+21, EXIT 1
+22, fun x => (Real.tan (Real.cos 4) - (-95 - Real.cos (-74))) / Real.log ((x ^ 8 + x ^ 2) / x ^ 5) - Real.cos (Real.sin (Real.tan (x ^ 6) - (-66 - -3))), 32, 7, 4011.300000ms, 3970.700000ms, 4072.200000ms, 4169.800000ms
+23, fun x => x ^ 7 * Real.sin (Real.cos (Real.cos (Real.cos 29))), 9, 6, 176.600000ms, 184.600000ms, 194.800000ms, 185.500000ms
+24, fun x => Real.cos (-44 + Real.cos (x ^ 5)) * (x ^ 1 + -78 / x ^ 6 - (Real.cos (x ^ 9) + -44)) - (17 / (-88 / 58) + 87 * (22 * x ^ 9)) / (x ^ 4 + Real.tan (Real.cos (-40))), 46, 7, 9141.000000ms, 9353.700000ms, 9049.300000ms, 9600.100000ms
+25, fun x => Real.sin (-66 + Real.cos (75 - x ^ 4) * (Real.tan (x ^ 3) / Real.cos (x ^ 1))), 19, 7, 3602.500000ms, 3625.800000ms, 3522.000000ms, 3561.200000ms
+26, fun x => Real.tan (-66 / x ^ 2 + Real.cos (Real.sin (-53 - x ^ 3))), 14, 7, 3115.100000ms, 3153.900000ms, 3080.900000ms, 3272.500000ms
+27, fun x => Real.log (-64) - Real.sin (Real.log (Real.log 73)) + Real.log (x ^ 10), 12, 6, 249.900000ms, 270.600000ms, 260.100000ms, 286.300000ms
+28, fun x => Real.cos (x ^ 9 + -50), 6, 4, 329.600000ms, 346.000000ms, 348.700000ms, 356.700000ms
+29, fun x => Real.cos (Real.sin (Real.tan (x ^ 5) - x ^ 9)) + (28 - Real.cos (Real.cos (Real.cos (x ^ 10)))), 19, 7, 3556.000000ms, 3594.600000ms, 3658.400000ms, 3644.000000ms
+30, fun x => Real.tan (Real.log (Real.sin (Real.log (x ^ 6) + (78 + -63)))), 11, 7, 2518.000000ms, 2607.500000ms, 2432.700000ms, 2577.100000ms
+31, fun x => x ^ 7 - -47 + x ^ 1, 9, 4, 491.700000ms, 506.600000ms, 484.000000ms, 481.600000ms
+32, fun x => Real.log ((x ^ 6 * -80 + (39 + x ^ 3)) * Real.log (Real.tan (-13)) / (Real.sin (-65 - 35) / 54)), 23, 7, 997.500000ms, 1104.700000ms, 1042.900000ms, 1068.000000ms
+33, fun x => (-99 + -23 - Real.tan (-56)) / x ^ 1 * (x ^ 4 - 87 + x ^ 3 / 90 + Real.cos (Real.sin 65)) + (Real.cos (Real.cos (-10 * -59)) - (Real.log (x ^ 3) - Real.tan (-65) + Real.sin (x ^ 4) * (x ^ 4 + x ^ 10))), 53, 7, 3140.300000ms, 2937.100000ms, 3076.500000ms, 3366.100000ms
+34, fun x => 2 * Real.sin (Real.sin (Real.cos (x ^ 1))) / (-57 - Real.log (x ^ 7) * (51 - x ^ 10) * Real.sin (Real.cos (x ^ 7))), 27, 7, 1937.500000ms, 1904.300000ms, 1913.400000ms, 1873.900000ms
+35, fun x => Real.log (Real.cos (Real.log (x ^ 3))) / Real.sin (x ^ 2), 11, 6, 637.500000ms, 738.400000ms, 706.000000ms, 702.900000ms
+36, fun x => (6 * x ^ 5 - x ^ 9 + Real.log (x ^ 2) + Real.tan 87) / (x ^ 2 / (Real.cos (x ^ 5) / x ^ 1) - x ^ 1), 34, 7, 2691.400000ms, 2818.500000ms, 2640.200000ms, 2686.900000ms
+37, fun x => Real.log (x ^ 9), 4, 3, 77.800000ms, 77.000000ms, 78.000000ms, 77.000000ms
+38, fun x => Real.sin (-86 + Real.log 32) * (61 * (-52 + -44) + (Real.sin 47 - -35) - Real.tan (1 / x ^ 10 * (x ^ 3 - x ^ 10))), 31, 7, 3454.900000ms, 3522.400000ms, 3431.100000ms, 3653.600000ms
+39, fun x => Real.cos (x ^ 1) / Real.cos (Real.cos (x ^ 3 / x ^ 8) / (Real.tan (x ^ 2) + Real.cos (x ^ 6))), 24, 7, 4303.100000ms, 4381.700000ms, 4320.700000ms, 4207.900000ms
+40, fun x => (Real.log (22 * (x ^ 1 + 21)) - Real.sin (Real.sin (-40 / x ^ 3))) / Real.log (Real.sin 66 / Real.log (-71) * x ^ 6), 27, 7, 1577.600000ms, 1683.900000ms, 1661.100000ms, 1642.900000ms
+41, fun x => 55 / Real.sin (x ^ 4 + Real.tan (x ^ 10) / Real.log 83), 14, 7, 3061.800000ms, 3058.800000ms, 3166.400000ms, 3184.200000ms
+42, fun x => Real.tan (Real.cos (Real.tan (Real.log (Real.cos (x ^ 5))))), 8, 7, 4789.800000ms, 4868.100000ms, 4885.200000ms, 4744.200000ms
+43, fun x => Real.tan (Real.cos (Real.cos (-51) * (-20 - x ^ 10)) - Real.log (Real.sin (x ^ 4 * x ^ 8))), 20, 7, 3165.800000ms, 3236.900000ms, 3357.800000ms, 3313.100000ms
+44, fun x => Real.sin (Real.cos (Real.log (Real.log (95 / x ^ 1)))), 9, 7, 517.900000ms, 523.400000ms, 559.600000ms, 559.000000ms
+45, fun x => Real.log (Real.log (Real.log (Real.cos (x ^ 2 / 35)))), 9, 7, 410.600000ms, 431.600000ms, 430.300000ms, 436.700000ms
+46, fun x => (x ^ 9 + (Real.sin (x ^ 3) + Real.tan (x ^ 3) - -47)) / Real.sin (x ^ 8 * x ^ 3 * (x ^ 3 - x ^ 10) * (32 * 18 - -86 * -14)), 40, 7, 5010.000000ms, 5086.300000ms, 5039.200000ms, 4773.200000ms
+47, fun x => Real.sin (Real.log (Real.cos (x ^ 8)) * (Real.tan (Real.cos 76) - (Real.cos (x ^ 3) - (x ^ 1 + 46)))), 21, 7, 1231.300000ms, 1254.400000ms, 1203.600000ms, 1219.600000ms
+48, fun x => Real.tan (Real.sin (x ^ 7 + Real.cos (-94 + 93))), 10, 6, 2359.300000ms, 2377.400000ms, 2485.200000ms, 2435.600000ms
+49, fun x => Real.cos (x ^ 2) * (55 / Real.tan (x ^ 2)), 11, 5, 2805.000000ms, 2855.400000ms, 2801.500000ms, 3119.800000ms
+50, fun x => Real.log (Real.log 40 / (10 / x ^ 2)) / x ^ 2 + (Real.sin (x ^ 3) - Real.tan (-98) - Real.tan (x ^ 9)) / Real.tan (x ^ 8), 31, 7, 6883.600000ms, 7983.800000ms, 6891.700000ms, 6800.700000ms
+51, fun x => Real.tan (x ^ 6 * x ^ 10 - (99 + -11)) * x ^ 7 - Real.sin (Real.log (Real.log (x ^ 9 / x ^ 2))), 27, 7, FAIL
+uncaught exception: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+51, EXIT 1
+52, fun x => Real.log 53 + Real.cos (73 - x ^ 7), 9, 5, 506.200000ms, 547.500000ms, 545.700000ms, 545.700000ms
+53, fun x => Real.sin (Real.cos (x ^ 4 + x ^ 5) * 77) - (Real.log (Real.sin (x ^ 4)) + Real.log (Real.cos (x ^ 5))) * Real.log (-67), 26, 7, 1538.900000ms, 1585.600000ms, 1563.300000ms, 1512.600000ms
+54, fun x => Real.tan (Real.sin (4 / x ^ 5 - x ^ 9 + Real.sin 7 / (-78 * x ^ 7))), 20, 7, 3994.400000ms, 3847.900000ms, 3809.100000ms, 3913.000000ms
+55, fun x => x ^ 1 + Real.tan (11 + Real.cos (x ^ 1)) * Real.sin (Real.sin 82 * Real.log (x ^ 10)), 20, 7, 3547.300000ms, 3662.700000ms, 3403.300000ms, 3606.100000ms
+56, fun x => Real.sin (Real.cos (Real.cos (-30 / x ^ 3))) * -40, 10, 7, 737.200000ms, 708.200000ms, 702.500000ms, 683.700000ms
+57, fun x => (21 * (-66 / -23 / Real.tan (x ^ 10)) + Real.cos (-97) * Real.log (x ^ 4) / (Real.sin 11 + 45)) * x ^ 5, 27, 7, 3994.700000ms, 3870.200000ms, 3841.400000ms, 3853.200000ms
+58, fun x => Real.cos (Real.sin (Real.log (-8 * 39) / (Real.log (x ^ 9) - 21 * x ^ 10))), 17, 7, 1175.600000ms, 1103.100000ms, 998.300000ms, 1039.900000ms
+59, fun x => Real.sin (Real.sin ((x ^ 6 - 83) * -67) * (Real.log (-89 - x ^ 7) * ((74 - x ^ 6) / x ^ 6))), 26, 7, 2188.800000ms, 2096.500000ms, 1993.800000ms, 2041.000000ms
+60, fun x => Real.tan (x ^ 6 + x ^ 3) + Real.tan (Real.tan (Real.sin (x ^ 2 + -63))), 17, 7, 7629.300000ms, 7811.900000ms, 7680.400000ms, 8062.600000ms
+61, fun x => Real.cos (Real.sin (Real.log 41 / 17) - (Real.log (-58) + (-12 - -83 + x ^ 6 * 97))), 19, 7, 792.200000ms, 813.600000ms, 819.400000ms, 797.400000ms
+62, fun x => Real.tan (Real.sin (Real.log 82 * (-11 - x ^ 8) + 33)), 12, 7, 3164.200000ms, 3010.400000ms, 2962.000000ms, 2992.000000ms
+63, fun x => Real.log (-20 / 52 * Real.sin (Real.sin (x ^ 10 + 16))), 12, 7, 482.100000ms, 517.300000ms, 537.800000ms, 441.000000ms
+64, fun x => Real.log 14 - ((x ^ 5 - 100 + -75 * 41) / (Real.cos 7 - Real.cos (x ^ 2)) - 81), 22, 7, 1799.300000ms, 1655.500000ms, 1558.900000ms, 1599.400000ms
+65, fun x => Real.sin (Real.tan (Real.sin (x ^ 3))), 6, 5, 2451.700000ms, 2251.100000ms, 2398.600000ms, 2493.000000ms
+66, fun x => Real.log (Real.sin (-75)) + Real.tan (x ^ 8 * Real.sin 97) - 40 / x ^ 6 / ((x ^ 10 - -89) / Real.log (x ^ 8)) / 71, 30, 7, 4722.700000ms, 4756.100000ms, 4805.600000ms, 4683.700000ms
+67, fun x => Real.tan (Real.sin (x ^ 1)), 5, 4, 2437.600000ms, 2699.400000ms, 2586.700000ms, 2552.700000ms
+68, fun x => Real.cos (Real.sin (Real.tan 75) + (x ^ 8 - -20 - Real.sin 36) - (x ^ 6 + 10 - Real.cos (x ^ 5) - (x ^ 8 - Real.log 56))), 31, 7, 2107.400000ms, 2026.600000ms, 2118.000000ms, 2178.600000ms
+69, fun x => Real.cos (Real.sin (x ^ 10) + Real.sin (-99) * x ^ 7 * Real.cos (Real.cos (x ^ 6))), 18, 7, 1211.400000ms, 1231.300000ms, 1165.300000ms, 1166.300000ms
+70, fun x => Real.log (7 * x ^ 9) + x ^ 1 * x ^ 4 / (x ^ 3 * x ^ 9) + 13 * (55 + x ^ 7) + x ^ 6, 34, 7, 2727.600000ms, 2612.900000ms, 2558.400000ms, 2639.800000ms
+71, fun x => x ^ 2 / Real.tan (-12 + 92 + (-5 + -15) - Real.sin (Real.sin 94)), 16, 6, 216.400000ms, 208.200000ms, 210.600000ms, 211.500000ms
+72, fun x => x ^ 9 * x ^ 1, 7, 3, 330.800000ms, 328.000000ms, 313.000000ms, 310.400000ms
+73, fun x => -44 + Real.log (Real.cos (x ^ 7) + (x ^ 7 + -68)) - x ^ 6, 17, 7, 1319.200000ms, 1271.800000ms, 1203.700000ms, 1255.300000ms
+74, fun x => Real.log (Real.sin (-51)) * Real.cos (x ^ 2 / -15) - -13 + Real.tan (Real.tan (Real.log (51 * -92))), 19, 7, 780.400000ms, 793.700000ms, 763.400000ms, 742.400000ms
+75, fun x => 46 + Real.tan (Real.sin (Real.tan (x ^ 10)) + x ^ 10), 12, 7, 5037.000000ms, 5244.400000ms, 5036.100000ms, 5508.200000ms
+76, fun x => x ^ 6 * Real.log (x ^ 3 + x ^ 9 - (x ^ 6 + -85) + x ^ 2), 22, 7, 1490.100000ms, 1612.400000ms, 1611.100000ms, 1633.500000ms
+77, fun x => Real.log (Real.cos (-57) + (x ^ 8 - (Real.log (-99) + Real.cos (x ^ 4)))), 15, 7, 930.800000ms, 846.100000ms, 851.300000ms, 854.300000ms
+78, fun x => Real.tan (Real.tan (88 + 75 - (-10 - 2))) * (Real.cos (x ^ 6) * (x ^ 10 * x ^ 2) / Real.cos (x ^ 3) * Real.cos (x ^ 10 / x ^ 6 - Real.sin (x ^ 5))), 41, 7, 2571.800000ms, 2609.800000ms, 2547.300000ms, 2663.100000ms
+79, fun x => Real.cos (Real.tan (Real.sin 71)) * ((-32 + 92 + -45) / -71) / Real.log (x ^ 8), 17, 6, 340.600000ms, 318.600000ms, 333.200000ms, 329.300000ms
+80, fun x => 46 + (x ^ 1 - 65 - Real.tan (-37) - x ^ 8 + 56 * x ^ 4), 20, 7, 1374.200000ms, 1397.000000ms, 1535.300000ms, 1636.800000ms
+81, fun x => Real.cos (Real.cos (-22) * Real.sin (x ^ 8 + Real.sin 43)), 11, 6, 546.000000ms, 523.500000ms, 493.600000ms, 505.800000ms
+82, fun x => Real.log (x ^ 4) / Real.tan (x ^ 8 + -73) + Real.tan (Real.sin 34) * Real.sin (Real.log (x ^ 2)) + 97, 23, 7, 3597.300000ms, 3863.800000ms, 4047.100000ms, 3805.400000ms
+83, fun x => Real.sin (Real.cos ((Real.tan (x ^ 10) + Real.log (x ^ 9)) * Real.log (Real.tan (-61)))), 15, 7, 3172.500000ms, 3083.200000ms, 2847.900000ms, 2830.400000ms
+84, fun x => Real.cos (Real.cos (x ^ 8) - -28) / x ^ 7, 11, 6, 773.700000ms, 796.100000ms, 801.800000ms, 822.200000ms
+85, fun x => Real.sin (76 * x ^ 4 - Real.sin (x ^ 2)) * x ^ 10 * Real.sin (Real.log (-86) - Real.sin (Real.sin 79)), 23, 7, 956.900000ms, 957.100000ms, 1110.000000ms, 1014.800000ms
+86, fun x => Real.sin (Real.tan (-99 / x ^ 6)) / Real.sin (x ^ 5) / (32 / x ^ 6), 18, 7, 3993.400000ms, 3839.500000ms, 3620.900000ms, 3668.700000ms
+87, fun x => Real.cos (Real.tan (x ^ 9 / x ^ 9 + (x ^ 5 - x ^ 2))) / (Real.cos (Real.cos (-9)) - ((45 + 18) / (x ^ 10 - 42) - (x ^ 10 + x ^ 8 + (x ^ 5 + 48)))), 45, 7, 5795.700000ms, 6309.900000ms, 6351.200000ms, 5834.800000ms
+88, fun x => 0 * (Real.tan (-39) / x ^ 2), 8, 4, 413.200000ms, 410.000000ms, 416.500000ms, 438.600000ms
+89, fun x => Real.sin (Real.cos (Real.sin (Real.log (x ^ 9)))) / (x ^ 3 / x ^ 9 - -49 + (x ^ 7 + -53) * Real.log (x ^ 10) + 82), 30, 7, 2372.700000ms, 2190.700000ms, 2505.600000ms, 2469.900000ms
+90, fun x => Real.sin (37 / x ^ 1 + x ^ 2 * -77) * (x ^ 7 / 32 * Real.log (x ^ 2) + (46 - 43 - 88)) / (Real.cos (Real.log (-66 + x ^ 6)) + Real.log (6 + Real.sin 45)), 43, 7, 2768.900000ms, 3149.000000ms, 3168.800000ms, 3405.600000ms
+91, fun x => Real.cos (x ^ 5) * Real.tan (Real.cos (Real.sin (-82)) - Real.log (6 - -77)), 14, 6, 405.500000ms, 439.000000ms, 414.900000ms, 461.800000ms
+92, fun x => Real.log (Real.sin (Real.cos (x ^ 5)) * Real.tan (Real.cos (x ^ 8))) - Real.sin 24, 15, 7, 3118.900000ms, 3146.300000ms, 3374.800000ms, 3092.600000ms
+93, fun x => Real.cos (x ^ 10 / 53), 6, 4, 385.900000ms, 362.600000ms, 338.600000ms, 330.200000ms
+94, fun x => Real.cos (Real.sin (Real.log (Real.log 86))) / x ^ 7, 9, 6, 338.900000ms, 344.300000ms, 348.200000ms, 343.500000ms
+95, fun x => Real.log (Real.log (Real.log (x ^ 9)) + (Real.cos 17 - (80 + x ^ 8)) + (Real.sin (x ^ 8) - 12)), 22, 7, 1449.900000ms, 1492.700000ms, 1419.100000ms, 1420.600000ms
+96, fun x => (x ^ 9 - x ^ 7) / (Real.log (Real.tan 7) * Real.log (x ^ 8 - 10) - Real.log (Real.log (Real.log (x ^ 2)))), 25, 7, 1688.400000ms, 1671.800000ms, 1704.400000ms, 1695.000000ms
+97, fun x => Real.cos (x ^ 8 * -20), 6, 4, 376.400000ms, 360.600000ms, 381.100000ms, 388.100000ms
+98, fun x => x ^ 7 + Real.log (x ^ 8 + (-51 - x ^ 4)), 14, 6, 955.600000ms, 970.000000ms, 949.900000ms, 943.100000ms
+99, fun x => Real.log (x ^ 6), 4, 3, 85.600000ms, 81.500000ms, 81.700000ms, 94.000000ms
+100, fun x => Real.tan ((x ^ 3 - -64 / 0) * Real.log (x ^ 9 - -31)) - (85 + (42 + -42) / (x ^ 1 * x ^ 1) + Real.cos (x ^ 1 - -39) / Real.log (x ^ 5)), 41, 7, 5331.300000ms, 5498.500000ms, 5322.600000ms, 5521.800000ms
+101, fun x => x ^ 8 / Real.tan 33, 6, 3, 227.200000ms, 241.500000ms, 237.000000ms, 236.600000ms
+102, fun x => Real.tan (Real.tan (Real.cos (x ^ 9) / (x ^ 4 / x ^ 2) * x ^ 7)), 18, 7, 5705.800000ms, 5706.000000ms, 5578.400000ms, 5628.200000ms
+103, fun x => Real.sin (Real.tan 71 * Real.log 38 / (26 + Real.tan (x ^ 4))) * Real.log (Real.tan (Real.log (-48)) - Real.tan (-66) / Real.log (x ^ 2)), 26, 7, 3677.100000ms, 3558.900000ms, 3965.100000ms, 4022.500000ms
+104, fun x => x ^ 8 * (42 * (Real.cos (x ^ 7) + Real.sin (-30)) / Real.tan (-81 - x ^ 4 - x ^ 10 * -45)), 26, 7, 4166.400000ms, 4161.100000ms, 3974.600000ms, 4006.300000ms
+105, fun x => (Real.cos (-77) + (-1 - 87)) / (Real.log (x ^ 4) * (64 / x ^ 10)) - Real.tan (Real.log (x ^ 8) * Real.tan (-2)) + Real.tan ((Real.sin (x ^ 6) + 40) * (Real.log (x ^ 10) * (x ^ 3 * -29))), 45, 7, 7121.200000ms, 7179.800000ms, 7866.700000ms, 7869.700000ms
+106, fun x => Real.sin (x ^ 7 * Real.log (Real.sin (-59) * x ^ 8)), 12, 6, 524.100000ms, 597.400000ms, 642.000000ms, 620.100000ms
+107, fun x => -9 / Real.log (Real.sin (-86) + x ^ 10), 9, 5, 602.500000ms, 548.300000ms, 617.700000ms, 562.700000ms
+108, fun x => Real.log (52 / 54 * 26 + x ^ 2 / -77 * (79 - -16 - 95 / -12)), 20, 6, 564.700000ms, 597.200000ms, 549.300000ms, 585.400000ms
+109, fun x => Real.sin (Real.log (x ^ 7 + 58)), 7, 5, 256.900000ms, 264.100000ms, 257.100000ms, 258.300000ms
+110, fun x => Real.log ((Real.cos (x ^ 6) + x ^ 1 - (x ^ 6 / x ^ 8 + Real.cos (x ^ 1))) * x ^ 1), 26, 7, 1965.500000ms, 1999.200000ms, 2052.500000ms, 1914.800000ms
+111, fun x => Real.sin (Real.sin (-25)) + Real.cos (x ^ 1) - (Real.cos (x ^ 9) + (x ^ 7 * x ^ 3 - Real.sin (-83)) / (Real.log (x ^ 3) / Real.cos 51)), 32, 7, 2051.100000ms, 2080.200000ms, 2116.000000ms, 2038.900000ms
+112, fun x => -41 / -53 * -1 + Real.tan (Real.cos (x ^ 1 - -46) * Real.sin (82 / 40)), 18, 7, 2908.200000ms, 2972.300000ms, 2917.000000ms, 2967.100000ms
+113, fun x => Real.log (Real.sin 5 * x ^ 10) * Real.sin (Real.sin (Real.tan (x ^ 5 / 36))), 16, 7, 3002.200000ms, 3153.900000ms, 2848.900000ms, 2841.500000ms
+114, fun x => Real.log (-54 * (Real.tan (Real.tan (-73)) / Real.log (x ^ 1 - x ^ 3))), 15, 7, 840.000000ms, 831.200000ms, 809.100000ms, 798.900000ms
+115, fun x => (x ^ 6 + (Real.tan (-60) - 18 / 55)) * -32 + -73, 14, 6, 530.000000ms, 533.600000ms, 578.800000ms, 546.800000ms
+116, fun x => Real.cos (x ^ 6), 4, 3, 145.100000ms, 146.300000ms, 149.100000ms, 156.800000ms
+117, fun x => Real.tan (Real.cos (x ^ 7 / ((-52 + x ^ 6) * Real.tan 66))), 14, 7, 3063.400000ms, 3084.600000ms, 3066.700000ms, 3008.200000ms
+118, fun x => (Real.tan (-25) + 10 * x ^ 4) * (x ^ 2 * (Real.log (64 + x ^ 3) + 86 / (17 * -30))), 25, 7, 1217.100000ms, 1252.100000ms, 1243.300000ms, 1215.600000ms
+119, fun x => Real.sin (Real.cos (Real.log (Real.sin (x ^ 10) + Real.tan 17))), 10, 7, 416.900000ms, 418.200000ms, 392.200000ms, 401.900000ms
+120, fun x => Real.tan (Real.sin (Real.tan (91 / (x ^ 5 + -30)))), 10, 7, 4770.200000ms, 4895.100000ms, 4888.500000ms, 4869.100000ms
+121, fun x => Real.tan (Real.sin (Real.sin (-10)) / Real.sin 18 / (Real.tan (x ^ 1 + x ^ 9) / Real.cos (x ^ 8 + -35))), 23, 7, 5616.900000ms, 5641.800000ms, 5615.100000ms, 5652.200000ms
+122, fun x => Real.sin (Real.tan (Real.tan (x ^ 5)) * Real.log (-58 / 10 / Real.sin (x ^ 9))), 16, 7, 4980.800000ms, 4994.500000ms, 5004.900000ms, 4992.600000ms
+123, fun x => (Real.cos 11 - x ^ 4 - Real.log (x ^ 2 / 75 + (x ^ 1 + -2))) * (Real.cos (x ^ 9) - Real.cos (x ^ 1) + Real.cos (52 / 96) + Real.tan (x ^ 2)), 39, 7, 4679.300000ms, 4756.500000ms, 4873.700000ms, 4723.400000ms
+124, fun x => Real.cos (Real.sin (Real.sin (Real.sin (x ^ 7)) * Real.cos 6)), 10, 7, 432.900000ms, 441.000000ms, 440.500000ms, 474.800000ms
+125, fun x => 98 * ((Real.cos 4 + 80 / x ^ 4) * -56 + (Real.tan (Real.cos (-97)) - (x ^ 6 - 74) * Real.cos 42)), 25, 7, 1680.500000ms, 1697.300000ms, 1625.000000ms, 1765.700000ms
+126, fun x => (Real.cos (Real.tan (-89 + x ^ 8)) + (84 - Real.tan (Real.tan 45))) / -93, 15, 7, 3048.700000ms, 3095.900000ms, 3345.100000ms, 3111.800000ms
+127, fun x => Real.tan (Real.tan (-50)) / x ^ 7 / Real.tan (Real.log (-20 - -18)) / (Real.cos (Real.log (x ^ 4)) * (-65 + Real.tan (x ^ 7)) * Real.sin (-6 + Real.tan (x ^ 4))), 34, 7, 7378.200000ms, 7121.300000ms, 6845.300000ms, 6785.200000ms
+128, fun x => Real.sin (Real.cos (Real.cos (80 * x ^ 6))) * Real.tan (Real.cos (Real.tan (Real.tan (x ^ 2)))), 16, 7, 8632.000000ms, 7976.000000ms, 8001.200000ms, 7745.300000ms
+129, fun x => Real.log (Real.log (Real.sin (Real.tan 41))) + Real.log (Real.sin (x ^ 10 + Real.tan (-51))), 14, 6, 465.500000ms, 456.600000ms, 460.800000ms, 502.500000ms
+130, fun x => Real.log (x ^ 7 - Real.log (x ^ 9)), 9, 5, 460.800000ms, 430.700000ms, 446.700000ms, 427.700000ms
+131, fun x => Real.sin (x ^ 4), 4, 3, 63.400000ms, 63.300000ms, 65.300000ms, 65.200000ms
+132, fun x => Real.tan (-76 * 80 * Real.tan (x ^ 3) * Real.log (45 + x ^ 6) * (Real.tan (x ^ 6 - x ^ 4) + Real.cos (Real.tan 80))), 29, 7, 8367.700000ms, 8213.900000ms, 8094.700000ms, 8065.500000ms
+133, fun x => x ^ 6 - Real.sin (Real.cos (x ^ 10) - x ^ 5) + Real.tan (17 - Real.sin (-98) / (x ^ 2 * x ^ 6)), 27, 7, 4161.300000ms, 4153.500000ms, 4043.400000ms, 4097.400000ms
+134, fun x => Real.tan (-55 * -86) / Real.cos (Real.cos 11) * -30 - Real.sin (Real.cos (Real.sin 37 + Real.log (x ^ 8))), 20, 7, 602.900000ms, 613.500000ms, 621.300000ms, 571.600000ms
+135, fun x => Real.tan (x ^ 4 / (x ^ 1 - x ^ 1 - Real.sin (x ^ 9))) * (Real.cos (Real.cos (Real.tan (x ^ 5))) / (Real.log (x ^ 2) + Real.tan (x ^ 1))), 34, 7, 9192.400000ms, 9367.800000ms, 10645.400000ms, 9193.900000ms
+136, fun x => Real.cos (x ^ 2 / 84 + (x ^ 2 - 51)) / -30 / Real.sin (x ^ 2 * x ^ 7 + (x ^ 5 - x ^ 6) + Real.tan (-73) * x ^ 6), 38, 7, 2973.900000ms, 2970.000000ms, 3010.000000ms, 3073.900000ms
+137, fun x => Real.sin (Real.tan 63 + Real.cos (Real.log (x ^ 4)) * (57 * x ^ 9 + x ^ 6)), 19, 7, 1201.600000ms, 1162.400000ms, 1122.900000ms, 1105.800000ms
+138, fun x => Real.cos ((8 - Real.sin 72) * (Real.tan (x ^ 3) / (-58 - 60)) + x ^ 5), 18, 7, 3208.200000ms, 3182.600000ms, 3077.700000ms, 3218.500000ms
+139, fun x => (Real.tan (Real.tan 41) - Real.log (-36 / x ^ 7)) * Real.log (-65 / x ^ 3 + Real.sin (-70)) - (Real.cos (x ^ 8 + x ^ 7) * Real.tan (Real.cos 19) + Real.log (Real.sin (Real.log (-70)))), 38, 7, 6104.000000ms, 6046.400000ms, 6173.800000ms, 6200.400000ms
+140, fun x => Real.log (Real.sin (Real.log (Real.log 80) / Real.log (x ^ 9))), 10, 6, 602.100000ms, 597.200000ms, 527.300000ms, 490.100000ms
+141, fun x => Real.cos (x ^ 8) / Real.log (x ^ 8 * x ^ 2 - Real.sin (x ^ 9)) * (Real.tan (Real.cos (Real.log 75)) + Real.tan (-14) / Real.cos (x ^ 8) / Real.tan (Real.log (-84))), 35, 7, 2608.500000ms, 2312.800000ms, 2256.200000ms, 2326.600000ms
+142, fun x => Real.log (Real.cos (Real.sin (Real.log (x ^ 9)) * Real.sin (Real.sin (x ^ 3)))), 13, 7, 585.100000ms, 599.300000ms, 618.300000ms, 620.500000ms
+143, fun x => Real.cos (Real.sin (65 - Real.tan (-72))) / (Real.sin (x ^ 10) - x ^ 6), 15, 6, 626.800000ms, 639.100000ms, 685.200000ms, 819.000000ms
+144, fun x => Real.log (x ^ 8), 4, 3, 83.700000ms, 85.500000ms, 79.900000ms, 81.500000ms
+145, fun x => Real.sin (Real.tan (x ^ 8) + x ^ 4) + (Real.cos (-72 - -2) + Real.log (x ^ 6) * 80) - Real.tan (Real.sin (x ^ 6) + Real.sin (Real.log 26)), 31, 7, 6390.500000ms, 6154.000000ms, 6112.800000ms, 5952.200000ms
+146, fun x => Real.log (Real.log (Real.sin (22 / x ^ 8)) - Real.log (Real.log (-89)) / Real.sin (x ^ 8)), 17, 7, 1110.800000ms, 1054.900000ms, 1119.600000ms, 1154.100000ms
+147, fun x => Real.sin (98 * Real.sin (Real.log (-5) + x ^ 3 * x ^ 2)), 14, 7, 719.300000ms, 772.000000ms, 802.200000ms, 790.100000ms
+148, fun x => (89 / (-87 / Real.log 87) + x ^ 1) * (x ^ 10 + Real.sin (-77 * -82)), 19, 6, 697.900000ms, 704.800000ms, 699.000000ms, 713.400000ms
+149, fun x => Real.cos (x ^ 1 * (Real.log (-9 + 76) * Real.log (Real.sin 37))), 13, 6, 296.000000ms, 277.700000ms, 277.600000ms, 275.500000ms
+150, fun x => Real.log ((Real.cos (x ^ 6 + x ^ 10) + Real.tan (x ^ 6 - -98)) * (Real.sin (Real.tan 64) - Real.log (x ^ 8))), 25, 7, 4867.200000ms, 4835.700000ms, 4203.900000ms, 4118.600000ms
+151, fun x => Real.tan (Real.log (-48 - 2) / x ^ 2 - -53 / (x ^ 1 + -25 + x ^ 3 / -53)), 23, 7, 4082.500000ms, 4063.300000ms, 4028.500000ms, 3982.400000ms
+152, fun x => Real.tan (Real.log (Real.tan (x ^ 6) * Real.sin (-79)) / (-81 * ((x ^ 9 - 41) / -6))), 19, 7, 5902.100000ms, 5979.800000ms, 5936.600000ms, 5909.600000ms
+153, fun x => Real.sin (Real.log (Real.sin (Real.tan (-14)) - (x ^ 8 * x ^ 6 + -53 / x ^ 10))), 19, 7, 1547.000000ms, 1866.700000ms, 1500.600000ms, 1338.400000ms
+154, fun x => x ^ 4 - Real.cos (Real.cos 11 * (Real.sin (x ^ 6) - (99 + x ^ 1))), 18, 7, 1268.500000ms, 1300.000000ms, 1254.700000ms, 1320.500000ms
+155, fun x => Real.log (Real.log (Real.cos (x ^ 7) - (-41 + x ^ 7)) * x ^ 6), 16, 7, 1122.500000ms, 1133.400000ms, 1143.100000ms, 1124.100000ms
+156, fun x => Real.log (x ^ 9 * (Real.tan (Real.sin 82) + Real.log (7 * -10))), 13, 6, 256.700000ms, 244.200000ms, 245.600000ms, 248.000000ms
+157, fun x => Real.log (Real.sin (x ^ 6 / x ^ 8)) * (x ^ 4 - 36 + Real.sin (x ^ 6) + x ^ 3) * (x ^ 9 * (-45 - x ^ 8) - Real.sin (x ^ 5) * Real.tan (x ^ 9) + -61), 46, 7, 6285.900000ms, 6158.900000ms, 6002.800000ms, 5990.300000ms
+158, fun x => Real.sin (Real.sin 38 + (-43 - x ^ 9)) * (Real.tan (x ^ 1) * Real.cos (Real.sin (-85))) * ((19 + Real.sin (-73)) / Real.tan (x ^ 1 - x ^ 3 - -52 / -30)), 36, 7, 6786.700000ms, 6705.800000ms, 6757.400000ms, 6638.400000ms
+159, fun x => x ^ 8 / Real.sin (Real.sin (Real.sin 80 / x ^ 3)), 12, 6, 826.200000ms, 823.200000ms, 864.800000ms, 848.200000ms
+160, fun x => Real.cos (Real.log (x ^ 8 / -73) + (65 - Real.tan (x ^ 9)) - Real.sin (-2 - -35)), 19, 7, 3434.500000ms, 3313.400000ms, 3358.900000ms, 3343.000000ms
+161, fun x => Real.sin (Real.sin (Real.log (Real.log (-5) + x ^ 5))), 9, 6, 362.300000ms, 350.500000ms, 353.600000ms, 356.100000ms
+162, fun x => x ^ 7 * ((Real.log (-1) / Real.sin (x ^ 9) - 6) / (64 / Real.cos (x ^ 6 + x ^ 7))), 24, 7, 2075.400000ms, 2100.900000ms, 2024.600000ms, 2103.800000ms
+163, fun x => Real.tan (Real.sin (Real.sin 23 * (x ^ 7 - 37)) * Real.cos (Real.sin (Real.sin (-8)))), 15, 7, 2878.100000ms, 2878.700000ms, 2896.000000ms, 2906.900000ms
+164, fun x => Real.cos (Real.log (x ^ 2 + 46)) * x ^ 10 - Real.sin (Real.cos (23 + x ^ 8 + Real.cos (x ^ 8))), 24, 7, 11920.300000ms, 13434.500000ms, 11750.500000ms, 11996.300000ms
+165, fun x => 1 / (Real.cos (Real.log (Real.sin (x ^ 2))) * Real.sin (x ^ 3)), 13, 7, 799.300000ms, 793.400000ms, 792.200000ms, 808.000000ms
+166, fun x => Real.sin (x ^ 7 - x ^ 6) / Real.tan (Real.sin (-74)) / Real.sin (-22) + Real.sin (Real.log (Real.tan (x ^ 3 - 44))), 24, 7, 3613.500000ms, 3714.300000ms, 3624.200000ms, 3854.300000ms
+167, fun x => Real.cos (x ^ 5 * (13 - -66) - (x ^ 9 - Real.cos (-70)) - Real.log (Real.tan (x ^ 6 / x ^ 7))), 25, 7, 4026.400000ms, 4016.300000ms, 3950.200000ms, 4101.000000ms
+168, fun x => x ^ 7 / Real.sin (Real.sin (-9)), 7, 4, 213.200000ms, 234.800000ms, 224.900000ms, 244.400000ms
+169, fun x => x ^ 10 - (x ^ 7 + (11 - -27)) / Real.cos (-5 - x ^ 6) * (Real.tan (Real.sin (x ^ 6)) + Real.sin (-35) * Real.log (x ^ 9)), 32, 7, 4812.500000ms, 4821.400000ms, 4772.600000ms, 4761.400000ms
+170, fun x => Real.sin (Real.cos (-93)) / (Real.log (Real.cos (x ^ 4)) * Real.sin (-1)) * Real.sin (Real.sin (x ^ 2) * Real.log (x ^ 9) / Real.log (Real.cos (-56))), 27, 7, 1679.200000ms, 1699.200000ms, 1661.600000ms, 1674.400000ms
+171, fun x => x ^ 4 * 28 + 50 * 62 + x ^ 6 * (x ^ 3 - x ^ 7) - Real.log (Real.sin (Real.log (-69))) - Real.sin (Real.tan (x ^ 7) * Real.log (-96)) * Real.sin (x ^ 3 - x ^ 2 - -75 * x ^ 10), 50, 7, 5785.000000ms, 5738.900000ms, 6124.600000ms, 5595.300000ms
+172, fun x => Real.log (61 - 49 + Real.log (-29) + 50) + (Real.log (Real.tan (x ^ 7)) / Real.sin (-58 / x ^ 2) + Real.tan (Real.tan (46 - -44))), 28, 7, 3630.300000ms, 3448.900000ms, 3447.100000ms, 3493.100000ms
+173, fun x => Real.sin (Real.tan (x ^ 8 + -74 + Real.log 89) * (Real.log (Real.cos (-49)) * (x ^ 3 / (x ^ 1 + -43)))), 24, 7, 3703.700000ms, 3712.200000ms, 3630.800000ms, 3593.500000ms
+174, fun x => Real.sin (x ^ 5), 4, 3, 71.000000ms, 70.000000ms, 75.700000ms, 80.000000ms
+175, fun x => Real.log (Real.tan (x ^ 8 * (x ^ 8 * 14))) + x ^ 1, 15, 7, 3330.000000ms, 3324.700000ms, 3260.700000ms, 3202.200000ms
+176, fun x => x ^ 7 + 14, 5, 3, 267.500000ms, 247.500000ms, 238.500000ms, 238.400000ms
+177, fun x => 67 - (Real.log (Real.tan (x ^ 8)) + Real.tan (x ^ 4 + -76)) + x ^ 1 / Real.log 96 / Real.tan (x ^ 8 / (x ^ 8 + x ^ 10)), 34, 7, 9911.100000ms, 9597.800000ms, 9556.500000ms, 9569.100000ms
+178, fun x => Real.sin (x ^ 6), 4, 3, 69.000000ms, 70.300000ms, 69.000000ms, 69.700000ms
+179, fun x => Real.cos (Real.log (Real.cos (Real.sin (x ^ 2)))), 7, 6, 327.400000ms, 314.700000ms, 314.500000ms, 313.600000ms
+180, fun x => Real.sin ((21 * x ^ 9 + -98) * -86) + ((x ^ 8 + -31) / (58 - x ^ 10) - Real.cos 31 * (-99 / -67)) / Real.cos (Real.cos (Real.sin (x ^ 8))), 36, 7, 2895.600000ms, 2863.900000ms, 2961.000000ms, 2944.000000ms
+181, fun x => Real.log (Real.log ((x ^ 7 + 24) * 47)) * Real.sin (Real.sin (Real.sin (x ^ 1))), 16, 7, 981.900000ms, 993.900000ms, 965.400000ms, 971.200000ms
+182, fun x => Real.sin (Real.cos (Real.log (-55 + 28) / ((x ^ 10 - 53) * Real.sin 14))), 15, 7, 1193.700000ms, 1201.600000ms, 1094.500000ms, 932.700000ms
+183, fun x => Real.cos (Real.sin (Real.tan (Real.log (x ^ 2))) / (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44)))), 20, 7, 4563.100000ms, 3934.400000ms, 3612.600000ms, 3559.600000ms
+184, fun x => Real.tan (Real.cos (14 / x ^ 1) / Real.log (Real.log (x ^ 2))) + Real.tan 45, 16, 7, 3445.000000ms, 3416.400000ms, 3442.400000ms, 3412.300000ms
+185, fun x => Real.tan (Real.tan (-95 + (x ^ 5 - 81)) - 45 / x ^ 6 * (82 * x ^ 1) / (x ^ 4 * x ^ 8 + Real.log (x ^ 6))), 34, 7, 7213.200000ms, 7541.300000ms, 7288.100000ms, 7383.200000ms
+186, fun x => Real.log (Real.tan (18 + x ^ 8 - (-44 - x ^ 9)) + Real.sin (Real.sin (x ^ 5 / x ^ 1))), 23, 7, 3898.600000ms, 4123.100000ms, 3881.000000ms, 3891.100000ms
+187, fun x => x ^ 3 * (Real.tan (x ^ 9) / Real.sin (-15) * Real.sin (Real.cos (x ^ 8)) - Real.cos ((x ^ 4 - 55) * Real.sin (-94))), 27, 7, 4077.400000ms, 3993.900000ms, 4023.800000ms, 4043.600000ms
+188, fun x => Real.cos (61 - 76 - 67 * x ^ 1 - 13 + Real.tan (Real.log (x ^ 4 + x ^ 3))), 22, 7, 3640.100000ms, 3711.600000ms, 3627.300000ms, 3644.500000ms
+189, fun x => Real.cos (x ^ 1) - Real.log (Real.tan (x ^ 5)) + Real.log (0 + x ^ 10) + x ^ 2, 21, 7, 3697.500000ms, 3704.600000ms, 3728.300000ms, 3770.600000ms
+190, fun x => Real.sin (Real.sin (Real.sin (Real.sin (59 / x ^ 8)))), 9, 7, 2322.900000ms, 2370.200000ms, 2255.300000ms, 2225.900000ms
+191, fun x => Real.cos 21 / (Real.sin (-51) * Real.tan (Real.sin (x ^ 5))) * x ^ 8, 15, 7, 3063.500000ms, 3105.500000ms, 3079.100000ms, 3114.500000ms
+192, fun x => Real.tan (Real.sin (Real.log (Real.tan (Real.tan (x ^ 2))))), 8, 7, 7089.800000ms, 7019.300000ms, 7035.700000ms, 7082.100000ms
+193, fun x => Real.tan (Real.tan (Real.cos (x ^ 10 - 52)) + (Real.log (65 + -34) + -83 / x ^ 8 * (x ^ 7 * -1))), 25, 7, 6338.000000ms, 7913.400000ms, 6587.400000ms, 6219.500000ms
+194, fun x => 1 + (Real.sin 54 + (x ^ 4 - x ^ 1) - Real.sin (x ^ 3)) - Real.cos (x ^ 2), 22, 7, 1520.600000ms, 1621.400000ms, 1537.200000ms, 1586.700000ms
+195, fun x => Real.log (x ^ 7) * (Real.cos (-77) + (-32 * 75 + 4 * -48)) + -8 * Real.cos (-35), 20, 6, 435.200000ms, 453.700000ms, 452.600000ms, 423.600000ms
+196, fun x => (Real.tan (Real.sin (x ^ 10) - Real.sin (x ^ 9)) + Real.tan (Real.tan (Real.sin (x ^ 4)))) * Real.cos 73, 20, 7, 8362.900000ms, 8296.000000ms, 8423.300000ms, 8342.000000ms
+197, fun x => Real.tan ((Real.log (x ^ 10) / Real.log (-12) + Real.cos (Real.log (x ^ 2))) * 91), 16, 7, 3328.400000ms, 3223.900000ms, 3138.200000ms, 3185.400000ms
+198, fun x => Real.cos (Real.tan (Real.log 91)) * x ^ 1 - Real.sin (Real.tan (56 + Real.tan (x ^ 3))), 17, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+198, EXIT 1
+199, fun x => (Real.cos (Real.tan (Real.log (x ^ 4))) + 100) / (Real.log (Real.log (x ^ 5) / (x ^ 7 * x ^ 10)) / ((x ^ 3 * x ^ 2 + x ^ 10) / x ^ 3)), 38, 7, 5596.400000ms, 5577.600000ms, 5568.900000ms, 5590.200000ms
+200, fun x => Real.log (Real.sin (Real.sin (x ^ 9 * Real.cos (x ^ 10)))), 11, 7, 547.400000ms, 547.000000ms, 567.300000ms, 544.600000ms
+201, fun x => x ^ 7 + Real.log (Real.cos 62) / (Real.sin 77 * Real.cos (x ^ 3)) + Real.cos (Real.log (x ^ 5)), 21, 7, 1298.000000ms, 1313.100000ms, 1347.400000ms, 1314.500000ms
+202, fun x => Real.log (Real.cos ((x ^ 6 + x ^ 9 + -100) * (12 - 84 + -4))), 17, 7, 795.600000ms, 779.900000ms, 766.900000ms, 770.700000ms
+203, fun x => Real.log (Real.log ((84 + -84) * (-98 - x ^ 6) * (29 - x ^ 1))), 17, 7, 890.400000ms, 892.200000ms, 896.900000ms, 855.600000ms
+204, fun x => Real.tan (Real.cos (Real.cos (x ^ 3 - x ^ 9))) + Real.cos (x ^ 8 - x ^ 9 + Real.tan (Real.sin 41)), 23, 7, 3922.300000ms, 3935.600000ms, 4044.700000ms, 4873.000000ms
+205, fun x => Real.log ((-41 + x ^ 2 - Real.tan (x ^ 3)) / (x ^ 2 * 34 * (-69 * -78)) / 64), 23, 7, 4088.500000ms, 3915.500000ms, 3824.400000ms, 3719.100000ms
+206, fun x => Real.cos (Real.tan (Real.cos (8 / -38))) - (Real.sin (Real.tan (x ^ 10 + 93)) - Real.cos (-15 - x ^ 9) / (x ^ 9 - 68)), 27, 7, 3948.300000ms, 3962.600000ms, 3966.700000ms, 4003.800000ms
+207, fun x => -37 + (x ^ 10 - x ^ 8) / (x ^ 5 - Real.log 43) * Real.tan (Real.tan (-38)), 20, 6, 1468.400000ms, 1376.100000ms, 1341.200000ms, 1403.500000ms
+208, fun x => Real.tan (Real.sin (x ^ 5) + Real.tan ((x ^ 10 - x ^ 7) * (x ^ 7 - 85))), 20, 7, 5833.100000ms, 5891.500000ms, 5780.900000ms, 5828.300000ms
+209, fun x => x ^ 7 - x ^ 4, 7, 3, 388.800000ms, 374.200000ms, 382.300000ms, 389.100000ms
+210, fun x => Real.log (Real.tan (Real.cos 24 - Real.cos (x ^ 10)) / Real.cos (76 - x ^ 10 / x ^ 2)), 20, 7, 3944.200000ms, 3932.000000ms, 3832.600000ms, 3862.700000ms
+211, fun x => Real.cos (Real.cos (Real.sin (x ^ 6) - Real.sin (x ^ 9))) - Real.log 71, 14, 7, 815.300000ms, 823.300000ms, 817.600000ms, 808.100000ms
+212, fun x => Real.cos (-53 / x ^ 8 + (76 + 52) - Real.sin (x ^ 6)) / x ^ 2, 19, 7, 1766.100000ms, 1429.000000ms, 1460.700000ms, 1491.700000ms
+213, fun x => Real.sin (x ^ 10), 4, 3, 64.400000ms, 68.100000ms, 69.300000ms, 72.800000ms
+214, fun x => Real.sin (Real.tan (Real.cos (Real.log 48))) / (Real.cos (x ^ 9 / -24) + (-72 / x ^ 6 - Real.tan (-89)) - Real.cos ((-15 + 19) / Real.log (x ^ 7))), 31, 7, 2222.700000ms, 2234.100000ms, 2248.700000ms, 2226.400000ms
+215, fun x => Real.cos (Real.log (Real.sin (-91 * 69))) * Real.tan (x ^ 4 / -46 / -8 * Real.tan (Real.tan (x ^ 8))), 21, 7, 7756.100000ms, 7802.000000ms, 7746.900000ms, 7776.600000ms
+216, fun x => Real.tan (18 + 39 / (x ^ 3 - x ^ 9)) - Real.sin (x ^ 10 + 5 * 33 * Real.cos (x ^ 5)), 26, 7, 4223.500000ms, 4175.900000ms, 4154.700000ms, 4176.500000ms
+217, fun x => Real.sin (Real.tan (Real.tan (-17) / 92)) - ((x ^ 10 - -79) * (x ^ 1 + x ^ 9) * ((x ^ 3 - x ^ 10) / x ^ 8) + Real.sin ((81 + x ^ 8) * (x ^ 4 / 39))), 45, 7, 3221.000000ms, 3214.200000ms, 3220.300000ms, 3302.600000ms
+218, fun x => Real.sin (Real.sin (Real.log 38) + Real.log (Real.cos (-10))) / (Real.cos (x ^ 2) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14)))), 22, 6, 597.900000ms, 614.700000ms, 563.600000ms, 565.900000ms
+219, fun x => Real.sin (Real.log (Real.cos (Real.sin (-22) - (76 + x ^ 4)))), 11, 7, 605.200000ms, 614.400000ms, 652.200000ms, 611.600000ms
+220, fun x => Real.sin (98 / (Real.sin 32 - Real.tan (x ^ 10))) - Real.tan (x ^ 2 + x ^ 2) * x ^ 6 * Real.sin (Real.cos (Real.log (x ^ 2))), 30, 7, 7109.900000ms, 7154.400000ms, 6609.300000ms, 6607.200000ms
+221, fun x => Real.sin (Real.sin (x ^ 3 * x ^ 1) * (15 - 37 + Real.log (x ^ 3))) / -96, 20, 7, 1101.900000ms, 1071.300000ms, 1061.000000ms, 1077.000000ms
+222, fun x => Real.sin (Real.sin (Real.cos (x ^ 5)) + x ^ 10 - -60), 12, 7, 707.300000ms, 734.000000ms, 690.300000ms, 698.100000ms
+223, fun x => Real.cos (Real.tan (Real.tan 10 / Real.tan (-29))) - Real.log (Real.sin (Real.cos (x ^ 7))), 14, 6, 404.400000ms, 431.000000ms, 395.800000ms, 410.100000ms
+224, fun x => (x ^ 2 * -43 - x ^ 6 / x ^ 7 + Real.cos (Real.cos (x ^ 1))) * -98 / Real.log (Real.cos (Real.sin (x ^ 3))), 28, 7, 2253.100000ms, 2235.800000ms, 2271.400000ms, 2249.400000ms
+225, fun x => Real.tan ((Real.sin (Real.sin 78) - (Real.log (x ^ 6) - Real.log (x ^ 7))) / Real.tan (Real.sin 72)), 18, 7, 3056.600000ms, 3024.000000ms, 3064.700000ms, 3099.800000ms
+226, fun x => Real.sin (Real.tan (Real.sin (61 * x ^ 2)) - Real.log (Real.sin (-18) * Real.sin 74)), 15, 7, 2651.200000ms, 2740.400000ms, 2647.400000ms, 2705.800000ms
+227, fun x => Real.sin ((66 / 55 + Real.log (x ^ 1)) * (61 * 81 / (x ^ 8 + -44))) / (Real.tan (Real.log (-62 + 97)) + Real.tan (Real.sin 96)), 29, 7, 1191.200000ms, 1204.700000ms, 1207.300000ms, 1206.100000ms
+228, fun x => Real.log (Real.cos (Real.cos (Real.tan 13)) / ((51 - -95) * x ^ 6 - 9)), 15, 6, 773.200000ms, 775.700000ms, 715.000000ms, 737.100000ms
+229, fun x => Real.cos (Real.tan (Real.tan (x ^ 8))), 6, 5, 4585.100000ms, 4687.800000ms, 4702.700000ms, 5565.200000ms
+230, fun x => x ^ 5 * (-52 - -92 * (x ^ 4 * -67) / Real.cos (Real.tan 96)), 17, 7, 927.800000ms, 927.500000ms, 959.100000ms, 917.500000ms
+231, fun x => Real.tan (18 - Real.cos (Real.cos (-88)) - (x ^ 7 / Real.cos 24 - Real.cos 59 * -96)), 18, 6, 2840.700000ms, 2917.500000ms, 2831.700000ms, 2903.500000ms
+232, fun x => 42 - Real.tan (Real.sin (x ^ 9 / -41) - (Real.sin (-46) + (x ^ 9 + x ^ 2))), 20, 7, 3562.300000ms, 3591.000000ms, 3582.700000ms, 3515.500000ms
+233, fun x => Real.cos (Real.sin (97 - -16) / Real.log (x ^ 1 * x ^ 2)) * Real.log (Real.tan (x ^ 8) - Real.cos (x ^ 1) + -19 / -41 / Real.log (x ^ 7)), 34, 7, 4451.500000ms, 4515.600000ms, 4443.600000ms, 4379.300000ms
+234, fun x => Real.log (x ^ 2 - Real.tan (-93)), 7, 4, 280.100000ms, 267.200000ms, 267.100000ms, 272.900000ms
+235, fun x => Real.log (Real.tan 26 * Real.log (x ^ 5)) - Real.tan (Real.cos (x ^ 9) + 55 / -39) + Real.cos (Real.log (-15 / -88 * (-64 / x ^ 8))), 30, 7, 4018.000000ms, 3898.000000ms, 4068.600000ms, 3937.700000ms
+236, fun x => (Real.tan (Real.tan (25 * x ^ 3)) + Real.cos 72 * (Real.tan (-88) / Real.tan (x ^ 5))) / x ^ 1, 22, 7, 8249.800000ms, 8271.700000ms, 8282.300000ms, 8279.200000ms
+237, fun x => (9 - 8) / (x ^ 2 - -54) * Real.cos (-46 + -5) / Real.log (-86) * Real.tan (67 * x ^ 2 / (x ^ 7 + 49) - Real.cos (x ^ 1) * Real.cos 60), 38, 7, 4782.800000ms, 4769.400000ms, 4750.900000ms, 4722.900000ms
+238, fun x => Real.tan (-100) - x ^ 1, 6, 3, 243.000000ms, 261.100000ms, 252.200000ms, 254.100000ms
+239, fun x => Real.tan (Real.log (Real.tan (Real.log (x ^ 10)) * Real.cos (x ^ 8 + x ^ 8))), 16, 7, 5437.000000ms, 5346.500000ms, 5372.100000ms, 5378.400000ms
+240, fun x => Real.sin (Real.cos (Real.log (-64))) / (Real.sin (87 + x ^ 1) / -14) + Real.log (Real.sin (Real.cos (x ^ 10))) * Real.sin (Real.cos (x ^ 1 - x ^ 1)), 30, 7, 2213.700000ms, 2246.200000ms, 2290.300000ms, 2198.100000ms
+241, fun x => Real.cos (x ^ 7 / (-18 / x ^ 6) / (x ^ 7 + x ^ 7 + Real.log (-75)) * (x ^ 6 * (x ^ 7 / x ^ 4) * x ^ 7)), 37, 7, 3241.900000ms, 3235.600000ms, 3219.300000ms, 3203.100000ms
+242, fun x => Real.log (Real.sin (Real.tan (-68 * -1))) - Real.log (x ^ 7) / Real.cos (-79) / (9 + -54) * (Real.tan (x ^ 2) + Real.cos (-60)), 26, 7, 3333.900000ms, 3345.100000ms, 3369.600000ms, 3251.400000ms
+243, fun x => x ^ 10 - (Real.log (-16 * 34) * (Real.log (x ^ 5) / (-51 * x ^ 1)) + Real.log (41 + -21) * (-9 - 96 + x ^ 2)), 32, 7, 1786.900000ms, 1770.100000ms, 1850.200000ms, 1789.800000ms
+244, fun x => (Real.sin (Real.log (Real.cos 21)) + (Real.sin (-62) - -96 - 90 / -33 * Real.sin 2)) / x ^ 1, 20, 6, 330.600000ms, 301.400000ms, 306.400000ms, 322.300000ms
+245, fun x => Real.tan (x ^ 4) / -60, 6, 4, 2379.000000ms, 2373.000000ms, 2428.100000ms, 2453.100000ms
+246, fun x => (-18 + (Real.cos (Real.cos 89) + -37)) / (Real.cos (x ^ 2 * -39 * (4 - x ^ 2)) - x ^ 2), 24, 7, 1402.400000ms, 1475.500000ms, 1404.800000ms, 1357.900000ms
+247, fun x => Real.log (Real.log (x ^ 4) * x ^ 2 - Real.log (x ^ 6)), 14, 6, 748.300000ms, 778.000000ms, 778.300000ms, 785.600000ms
+248, fun x => Real.sin (-96 / x ^ 9) / -93, 8, 5, 503.700000ms, 498.600000ms, 535.000000ms, 512.200000ms
+249, fun x => -98 - (Real.cos (Real.log (83 / x ^ 4)) + x ^ 1), 13, 7, 971.100000ms, 1023.900000ms, 1075.600000ms, 1169.100000ms
+250, fun x => (-45 + Real.cos (Real.log (-99)) - Real.log (Real.cos (x ^ 8 * x ^ 8))) / ((-23 - Real.cos (x ^ 3)) / (Real.cos (-63) / (-8 + -79)) + 10), 31, 7, 1825.100000ms, 1702.800000ms, 1725.100000ms, 1776.900000ms
+251, fun x => (x ^ 9 - x ^ 5) / Real.tan 80 / x ^ 5 / (Real.log (x ^ 3) - Real.tan (Real.sin (-26))) / Real.sin (-35 * Real.cos (Real.cos (x ^ 2))), 32, 7, 2520.300000ms, 2560.300000ms, 2572.400000ms, 2588.100000ms
+252, fun x => Real.tan (Real.sin (Real.log (Real.log (x ^ 4))) + Real.log (Real.sin (Real.sin (x ^ 7)))), 14, 7, 2782.700000ms, 2803.700000ms, 2826.100000ms, 2801.800000ms
+253, fun x => Real.tan (x ^ 10), 4, 3, 2290.500000ms, 2265.500000ms, 2258.900000ms, 2264.200000ms
+254, fun x => Real.log (Real.sin (Real.sin (x ^ 10)) - Real.cos (x ^ 7) * (-31 - x ^ 6) - Real.sin (Real.cos (Real.cos (x ^ 5)))), 24, 7, 1651.500000ms, 1629.700000ms, 1606.100000ms, 1599.100000ms
+255, fun x => 52 + x ^ 6, 5, 3, 264.100000ms, 255.900000ms, 253.100000ms, 239.600000ms
+256, fun x => Real.cos (Real.log (Real.sin (Real.cos (-97) + Real.tan (x ^ 9)))), 10, 7, 2599.800000ms, 2631.400000ms, 2674.400000ms, 2631.600000ms
+257, fun x => Real.cos (Real.sin (Real.log (Real.log (x ^ 10 / -36)))), 9, 7, 410.700000ms, 396.500000ms, 400.300000ms, 417.100000ms
+258, fun x => Real.cos (Real.sin (Real.log (x ^ 1)) - Real.tan (Real.cos (x ^ 8)) - x ^ 9 * Real.log (Real.log (-68))), 20, 7, 3440.600000ms, 3417.700000ms, 3357.600000ms, 3438.400000ms
+259, fun x => Real.tan (55 * (20 - x ^ 4) * x ^ 3 / ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6)))), 26, 7, 4284.200000ms, 4226.100000ms, 4354.500000ms, 4269.200000ms
+260, fun x => Real.tan (Real.tan (Real.cos (x ^ 4 + 43))) * Real.cos (Real.cos ((x ^ 9 + -9) * 17)), 18, 7, 5767.200000ms, 6070.700000ms, 5627.800000ms, 5692.700000ms
+261, fun x => Real.tan (-36 / (x ^ 7 + x ^ 8) + Real.cos 63 / x ^ 4 - Real.cos (-64) / Real.log 69 / Real.cos (Real.cos (x ^ 1))), 29, 7, 4484.300000ms, 4487.500000ms, 4352.300000ms, 4419.600000ms
+262, fun x => Real.log (Real.log (Real.cos (Real.sin (x ^ 7 + x ^ 4)))), 11, 7, 583.000000ms, 589.200000ms, 574.500000ms, 558.100000ms
+263, fun x => -45 / Real.sin (Real.sin (64 / x ^ 8)) - Real.sin 53, 12, 7, 864.100000ms, 877.200000ms, 847.800000ms, 864.100000ms
+264, fun x => Real.log (Real.sin (Real.cos (Real.cos (x ^ 2 + 84)))), 9, 7, 504.800000ms, 502.700000ms, 530.800000ms, 499.600000ms
+265, fun x => Real.log ((Real.log (Real.cos (x ^ 5)) + Real.cos (Real.cos 53)) / Real.log (-50)), 13, 7, 577.200000ms, 576.200000ms, 611.900000ms, 572.900000ms
+266, fun x => Real.tan (Real.tan (Real.cos ((x ^ 4 - x ^ 5) / (x ^ 5 * -48)))), 16, 7, 5726.500000ms, 5694.100000ms, 5700.300000ms, 5623.900000ms
+267, fun x => Real.sin (Real.cos (Real.tan (x ^ 8) / (-12 + 7)) + Real.tan (x ^ 8)), 15, 7, 5561.200000ms, 5335.500000ms, 5137.300000ms, 5191.800000ms
+268, fun x => -60 * (Real.tan (99 + x ^ 2) - Real.cos (x ^ 1) - Real.tan (Real.cos (-6) + -89)), 19, 7, 3387.200000ms, 3291.300000ms, 3313.000000ms, 3268.000000ms
+269, fun x => Real.sin 67 / (Real.log (x ^ 7) * Real.log (x ^ 1) / Real.cos (x ^ 6 * x ^ 2)) / x ^ 6, 25, 7, 1952.300000ms, 1878.700000ms, 1958.300000ms, 1941.500000ms
+270, fun x => x ^ 3 - x ^ 7 + Real.tan (Real.tan (Real.sin (x ^ 10)) + Real.cos 77 / x ^ 10), 21, 7, 5708.900000ms, 5722.900000ms, 5782.400000ms, 5738.200000ms
+271, fun x => Real.log (-7) / (-98 / x ^ 10) + (x ^ 9 + x ^ 3 + Real.sin (-1)) - 9 - Real.log (x ^ 6), 26, 7, 2050.100000ms, 1882.300000ms, 1900.300000ms, 1894.700000ms
+272, fun x => Real.sin (x ^ 9), 4, 3, 78.000000ms, 65.900000ms, 63.600000ms, 67.000000ms
+273, fun x => Real.log (x ^ 1) / -57 * (Real.sin (x ^ 8 - x ^ 6 + x ^ 4 / x ^ 9) / ((-100 + x ^ 5) * Real.log (x ^ 8) * (Real.sin 12 + Real.tan 84))), 40, 7, 2678.000000ms, 2675.400000ms, 2725.400000ms, 2641.300000ms
+274, fun x => 0 - (x ^ 2 + Real.log 40) * (27 + -40 + Real.tan (-12)) / Real.log (Real.tan (x ^ 1) / Real.cos (x ^ 8)), 26, 7, 3839.300000ms, 3760.300000ms, 3844.700000ms, 3664.200000ms
+275, fun x => 97 / (Real.tan (Real.cos (x ^ 4 - x ^ 8)) - -98 / Real.sin (Real.tan 95)), 17, 7, 3158.800000ms, 3151.700000ms, 3214.000000ms, 3131.100000ms
+276, fun x => Real.tan (Real.sin (4 / x ^ 7) / -90) / x ^ 10, 13, 7, 3172.400000ms, 3190.600000ms, 3154.200000ms, 3172.400000ms
+277, fun x => x ^ 10 - (Real.cos (x ^ 5) + Real.sin (-37)) - Real.sin (x ^ 6 / x ^ 6) / -99 - Real.tan (Real.sin (Real.log 31) / -25), 29, 7, 1767.300000ms, 1707.800000ms, 1792.500000ms, 1787.000000ms
+278, fun x => (73 * x ^ 8 - 48 - (-79 + 16) / (x ^ 6 + x ^ 2) + Real.tan (Real.log (Real.log (x ^ 6)))) / Real.sin (Real.cos (x ^ 2)), 32, 7, 4915.700000ms, 4464.000000ms, 4555.500000ms, 4526.200000ms
+279, fun x => Real.log (Real.log (-88)) * Real.tan (80 / x ^ 10) - 8 * (Real.tan (x ^ 2) - -33) - Real.sin (-30), 22, 7, 5748.300000ms, 5789.500000ms, 5775.300000ms, 5727.700000ms
+280, fun x => x ^ 8 + x ^ 7 * ((x ^ 4 - x ^ 7) / x ^ 1) - Real.sin (Real.log (-20) / (x ^ 3 - -61)) * Real.tan (Real.log (-3 * -36)), 35, 7, 2453.500000ms, 2353.700000ms, 2390.400000ms, 2402.300000ms
+281, fun x => Real.log (Real.sin (Real.cos (-7)) * (30 - Real.log (-74)) / x ^ 3), 13, 6, 367.800000ms, 321.300000ms, 334.100000ms, 333.100000ms
+282, fun x => Real.cos (Real.log (Real.tan (x ^ 7) * (x ^ 6 * x ^ 1))) * Real.log (-30), 17, 7, 3066.100000ms, 3034.000000ms, 3134.000000ms, 3023.600000ms
+283, fun x => Real.tan (Real.tan (Real.log (-56))) * (x ^ 5 - x ^ 9 + Real.cos (-24) / x ^ 3) - Real.sin (x ^ 5), 24, 6, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+283, EXIT 1
+284, fun x => x ^ 1 + Real.log (Real.log (Real.log (x ^ 2))) + x ^ 1, 14, 7, 696.400000ms, 729.600000ms, 712.600000ms, 803.000000ms
+285, fun x => x ^ 6 + x ^ 1 / x ^ 7 / (x ^ 4 * x ^ 1) * (43 - x ^ 7 / x ^ 9) / Real.log (58 / -70 / (x ^ 8 + 26)), 40, 7, 3360.400000ms, 3431.800000ms, 3533.900000ms, 3921.500000ms
+286, fun x => Real.cos (Real.sin (Real.log (Real.tan (x ^ 1)) - Real.cos 0 / Real.log (x ^ 1))), 15, 7, 3070.400000ms, 3013.800000ms, 3025.700000ms, 3036.000000ms
+287, fun x => Real.cos (Real.cos ((x ^ 8 - x ^ 4) / (-5 - 57))) / ((Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) * (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8)))), 42, 7, 2861.600000ms, 2826.700000ms, 2935.300000ms, 2758.100000ms
+288, fun x => x ^ 5 + x ^ 3 - x ^ 4 / (x ^ 8 * x ^ 1 / Real.log 27 - (43 * -51 - Real.sin (x ^ 6))), 31, 7, 2145.000000ms, 2056.900000ms, 2170.600000ms, 2061.100000ms
+289, fun x => Real.tan (Real.log (Real.log (x ^ 7 + -20 - (31 + x ^ 9)))), 14, 7, 2985.000000ms, 2890.500000ms, 2928.800000ms, 3014.700000ms
+290, fun x => Real.tan (Real.sin (Real.log (x ^ 3) - -52 / x ^ 10) - (Real.tan 68 - Real.cos 76 - Real.sin (-66) * Real.cos (x ^ 2))), 26, 7, 3645.900000ms, 3669.900000ms, 3608.400000ms, 3701.700000ms
+291, fun x => x ^ 5 / Real.sin (-42) * 30, 8, 4, 352.200000ms, 335.300000ms, 333.200000ms, 359.200000ms
+292, fun x => Real.log (67 * x ^ 9 + x ^ 4 + 89) * -21, 14, 7, 764.500000ms, 787.300000ms, 820.100000ms, 843.400000ms
+293, fun x => Real.cos ((83 / 27 - Real.cos (-22)) * x ^ 9) * ((x ^ 5 - -69 + Real.tan (x ^ 1) + Real.tan (Real.tan (x ^ 7))) * x ^ 10), 32, 7, 8586.800000ms, 8504.200000ms, 8428.800000ms, 8424.700000ms
+294, fun x => x ^ 1 / (Real.log (Real.log (x ^ 2)) - (Real.cos (Real.cos 84) + (Real.sin (x ^ 2) - -27))), 20, 7, 1237.700000ms, 1241.300000ms, 1213.600000ms, 1317.600000ms
+295, fun x => Real.sin (Real.log (x ^ 6)), 5, 4, 96.000000ms, 95.300000ms, 95.800000ms, 96.200000ms
+296, fun x => Real.cos (x ^ 4 - x ^ 7 * Real.cos 94) * (x ^ 9 / x ^ 10), 19, 6, 1234.000000ms, 1302.600000ms, 1244.600000ms, 1341.900000ms
+297, fun x => Real.sin (Real.tan (Real.sin (Real.log (-42) + Real.log (x ^ 10)))), 10, 7, 2841.100000ms, 2666.600000ms, 2536.100000ms, 2516.900000ms
+298, fun x => Real.sin ((x ^ 5 + x ^ 7) * (-55 / -71)) + Real.log (Real.log (x ^ 8 - 35)) - ((Real.tan (x ^ 4) - 26) / Real.tan (62 - x ^ 4) - -72), 36, 7, 7015.600000ms, 7110.000000ms, 7073.800000ms, 6981.000000ms
+299, fun x => Real.log (Real.tan (Real.sin (Real.cos (x ^ 7)) + Real.log (48 - x ^ 3))), 14, 7, 3022.400000ms, 2970.300000ms, 3015.700000ms, 2969.200000ms
+300, fun x => Real.tan (Real.sin (Real.log (x ^ 9 - x ^ 8) + Real.log (-21 / x ^ 5))), 17, 7, 3261.000000ms, 3286.300000ms, 3207.800000ms, 3281.900000ms
+301, fun x => Real.sin (Real.cos (Real.tan (Real.cos 81 + (-46 - x ^ 5)))), 11, 7, 2962.400000ms, 2921.800000ms, 2836.500000ms, 2755.900000ms
+302, fun x => Real.cos (Real.log ((x ^ 1 - -17) / Real.log (x ^ 2))) / Real.log (Real.cos (x ^ 10 / 11) / (Real.log (x ^ 9) * Real.sin (x ^ 6))), 30, 7, 2448.500000ms, 2346.000000ms, 2401.700000ms, 2422.700000ms
+303, fun x => Real.sin (Real.sin (Real.sin (Real.sin 91 / Real.cos (x ^ 1)))), 10, 7, 678.300000ms, 732.500000ms, 705.100000ms, 705.000000ms
+304, fun x => Real.tan (-57 - Real.log (Real.log (x ^ 1))) + Real.log (x ^ 4 / x ^ 1 * Real.log (x ^ 3)) * 54, 24, 7, 3779.700000ms, 3769.500000ms, 3683.300000ms, 3809.400000ms
+305, fun x => (Real.cos (-16) / (x ^ 9 + x ^ 7) + x ^ 3 / (x ^ 6 / x ^ 6)) * Real.cos (Real.log (-39 - x ^ 6)) - Real.cos (Real.cos (x ^ 1) - Real.tan (x ^ 10)) * (x ^ 10 / Real.log 44), 48, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+305, EXIT 1
+306, fun x => Real.sin (Real.log (x ^ 2 / 41 * (2 / x ^ 4)) - Real.sin (Real.sin 66)), 17, 7, 979.600000ms, 1026.500000ms, 972.100000ms, 945.600000ms
+307, fun x => (Real.log (x ^ 9 - x ^ 3) / (-42 * -55 / (-45 + x ^ 6)) - (x ^ 6 + -55) / x ^ 3 * Real.log 7) / ((Real.cos (x ^ 4 * x ^ 8) - x ^ 10 / (-53 + x ^ 5)) / (Real.sin 13 - x ^ 4)), 57, 7, 5037.900000ms, 5040.600000ms, 5031.000000ms, 5052.800000ms
+308, fun x => Real.tan (Real.sin (x ^ 9 + Real.cos (Real.log 18))), 9, 6, 2416.800000ms, 2475.000000ms, 2424.300000ms, 2443.700000ms
+309, fun x => (Real.sin (39 + -88) * Real.tan 52 + 90) * Real.log (x ^ 6 + -32 + -62 / x ^ 7 + Real.sin (Real.log (x ^ 4))), 28, 7, 1279.500000ms, 1310.300000ms, 1372.300000ms, 1301.700000ms
+310, fun x => Real.log (Real.sin ((x ^ 8 - -36) * (x ^ 9 + -56)) / x ^ 6), 17, 7, 1175.900000ms, 1131.600000ms, 1158.100000ms, 1153.000000ms
+311, fun x => (23 + x ^ 10 - x ^ 5 * x ^ 4) * (x ^ 8 / x ^ 3 + -28) - Real.tan (x ^ 7 * 7) * (61 / -73 / (x ^ 2 + 46)) - (Real.log (Real.sin (x ^ 2) + Real.tan (x ^ 2)) + (x ^ 1 - (x ^ 8 - x ^ 7) * x ^ 9)), 67, 7, 9514.500000ms, 9570.500000ms, 9515.300000ms, 9612.200000ms
+312, fun x => Real.sin (Real.log (Real.log (x ^ 6))), 6, 5, 128.500000ms, 130.100000ms, 130.300000ms, 137.300000ms
+313, fun x => 47 / (Real.sin (Real.tan (x ^ 3)) + Real.sin (Real.log 14)) + Real.log (Real.log ((65 - -4) / Real.tan (x ^ 6))), 22, 7, 5732.600000ms, 5970.200000ms, 5894.600000ms, 5649.500000ms
+314, fun x => Real.sin (Real.tan (Real.sin (Real.cos (x ^ 4) + Real.sin (x ^ 10)))), 12, 7, 2896.200000ms, 2810.500000ms, 2831.200000ms, 2831.500000ms
+315, fun x => Real.log (Real.sin (x ^ 5)) + Real.log (Real.log (x ^ 5)), 11, 5, 461.800000ms, 454.900000ms, 459.000000ms, 440.200000ms
+316, fun x => 59 - (Real.tan (x ^ 4 * 84) + (29 + Real.cos (x ^ 4))) / ((Real.log (-55) - Real.log 41) * Real.sin (-94 - -16)), 26, 7, 3449.200000ms, 3432.300000ms, 3429.700000ms, 3454.300000ms
+317, fun x => Real.sin (Real.sin (43 + x ^ 9 + (x ^ 1 - x ^ 2)) / (Real.log (x ^ 3) + Real.tan (-62 + -41))), 25, 7, 1537.600000ms, 1597.900000ms, 1473.500000ms, 1492.300000ms
+318, fun x => Real.log (Real.sin (Real.tan 42 * Real.sin (x ^ 4)) / (10 + x ^ 9)), 15, 7, 831.500000ms, 861.400000ms, 905.400000ms, 876.700000ms
+319, fun x => Real.sin (Real.log (Real.tan (-91 + x ^ 6)) - Real.cos (Real.log (-36) * Real.tan (-47))), 15, 7, 2694.000000ms, 2709.300000ms, 2640.300000ms, 2695.100000ms
+320, fun x => Real.tan (Real.log (x ^ 9)), 5, 4, 2311.300000ms, 2235.900000ms, 2284.800000ms, 2342.400000ms
+321, fun x => -37 / Real.log (Real.sin (Real.tan 96)) * (x ^ 5 - -35 - Real.tan (x ^ 9) - Real.sin 4 * Real.tan 18 + 88), 25, 7, 4334.200000ms, 3492.700000ms, 3386.300000ms, 3333.500000ms
+322, fun x => Real.log (Real.cos ((x ^ 8 + 82) / Real.cos (-58))) + 37 * ((47 + x ^ 5) / (x ^ 1 - x ^ 8) / (88 - Real.tan (x ^ 4))), 33, 7, 4874.100000ms, 5054.700000ms, 4946.300000ms, 4851.600000ms
+323, fun x => Real.tan (-70 * 56) * -95 + (Real.sin (x ^ 3 / x ^ 6) + 51) + (Real.log (Real.tan (x ^ 7)) + Real.sin (x ^ 3)), 28, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+323, EXIT 1
+324, fun x => Real.tan (Real.cos ((-53 + x ^ 5) * Real.log (x ^ 1)) / (Real.sin 41 * -18)), 17, 7, 2957.700000ms, 2939.100000ms, 3052.500000ms, 2994.800000ms
+325, fun x => Real.sin (x ^ 10) / ((Real.cos (-86 + -85) - Real.cos (x ^ 3 / -11)) / -100), 18, 7, 1062.100000ms, 1028.900000ms, 1102.200000ms, 1094.400000ms
+326, fun x => Real.log (-92 / -99 / (67 + x ^ 10) + -87 * (-90 - 75)) - Real.log (Real.cos (x ^ 3) - x ^ 9 - Real.log (-2) * Real.cos (-14)), 32, 7, 1716.700000ms, 1647.900000ms, 1625.500000ms, 1700.900000ms
+327, fun x => Real.sin (Real.tan (Real.tan (-86)) - Real.log (Real.cos (x ^ 3)) - Real.sin (-77 / x ^ 7 / (x ^ 2 + x ^ 9))), 25, 7, 1739.100000ms, 1808.900000ms, 1848.000000ms, 1805.200000ms
+328, fun x => Real.log (Real.tan ((x ^ 10 - x ^ 9) * x ^ 7) + Real.log (Real.log (-59) + (-55 + 8))), 21, 7, 3058.600000ms, 3109.900000ms, 2997.700000ms, 3099.500000ms
+329, fun x => -34 * Real.sin (91 + (-53 / -25 - (x ^ 6 + x ^ 10))), 16, 7, 899.500000ms, 944.400000ms, 900.000000ms, 972.500000ms
+330, fun x => Real.sin (Real.tan (Real.tan (x ^ 10)) / Real.cos (-82 + x ^ 4)) * (Real.tan (x ^ 10 * -54 / (x ^ 6 + x ^ 6)) + Real.cos (Real.sin 68) / (x ^ 6 / x ^ 2 / (x ^ 8 - x ^ 5))), 48, 7, 10570.800000ms, 10604.100000ms, 10631.000000ms, 10596.500000ms
+331, fun x => Real.sin (5 / (x ^ 5 - x ^ 9)) + Real.sin (Real.cos (x ^ 1 * x ^ 8 / Real.sin (x ^ 7))), 25, 7, 2047.200000ms, 1913.600000ms, 1915.800000ms, 1922.900000ms
+332, fun x => Real.tan (x ^ 1) * Real.cos (Real.sin (x ^ 3)) + Real.cos (Real.log (x ^ 4 / -31)) + 52, 20, 7, FAIL
+uncaught exception: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+332, EXIT 1
+333, fun x => x ^ 6 - 9 - Real.tan 64 - x ^ 10 * x ^ 7 * (x ^ 9 - x ^ 8) + (Real.cos (x ^ 5) - -9 * x ^ 8 - Real.log (Real.cos (x ^ 4))) - (Real.tan (Real.log (Real.cos (x ^ 1))) - x ^ 3), 52, 7, 6189.800000ms, 6090.900000ms, 6059.000000ms, 6072.500000ms
+334, fun x => Real.log (Real.tan (Real.cos (x ^ 6))) - Real.sin (Real.tan (x ^ 5) / (-19 * x ^ 1)) + Real.log (51 * -3), 23, 7, 5874.800000ms, 6529.400000ms, 6339.300000ms, 5959.800000ms
+335, fun x => Real.cos (Real.sin (Real.cos (Real.cos (-56))) + Real.log (Real.sin (Real.cos (x ^ 10)))), 12, 7, 550.600000ms, 510.900000ms, 528.500000ms, 516.300000ms
+336, fun x => Real.log (Real.log (x ^ 2)) - (51 + 25) - Real.log (Real.sin (Real.tan (Real.cos (-76)))), 15, 6, 450.900000ms, 450.900000ms, 448.600000ms, 491.400000ms
+337, fun x => Real.cos (x ^ 5), 4, 3, 156.800000ms, 150.400000ms, 160.700000ms, 168.300000ms
+338, fun x => Real.sin ((x ^ 2 * 49 + Real.cos (-22)) * Real.sin (x ^ 7) - (2 * -21 + (x ^ 8 + 53) - Real.log (x ^ 2) * Real.cos (x ^ 10))), 34, 7, 2344.600000ms, 2262.200000ms, 2371.000000ms, 2213.600000ms
+339, fun x => Real.log (x ^ 8 / (72 * x ^ 3) - Real.log 82 + x ^ 4 / -52 / Real.sin 5), 22, 7, 1463.600000ms, 1489.000000ms, 1453.600000ms, 1540.800000ms
+340, fun x => Real.sin (x ^ 8 + 66 - x ^ 5 / x ^ 3 - Real.tan (-11 - x ^ 5)) + (-15 + Real.sin (x ^ 2)), 28, 7, 4333.200000ms, 4291.200000ms, 4168.300000ms, 4325.000000ms
+341, fun x => x ^ 5 / ((Real.sin 4 + 41) / (-64 + 70 + x ^ 5)) * Real.cos (x ^ 8 / (90 * -59) / (-98 - x ^ 1 - x ^ 8)), 35, 7, 2519.200000ms, 2464.400000ms, 2501.600000ms, 2417.100000ms
+342, fun x => (Real.log 23 + Real.cos (-98 - x ^ 8 / -57)) * x ^ 1, 15, 7, 913.000000ms, 915.000000ms, 882.400000ms, 905.100000ms
+343, fun x => Real.tan (x ^ 7), 4, 3, 2214.800000ms, 2268.600000ms, 2209.800000ms, 2233.500000ms
+344, fun x => -71 / x ^ 1, 5, 3, 293.900000ms, 283.700000ms, 285.100000ms, 289.100000ms
+345, fun x => Real.log (-58) / ((x ^ 10 * -35 - Real.log (-80)) * (Real.tan 23 * (-94 - 26)) * (Real.sin (x ^ 5) * -11 - Real.tan (x ^ 10 + -16))), 32, 7, 4546.700000ms, 4576.500000ms, 4475.100000ms, 4506.100000ms
+346, fun x => Real.cos (Real.tan (Real.cos (-88)) - (Real.cos (-33) - (9 - -15))) * Real.sin (Real.sin (Real.tan (x ^ 7 + 71))), 20, 7, 2708.600000ms, 2696.900000ms, 2816.600000ms, 2686.100000ms
+347, fun x => Real.cos (Real.log (Real.sin (x ^ 4))), 6, 5, 198.400000ms, 211.300000ms, 203.800000ms, 201.900000ms
+348, fun x => Real.log (Real.tan (Real.log (Real.log (x ^ 6)))) + (x ^ 1 * (Real.cos (x ^ 2) / 77) - Real.log (x ^ 8) / x ^ 6 * -27), 29, 7, 4239.000000ms, 4184.900000ms, 4249.700000ms, 4180.000000ms
+349, fun x => Real.log (x ^ 2), 4, 3, 70.000000ms, 69.300000ms, 74.100000ms, 80.700000ms
+350, fun x => 87 + (Real.log (x ^ 8 - x ^ 5) + Real.log (-99 / 23) + Real.cos (Real.sin (x ^ 8 - 53))), 23, 7, 1414.400000ms, 1359.300000ms, 1411.100000ms, 1388.900000ms
+351, fun x => 7 / Real.log (Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43)), 18, 7, 1036.100000ms, 967.300000ms, 1000.700000ms, 1056.700000ms
+352, fun x => (x ^ 3 - x ^ 9) / (x ^ 6 * Real.cos (x ^ 7) / Real.tan (-10 / x ^ 2)) * 90, 25, 7, 4343.700000ms, 4335.900000ms, 4674.500000ms, 4287.800000ms
+353, fun x => Real.log (Real.cos (-38)) - x ^ 3 / (16 + 94) - Real.log (-37) * (Real.cos (x ^ 9) * Real.sin (-55)) - 16, 24, 7, 1234.000000ms, 1193.100000ms, 1204.800000ms, 1297.900000ms
+354, fun x => Real.log (Real.tan (Real.tan (x ^ 5)) + Real.sin (-95) / Real.sin (x ^ 2) - x ^ 4), 18, 7, 5566.800000ms, 5493.300000ms, 5460.100000ms, 5417.200000ms
+355, fun x => Real.sin (-19 / 51 * Real.sin (x ^ 7 - x ^ 5) / -56), 15, 7, 707.400000ms, 734.600000ms, 739.300000ms, 716.900000ms
+356, fun x => Real.cos (Real.cos (Real.tan (Real.cos (x ^ 10))) / 56), 9, 7, 2737.000000ms, 2832.500000ms, 2729.800000ms, 2874.400000ms
+357, fun x => Real.sin (-52 / (x ^ 7 - -16)) + 100 / (-30 / Real.cos 69) + Real.log (Real.sin (Real.tan (x ^ 1) - x ^ 6 / x ^ 4)), 30, 7, 4029.600000ms, 4078.900000ms, 4055.300000ms, 4150.100000ms
+358, fun x => Real.tan (x ^ 8) * Real.sin (Real.tan (Real.tan (-45 / -71))), 11, 6, 2466.700000ms, 2485.900000ms, 2356.700000ms, 2414.600000ms
+359, fun x => Real.cos (Real.log (Real.tan (x ^ 2 / 27)) / (Real.log (x ^ 9 * 34) * Real.log (x ^ 7 / -21))), 22, 7, 3688.900000ms, 3681.900000ms, 3647.300000ms, 3612.200000ms
+360, fun x => 99 + Real.cos (Real.cos (Real.sin (x ^ 1) / (-7 - -95))), 12, 7, 627.400000ms, 633.000000ms, 619.900000ms, 635.000000ms
+361, fun x => Real.cos (Real.cos (x ^ 5)) * (x ^ 5 / 4 - x ^ 6 / x ^ 2) + Real.sin (Real.log 30) - Real.log (x ^ 6), 28, 7, 7258.500000ms, 7179.600000ms, 7239.700000ms, 7207.200000ms
+362, fun x => Real.cos (Real.sin ((Real.sin (x ^ 10) + x ^ 10) / (x ^ 5 + 48 - Real.cos (-51)))), 19, 7, 1286.600000ms, 1286.800000ms, 1265.000000ms, 1291.100000ms
+363, fun x => Real.sin (Real.sin 88) + Real.log (Real.sin ((12 - x ^ 2) / (93 * -46))), 15, 7, 605.200000ms, 625.600000ms, 612.200000ms, 680.200000ms
+364, fun x => Real.cos (x ^ 10 - Real.tan (x ^ 9 + x ^ 9) - -90), 15, 7, 3298.800000ms, 3201.600000ms, 3239.000000ms, 3209.600000ms
+365, fun x => (x ^ 7 + x ^ 6) * Real.sin (x ^ 2 - x ^ 4) / Real.log (Real.tan (x ^ 4) / Real.sin (-76)) / -100, 27, 7, 4067.100000ms, 4063.900000ms, 3959.500000ms, 4053.100000ms
+366, fun x => x ^ 1 / (Real.log (Real.sin 57) + Real.log (-24 - x ^ 8) * Real.cos (Real.cos (-80))), 18, 7, 975.900000ms, 946.100000ms, 986.800000ms, 942.300000ms
+367, fun x => Real.sin (Real.cos ((97 - x ^ 1) / -52 * Real.sin (x ^ 6 - x ^ 7))), 18, 7, 1147.000000ms, 1150.100000ms, 1137.200000ms, 1230.500000ms
+368, fun x => Real.log (Real.cos (-95) + Real.cos (x ^ 4)) / (Real.log (x ^ 10 + x ^ 5) - (-89 - x ^ 2) / Real.log (x ^ 5)) - Real.tan (Real.cos 60 * Real.tan (Real.sin 73)), 36, 7, 2399.200000ms, 2387.700000ms, 2339.700000ms, 2362.900000ms
+369, fun x => Real.tan (Real.log (Real.tan (x ^ 2) + Real.sin 10)) / x ^ 5, 13, 7, 5155.400000ms, 5112.000000ms, 5185.300000ms, 5140.200000ms
+370, fun x => Real.tan (x ^ 5), 4, 3, 2159.100000ms, 2223.000000ms, 2200.600000ms, 2294.300000ms
+371, fun x => Real.tan (x ^ 10 - -62 - Real.sin (x ^ 7) - Real.sin (Real.tan (-73))) - Real.log (-89 + x ^ 2 - Real.cos (-72)) / Real.sin 65, 28, 7, 3836.800000ms, 3918.100000ms, 3855.100000ms, 3880.800000ms
+372, fun x => Real.tan (x ^ 3), 4, 3, 2223.400000ms, 2173.100000ms, 2279.800000ms, 2205.900000ms
+373, fun x => (36 + 11) * Real.tan (x ^ 1) * (x ^ 7 + Real.log 22) + Real.cos (x ^ 7 * (x ^ 2 * x ^ 1)) + x ^ 9, 32, 7, 4112.600000ms, 4203.700000ms, 5108.000000ms, 4222.900000ms
+374, fun x => (Real.log (Real.log (x ^ 4)) - (x ^ 3 + x ^ 2 + x ^ 3 * x ^ 6) - Real.cos (x ^ 6 / x ^ 4) * Real.cos (8 / x ^ 7)) * -14, 39, 7, 3036.800000ms, 2999.300000ms, 3088.700000ms, 3070.500000ms
+375, fun x => 13 / Real.log (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91)), 14, 7, 3095.600000ms, 2955.500000ms, 3083.000000ms, 3030.800000ms
+376, fun x => (Real.cos 42 / (x ^ 7 - 82) + (x ^ 10 + x ^ 2) / (17 / 70)) / Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) * (Real.cos (Real.cos 47) - Real.cos (x ^ 2) + Real.log (Real.cos (Real.sin (x ^ 5)))), 50, 7, 11865.700000ms, 11900.400000ms, 11911.500000ms, 11734.400000ms
+377, fun x => (x ^ 2 / Real.cos (x ^ 5) + Real.cos (Real.tan (-70)) / Real.tan (64 / 55)) * (Real.sin 58 * x ^ 8), 24, 6, 1100.600000ms, 1163.400000ms, 1120.000000ms, 1111.200000ms
+378, fun x => Real.log (25 / (x ^ 7 + -44 * 97 - (21 + x ^ 9 - Real.tan 31))), 19, 7, 1180.800000ms, 1210.500000ms, 1264.000000ms, 1149.700000ms
+379, fun x => Real.cos (90 / -5 * Real.sin 83 * Real.sin (Real.sin (x ^ 7))) - Real.log (x ^ 6), 18, 7, 708.400000ms, 732.400000ms, 697.900000ms, 685.500000ms
+380, fun x => Real.tan (x ^ 1 + Real.cos (Real.tan (x ^ 9 / x ^ 8))), 14, 7, 5222.400000ms, 5217.100000ms, 5258.300000ms, 5315.600000ms
+381, fun x => Real.cos (Real.tan (-5 - x ^ 10 + Real.log (-87) - -55)), 12, 7, 2814.000000ms, 2908.400000ms, 2805.200000ms, 2891.700000ms
+382, fun x => Real.log (Real.log (x ^ 1)) * Real.sin (x ^ 3 + 53) * Real.sin 43 / ((66 + Real.sin 8 - Real.sin (Real.log (-75))) * Real.tan (x ^ 2 * x ^ 2 / (x ^ 10 + 100))), 39, 7, 4390.400000ms, 4380.600000ms, 4407.600000ms, 4329.200000ms
+383, fun x => Real.tan (Real.cos (x ^ 9 + Real.cos (-78))), 8, 5, 2537.100000ms, 2558.400000ms, 2472.400000ms, 2526.700000ms
+384, fun x => 63 / Real.log (Real.cos (Real.tan (x ^ 2) + x ^ 2)), 12, 7, 3015.200000ms, 2994.700000ms, 3044.700000ms, 3038.500000ms
+385, fun x => Real.cos (Real.tan (94 - -37)) - 36 - x ^ 7, 11, 6, 219.500000ms, 233.600000ms, 243.000000ms, 236.600000ms
+386, fun x => Real.tan (Real.cos (Real.tan (x ^ 1) - (59 + 83))) * x ^ 7, 14, 7, 5371.700000ms, 5118.300000ms, 4968.400000ms, 4975.700000ms
+387, fun x => Real.tan (Real.log (Real.cos (x ^ 6)) * -88 - (Real.tan (Real.tan (-57)) - (-9 * 22 - Real.sin 81))), 19, 7, 2717.400000ms, 2743.800000ms, 2736.900000ms, 2732.200000ms
+388, fun x => Real.cos (Real.cos (x ^ 9) * Real.log (x ^ 2 - 12) * ((x ^ 10 + x ^ 8 + x ^ 1 * x ^ 9) / (x ^ 8 / (x ^ 4 * x ^ 5)))), 40, 7, 3289.300000ms, 3135.600000ms, 3165.600000ms, 3166.200000ms
+389, fun x => x ^ 9 / x ^ 5, 7, 3, 492.700000ms, 470.500000ms, 451.400000ms, 428.900000ms
+390, fun x => Real.tan ((-100 - Real.tan 5 - Real.sin (x ^ 1) / Real.cos (x ^ 6)) / (Real.tan (58 * -70) / Real.tan (-68 * 25))), 25, 7, 3146.200000ms, 3231.100000ms, 4028.200000ms, 3218.800000ms
+391, fun x => ((x ^ 4 - x ^ 1) / Real.log 95 / (Real.cos 55 * Real.sin (x ^ 3)) - 45) / Real.tan (Real.cos (Real.sin (-8)) + Real.cos (x ^ 6 * -79)), 32, 7, 4516.200000ms, 4491.600000ms, 4561.100000ms, 4456.900000ms
+392, fun x => (Real.log (x ^ 6) - -96) * (Real.cos (Real.tan (-4 / x ^ 3)) * Real.cos (x ^ 9)), 19, 7, 3606.500000ms, 3532.600000ms, 3558.000000ms, 3514.100000ms
+393, fun x => Real.cos (Real.tan (62 * x ^ 5 * (x ^ 9 / x ^ 3) / x ^ 10)), 19, 7, 3555.300000ms, 3649.600000ms, 3644.800000ms, 3628.100000ms
+394, fun x => Real.log (Real.log (x ^ 5 - 86) - (x ^ 7 - 51 - 55 / x ^ 9)) / (Real.sin (Real.sin (Real.tan (-27))) * (x ^ 10 + Real.cos (Real.log 56))), 32, 7, 2236.600000ms, 2181.500000ms, 2197.800000ms, 2188.800000ms
+395, fun x => Real.cos (x ^ 3 * (69 - 28 + Real.cos (x ^ 5)) - (92 - 52)), 17, 7, 948.700000ms, 983.300000ms, 919.800000ms, 898.200000ms
+396, fun x => Real.tan (x ^ 8), 4, 3, 2259.000000ms, 2167.100000ms, 2270.700000ms, 2270.600000ms
+397, fun x => Real.sin (Real.sin (43 * x ^ 1 + (36 - -20)) + Real.cos (Real.tan (Real.tan (x ^ 7)))), 18, 7, 5360.200000ms, 5296.500000ms, 5255.300000ms, 5269.900000ms
+398, fun x => Real.tan (Real.log (Real.cos (Real.tan (x ^ 2))) - 77), 9, 7, 4912.400000ms, 4930.000000ms, 4908.000000ms, 4844.500000ms
+399, fun x => Real.log (x ^ 9 + Real.cos (-42)), 7, 4, 232.600000ms, 247.000000ms, 236.800000ms, 238.700000ms
+400, fun x => 83 * (Real.tan (-21 + Real.sin (x ^ 6)) - Real.tan (Real.tan (Real.tan (-61)))), 14, 7, 2746.700000ms, 2820.200000ms, 2772.700000ms, 2922.200000ms
+401, fun x => Real.cos (x ^ 1), 4, 3, 138.700000ms, 133.900000ms, 143.000000ms, 137.100000ms
+402, fun x => Real.log (Real.sin (Real.cos (-16))) + Real.sin ((x ^ 8 - x ^ 1) * (-29 * x ^ 1)) - Real.sin (89 / (Real.tan 49 - 53)), 27, 7, 1122.900000ms, 1157.700000ms, 1101.900000ms, 1117.600000ms
+403, fun x => Real.log (x ^ 1) * (Real.log (Real.sin 82 + x ^ 3) * (41 / Real.cos (x ^ 7 / 74))), 21, 7, 1400.300000ms, 1369.400000ms, 1375.000000ms, 1347.300000ms
+404, fun x => Real.cos (Real.sin (Real.log (-34 * x ^ 10))) / x ^ 6, 12, 7, 728.300000ms, 798.000000ms, 719.900000ms, 722.600000ms
+405, fun x => (Real.tan (-15) + -2 * -67 - (-14 * -73 + (-45 - x ^ 6))) * Real.sin (-51 / 63 + x ^ 2) + Real.cos (-50) / (67 - (x ^ 7 * -66 + x ^ 8)), 40, 7, 2406.100000ms, 2397.200000ms, 2452.300000ms, 2533.600000ms
+406, fun x => Real.sin ((x ^ 7 + x ^ 6) * Real.cos (-97)) / Real.cos (x ^ 5 - x ^ 10 + Real.sin 96) + (x ^ 1 + x ^ 7), 31, 7, 2503.100000ms, 2434.900000ms, 2548.100000ms, 2410.100000ms
+407, fun x => Real.tan ((Real.cos (x ^ 2) * (x ^ 8 / x ^ 6) + Real.cos (x ^ 5 - x ^ 8)) / Real.cos (Real.log (x ^ 8 / x ^ 3))), 32, 7, 11511.600000ms, 10592.200000ms, 10465.400000ms, 10463.500000ms
+408, fun x => Real.log (Real.tan (Real.sin (x ^ 3 / 95) + x ^ 9 / x ^ 5 / Real.tan (-13))), 19, 7, 3348.600000ms, 3363.900000ms, 3340.400000ms, 3370.900000ms
+409, fun x => Real.sin (Real.tan (x ^ 2 * (-48 * -23) - (Real.log (-61) - Real.tan (x ^ 1)))), 17, 7, 5143.100000ms, 5190.100000ms, 5128.900000ms, 5167.800000ms
+410, fun x => Real.log (Real.cos (-10 / x ^ 6 / (-52 - x ^ 1) * x ^ 3)), 17, 7, 1333.300000ms, 1286.300000ms, 1281.100000ms, 1362.900000ms
+411, fun x => (Real.cos (Real.log (x ^ 1)) + (Real.cos (-7) - x ^ 4)) * Real.log (Real.sin (-13)) - Real.log ((-10 * x ^ 2 + x ^ 9 / -95) / Real.log (-88 + 45)), 34, 7, 2015.500000ms, 1960.400000ms, 1999.200000ms, 2018.000000ms
+412, fun x => Real.cos (Real.cos (x ^ 5) + Real.sin 62 + Real.tan (Real.log (-44)) - Real.cos (Real.log (x ^ 1) - -19 / x ^ 10)), 24, 7, 1676.600000ms, 1653.900000ms, 1575.600000ms, 1566.400000ms
+413, fun x => x ^ 1 / Real.cos (x ^ 6), 8, 4, 531.800000ms, 534.600000ms, 571.000000ms, 545.600000ms
+414, fun x => Real.tan (Real.log (x ^ 9 + x ^ 10 * -46) - Real.sin (x ^ 6 / x ^ 3 - (x ^ 1 - x ^ 8))), 28, 7, 4260.800000ms, 4229.600000ms, 4214.400000ms, 4112.900000ms
+415, fun x => Real.sin (x ^ 9 + 89) - x ^ 4 + Real.cos (x ^ 7 - Real.cos (x ^ 10)) + Real.cos (32 * x ^ 7 - x ^ 4) / (Real.log (25 - 92) / (Real.log (x ^ 9) + x ^ 4)), 45, 7, 3536.000000ms, 3462.100000ms, 3492.400000ms, 3410.100000ms
+416, fun x => Real.sin ((x ^ 9 - Real.tan (Real.log (x ^ 2))) * (Real.log (x ^ 8) / Real.cos 39 * -49)), 20, 7, 3254.000000ms, 3242.800000ms, 3277.400000ms, 3343.800000ms
+417, fun x => Real.sin 88 / Real.tan (x ^ 2 / x ^ 8 * Real.log (x ^ 8) - -27 * Real.tan (x ^ 5)), 23, 7, 6047.700000ms, 6062.600000ms, 6062.100000ms, 6087.100000ms
+418, fun x => Real.cos (Real.cos ((Real.sin (-98) - -13 / x ^ 2) * x ^ 4)), 14, 7, 1043.700000ms, 975.000000ms, 973.500000ms, 956.100000ms
+419, fun x => Real.sin (Real.sin (Real.sin (Real.tan (x ^ 7))) * (Real.cos (Real.cos (x ^ 3)) + Real.sin (Real.tan 33))), 17, 7, 3087.600000ms, 3099.100000ms, 3114.100000ms, 3108.000000ms
+420, fun x => Real.log (Real.tan (Real.cos 53) + Real.log (-84) * Real.tan (-10)) * ((-22 * Real.log 23 - Real.sin (-35) * (-84 - x ^ 10)) * 88), 26, 7, 784.600000ms, 799.900000ms, 816.000000ms, 801.800000ms
+421, fun x => Real.log (Real.tan (Real.sin (x ^ 9 - x ^ 7))) / (Real.log (x ^ 1) + x ^ 1 * (x ^ 10 / (-32 / x ^ 8))), 29, 7, 4396.000000ms, 4655.400000ms, 4718.100000ms, 4467.200000ms
+422, fun x => Real.sin (7 - Real.log (Real.tan (Real.cos (x ^ 7)))), 9, 7, 2611.600000ms, 2677.200000ms, 2619.800000ms, 2631.800000ms
+423, fun x => Real.log (Real.log (x ^ 3)), 5, 4, 106.100000ms, 106.400000ms, 115.200000ms, 107.800000ms
+424, fun x => Real.cos (Real.log (-91 * 98 + x ^ 10 / x ^ 10 - Real.log (Real.sin 33))), 17, 7, 998.400000ms, 955.000000ms, 976.000000ms, 990.700000ms
+425, fun x => -86 + Real.cos (Real.log (x ^ 3)) * x ^ 3, 11, 6, 617.700000ms, 620.300000ms, 622.300000ms, 639.800000ms
+426, fun x => Real.log (Real.tan (x ^ 2)) + Real.tan (Real.cos (Real.cos (x ^ 10)) / (x ^ 3 * 20 * Real.tan 43)), 21, 7, 6934.100000ms, 5902.700000ms, 5841.100000ms, 5816.100000ms
+427, fun x => x ^ 5 * Real.cos (Real.tan 93) - (x ^ 6 - x ^ 9) - Real.sin (33 - Real.log (x ^ 4 * 36)), 25, 7, 1644.200000ms, 1582.500000ms, 1520.800000ms, 1584.100000ms
+428, fun x => Real.log (Real.sin ((32 / 42 + Real.tan 95) * Real.sin (Real.sin (x ^ 2)))), 14, 7, 343.900000ms, 363.800000ms, 364.700000ms, 334.300000ms
+429, fun x => Real.sin (x ^ 3), 4, 3, 62.700000ms, 65.200000ms, 66.600000ms, 73.100000ms
+430, fun x => Real.sin (x ^ 8), 4, 3, 67.600000ms, 66.300000ms, 68.200000ms, 70.100000ms
+431, fun x => Real.cos (Real.log (x ^ 7)), 5, 4, 177.300000ms, 190.300000ms, 178.600000ms, 181.400000ms
+432, fun x => x ^ 4 - Real.log (-12) * Real.cos 55 - x ^ 3 + Real.tan (x ^ 5) / -18, 20, 6, 3395.700000ms, 3369.800000ms, 3319.000000ms, 3313.600000ms
+433, fun x => Real.tan (x ^ 1 * Real.cos ((x ^ 5 + x ^ 5) * Real.log 82)), 16, 7, 3109.300000ms, 3101.100000ms, 3129.800000ms, 3075.400000ms
+434, fun x => Real.sin (11 - Real.tan (-8 * x ^ 6 - x ^ 8 * 14)), 15, 7, 3094.000000ms, 3048.700000ms, 3092.100000ms, 3072.400000ms
+435, fun x => Real.cos (x ^ 4) * Real.cos ((-41 + 1 + 49 * -94) * (x ^ 10 + -27 + (27 + 91))), 23, 7, 989.900000ms, 938.700000ms, 951.100000ms, 960.000000ms
+436, fun x => Real.log (Real.tan (-19) - Real.log (Real.sin (x ^ 7 + -36))), 11, 7, 492.200000ms, 475.100000ms, 496.800000ms, 487.400000ms
+437, fun x => 51 / (Real.log (x ^ 2 / x ^ 8) * Real.tan (x ^ 6)) * ((x ^ 6 * x ^ 9 + Real.log (x ^ 5)) / (x ^ 6 - x ^ 7) + Real.sin (Real.sin (x ^ 8 * 19))), 44, 7, 5563.800000ms, 5618.000000ms, 5658.700000ms, 5682.800000ms
+438, fun x => Real.cos (x ^ 4) / Real.tan (Real.tan (Real.sin 10)), 9, 5, 309.000000ms, 305.200000ms, 347.100000ms, 320.300000ms
+439, fun x => Real.sin ((x ^ 2 + -87 - (36 - x ^ 10)) * x ^ 6) - x ^ 8, 20, 7, 1341.800000ms, 1403.300000ms, 1309.700000ms, 1331.000000ms
+440, fun x => Real.sin (Real.cos (Real.tan 23)) / (-72 + Real.log (x ^ 4)), 11, 5, 560.500000ms, 534.700000ms, 540.400000ms, 488.300000ms
+441, fun x => 80 + Real.log (x ^ 2) * Real.tan 40 * Real.log (Real.sin 0) - Real.sin (x ^ 7), 18, 7, 918.100000ms, 873.900000ms, 857.700000ms, 832.400000ms
+442, fun x => Real.cos (-91) * 17 / Real.tan (-28 - Real.cos (Real.sin (x ^ 3))), 13, 7, 2908.200000ms, 2849.100000ms, 2852.700000ms, 2838.700000ms
+443, fun x => Real.log (Real.sin (Real.tan (-71)) + (Real.cos (x ^ 8) - Real.sin (-80))) - Real.log (Real.sin (Real.cos (x ^ 5 * x ^ 6))), 23, 7, 1249.400000ms, 1251.700000ms, 1291.600000ms, 1394.700000ms
+444, fun x => Real.log (67 * -99 * Real.tan (x ^ 3)) * Real.log (Real.log (Real.cos (x ^ 4))) - Real.sin (Real.log (Real.log (x ^ 2 / 57))), 25, 7, 3445.000000ms, 3439.600000ms, 3488.600000ms, 3468.200000ms
+445, fun x => Real.cos (Real.tan 77 + (x ^ 3 / -40 + x ^ 8 / x ^ 4)) * 68, 19, 7, 1355.400000ms, 1414.400000ms, 1416.000000ms, 1352.300000ms
+446, fun x => x ^ 4 / Real.sin (Real.tan (4 + 46 - (x ^ 3 - -84))), 15, 7, 3069.100000ms, 3110.100000ms, 3114.800000ms, 3130.800000ms
+447, fun x => 40 + Real.tan (Real.cos (-40)) / Real.cos 50 + (Real.tan (Real.sin 98) * (Real.sin (x ^ 10) + x ^ 8) - Real.cos 81 / Real.tan (x ^ 4) * (Real.log (-38) - x ^ 9)), 36, 7, FAIL
+uncaught exception: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+447, EXIT 1
+448, fun x => x ^ 5 / (Real.tan ((-58 + x ^ 10) * -96) * Real.tan (-89 * x ^ 3 * (x ^ 10 + x ^ 3))), 27, 7, 6364.000000ms, 6278.700000ms, 6288.100000ms, 6244.600000ms
+449, fun x => Real.sin (Real.cos (x ^ 8)), 5, 4, 176.600000ms, 177.300000ms, 186.700000ms, 176.600000ms
+450, fun x => Real.tan (Real.tan (-54 * x ^ 4)) / Real.log 97 / Real.sin (Real.log (Real.tan (x ^ 7) + 4 / x ^ 7)), 23, 7, 8216.600000ms, 8154.600000ms, 8096.900000ms, 8123.500000ms
+451, fun x => Real.log (Real.tan (Real.log (Real.tan 9)) + (Real.tan 35 - (-58 - -59) - (Real.tan (x ^ 6) - 61 / -63))), 21, 7, 3199.200000ms, 2939.800000ms, 2901.800000ms, 2895.300000ms
+452, fun x => Real.cos (Real.tan 85) + (Real.sin (x ^ 6 - 48) / (x ^ 9 * (x ^ 7 + -15)) - Real.tan 89), 23, 7, 1954.500000ms, 1907.700000ms, 1978.300000ms, 1975.700000ms
+453, fun x => Real.log (Real.tan (-58 / -19 - Real.log (-73) - x ^ 6)), 12, 6, 2460.800000ms, 2438.800000ms, 2518.400000ms, 2432.900000ms
+454, fun x => Real.sin (Real.tan (x ^ 5 + (x ^ 10 + x ^ 5)) + (85 + x ^ 5 + (x ^ 2 + 52) - (Real.log (-31) + (-22 - -23)))), 32, 7, 4102.900000ms, 4074.900000ms, 4086.300000ms, 4064.600000ms
+455, fun x => x ^ 2 + Real.tan (x ^ 4) + Real.cos 77 / Real.cos (x ^ 4 - 83) / x ^ 2, 22, 7, 3883.800000ms, 3931.100000ms, 3884.400000ms, 3838.600000ms
+456, fun x => Real.cos (Real.tan (x ^ 3) / x ^ 9 + x ^ 8 + Real.cos (87 / Real.sin (-51))), 19, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+456, EXIT 1
+457, fun x => Real.sin (Real.sin (Real.tan (Real.sin (x ^ 2)))) + Real.tan 80, 10, 7, 2546.600000ms, 2633.300000ms, 2578.400000ms, 2613.100000ms
+458, fun x => Real.tan (x ^ 9), 4, 3, 2267.700000ms, 2354.000000ms, 2258.200000ms, 2262.700000ms
+459, fun x => Real.tan (Real.log (Real.tan (Real.log (Real.cos (x ^ 1))))), 8, 7, 4627.100000ms, 4694.400000ms, 4638.600000ms, 4592.700000ms
+460, fun x => Real.sin (x ^ 7 / -97) + x ^ 9, 10, 5, 500.900000ms, 490.600000ms, 509.500000ms, 498.200000ms
+461, fun x => Real.log (Real.cos (x ^ 5 * (x ^ 7 - x ^ 10))), 13, 6, 802.300000ms, 810.200000ms, 784.600000ms, 841.200000ms
+462, fun x => Real.cos (Real.tan (Real.sin (Real.cos (x ^ 8))) + (Real.tan (x ^ 4) + x ^ 3 * -45) / Real.log 75), 21, 7, 5693.100000ms, 5727.900000ms, 5633.300000ms, 5696.900000ms
+463, fun x => 40 + Real.sin (Real.sin (x ^ 7 * x ^ 9)) - (-34 + Real.cos (Real.cos (Real.cos (x ^ 9)))), 20, 7, 1460.300000ms, 1411.100000ms, 1525.700000ms, 1417.200000ms
+464, fun x => Real.log (37 - x ^ 6 + Real.sin (x ^ 1)) + Real.cos (Real.log (x ^ 4 - x ^ 7)) - (Real.sin (Real.log (Real.sin 89)) + Real.tan (Real.cos (90 / 11))), 32, 7, 1534.600000ms, 1564.500000ms, 1550.500000ms, 1572.000000ms
+465, fun x => (x ^ 7 / Real.log 13 - 87 / Real.sin (x ^ 4)) / (Real.tan (x ^ 9) * (Real.log (-30) + x ^ 9)) + Real.tan (64 - 93), 30, 7, 4382.500000ms, 5489.000000ms, 4357.000000ms, 4358.900000ms
+466, fun x => Real.cos ((54 + -58) / Real.tan 19) * (Real.log (x ^ 10) + 29 + -96) - x ^ 5, 20, 7, 7648.800000ms, 7719.700000ms, 7624.900000ms, 7650.300000ms
+467, fun x => Real.tan (Real.cos 88) * (Real.sin (-69) * (61 - x ^ 7)) * (Real.sin (-36 / x ^ 9) + 62) + Real.tan (x ^ 4), 26, 7, 3801.300000ms, 3917.700000ms, 4203.200000ms, 3785.900000ms
+468, fun x => x ^ 8 - (Real.tan ((x ^ 10 - x ^ 2) * (x ^ 5 - x ^ 9)) - -31), 22, 7, 3845.600000ms, 3719.500000ms, 3859.300000ms, 4258.000000ms
+469, fun x => Real.tan (-44) / (100 / Real.sin (Real.tan (x ^ 6))) - Real.log (-55), 13, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+469, EXIT 1
+470, fun x => Real.sin (Real.cos (x ^ 3) + (-61 - -73) - Real.tan (66 * x ^ 5)) * Real.tan (Real.sin (x ^ 3) + (x ^ 6 / -60 + 55 / -5)), 32, 7, 6463.100000ms, 6200.900000ms, 6094.000000ms, 6119.900000ms
+471, fun x => Real.log (x ^ 3 * x ^ 4 + Real.tan (x ^ 7)) / 4 * (Real.cos (Real.sin (x ^ 10) + -76) / (-13 * Real.cos (Real.tan (x ^ 6)))), 31, 7, 6639.400000ms, 6560.100000ms, 6540.800000ms, 6662.600000ms
+472, fun x => Real.log (29 + (-49 * 92 - Real.cos (x ^ 5))) + 40, 13, 7, 715.800000ms, 702.300000ms, 699.800000ms, 718.300000ms
+473, fun x => Real.tan (x ^ 10 - Real.tan (-52)) + Real.tan (Real.cos (Real.cos 64)) - 86, 14, 6, 2802.400000ms, 2746.900000ms, 2765.400000ms, 2766.400000ms
+474, fun x => -10 + (Real.log (Real.sin 48) - (Real.tan (x ^ 4) - 99 / x ^ 6) * Real.tan (x ^ 5)), 21, 7, 5778.100000ms, 5795.100000ms, 5828.400000ms, 5751.900000ms
+475, fun x => -17 + Real.tan (Real.sin (-94) * x ^ 3) - x ^ 4, 13, 6, 2843.900000ms, 2859.500000ms, 2841.300000ms, 2888.200000ms
+476, fun x => Real.cos (Real.log (12 / 36)) - x ^ 2, 9, 5, 218.000000ms, 229.800000ms, 234.400000ms, 228.500000ms
+477, fun x => Real.sin (Real.cos (Real.sin (-56)) * Real.log (Real.cos (x ^ 2))) + Real.log (Real.sin (x ^ 1)), 16, 7, 738.600000ms, 982.900000ms, 997.500000ms, 1019.700000ms
+478, fun x => 99 * Real.tan (Real.tan 23 + x ^ 6 * Real.sin (x ^ 6)), 14, 7, 2951.700000ms, 2869.800000ms, 2967.900000ms, 2892.800000ms
+479, fun x => -13 - Real.log (Real.cos (72 * x ^ 5)) - Real.tan (x ^ 3), 14, 7, 3027.300000ms, 3027.700000ms, 3080.800000ms, 3190.900000ms
+480, fun x => Real.log ((Real.cos (Real.log (x ^ 2)) + Real.cos (Real.cos 22)) / (-57 / x ^ 9 + (x ^ 4 + x ^ 5) + 73)), 26, 7, 2015.500000ms, 2171.700000ms, 1877.900000ms, 1915.000000ms
+481, fun x => Real.log ((Real.sin (x ^ 10) - Real.cos 33) / Real.tan (Real.sin 5)) + (Real.tan 11 * (2 + x ^ 4) - Real.sin (Real.tan (x ^ 9)) - (Real.sin (x ^ 9) * Real.sin (-28) - Real.cos (x ^ 3) / Real.sin 58)), 43, 7, FAIL
+uncaught exception: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+481, EXIT 1
+482, fun x => x ^ 1 / (Real.cos (x ^ 6) - Real.sin (-14)), 11, 5, 897.800000ms, 838.100000ms, 824.300000ms, 766.600000ms
+483, fun x => Real.log (Real.sin (Real.cos (Real.cos (x ^ 10) - x ^ 4 / x ^ 6))), 15, 7, 1060.700000ms, 1031.000000ms, 1024.000000ms, 1062.100000ms
+484, fun x => Real.cos (Real.tan (-40 - Real.tan (x ^ 3))) + (Real.log (Real.sin 96) - Real.sin (51 / x ^ 5)) * (Real.cos (Real.cos (x ^ 7)) + Real.cos (-19) * (x ^ 6 + 9)), 34, 7, 7477.800000ms, 7306.800000ms, 7473.900000ms, 7605.100000ms
+485, fun x => -17 + Real.log (Real.cos (x ^ 4 * x ^ 7 * (x ^ 6 + x ^ 5))), 19, 7, 1381.300000ms, 1400.200000ms, 1442.200000ms, 1581.300000ms
+486, fun x => Real.tan (Real.tan (Real.sin (Real.log (x ^ 7 - x ^ 6)))), 11, 7, 5335.900000ms, 5201.800000ms, 5316.900000ms, 5481.400000ms
+487, fun x => Real.log (x ^ 7), 4, 3, 81.100000ms, 84.700000ms, 94.700000ms, 108.600000ms
+488, fun x => (Real.log (x ^ 9) + Real.sin (x ^ 3) - Real.sin (-13) + Real.sin (Real.log (-93)) / ((89 + x ^ 9) / Real.cos (-100))) * ((46 - x ^ 7) / (x ^ 6 - Real.tan (80 - x ^ 2))), 42, 7, 5417.200000ms, 5215.500000ms, 5475.300000ms, 5590.800000ms
+489, fun x => Real.sin (18 - Real.sin (Real.log (-29))) * (x ^ 7 * Real.log (x ^ 1) / (x ^ 9 / x ^ 2 * (-25 + 8)) - (x ^ 9 - Real.cos 52 + Real.sin (x ^ 7 * -20))), 41, 7, 2589.200000ms, 2596.300000ms, 2622.800000ms, 2600.500000ms
+490, fun x => (Real.cos (x ^ 1) - -31 / -65 + 86) * Real.cos (Real.cos (-42) + Real.log (x ^ 3)) + (Real.tan (Real.log (x ^ 3)) + Real.sin (Real.sin (x ^ 7))) * (Real.sin (Real.sin (-23)) / (Real.log (-38) * Real.tan 98)), 41, 7, 4228.300000ms, 4275.700000ms, 4269.400000ms, 4294.100000ms
+491, fun x => Real.cos (Real.log (x ^ 4 - x ^ 6) / Real.cos (x ^ 9 - x ^ 2)) + 58, 20, 7, 1574.600000ms, 1543.700000ms, 1542.200000ms, 1691.200000ms
+492, fun x => Real.tan (x ^ 4 + x ^ 10) / Real.tan (Real.log 3) / Real.sin (Real.tan (51 / 2)) + x ^ 9, 22, 7, 3167.200000ms, 3345.400000ms, 3434.000000ms, 3730.000000ms
+493, fun x => Real.log (-78 * x ^ 5), 6, 4, 208.500000ms, 258.500000ms, 205.900000ms, 220.800000ms
+494, fun x => Real.tan (Real.cos ((x ^ 9 + x ^ 8) * (x ^ 8 / 1)) + Real.tan (Real.log (Real.cos (-18)))), 20, 7, 3331.600000ms, 3439.400000ms, 3704.200000ms, 3687.500000ms
+495, fun x => Real.tan (Real.cos (x ^ 4)) / Real.cos (Real.tan (-48) + Real.log 78 - (42 + x ^ 10 + (x ^ 1 + x ^ 4))), 26, 7, 3819.700000ms, 3831.200000ms, 4141.800000ms, 4161.400000ms
+496, fun x => Real.tan (Real.tan (x ^ 3)), 5, 4, 5551.400000ms, 4635.500000ms, 4695.500000ms, 4709.800000ms
+497, fun x => Real.tan (x ^ 1), 4, 3, 2168.700000ms, 2339.300000ms, 2262.200000ms, 2219.500000ms
+498, fun x => (-59 + (x ^ 8 * 81 / -27 - Real.cos (x ^ 8 / x ^ 8))) * Real.log (Real.cos (Real.tan (Real.cos (x ^ 2)))), 26, 7, 4218.100000ms, 4208.800000ms, 4228.100000ms, 4399.900000ms
+499, fun x => Real.cos (-32 - x ^ 3), 6, 4, 348.900000ms, 349.600000ms, 322.700000ms, 322.300000ms
+500, fun x => (Real.sin 63 + (57 / (x ^ 4 - -46) - Real.log (Real.sin (x ^ 3)))) / (-7 * (x ^ 4 + Real.log (x ^ 7) + Real.log (x ^ 9))), 32, 7, 2449.600000ms, 2367.300000ms, 2348.400000ms, 2412.000000ms

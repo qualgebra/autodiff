@@ -1,0 +1,25 @@
+Input: test86
+fun x => Real.sin (Real.tan (-99 / x ^ 6)) / Real.sin (x ^ 5) / (32 / x ^ 6)
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (Real.tan (-99 / x ^ 6)) *
+              (1 / Real.cos (-99 / x ^ 6) ^ 2 * (-99 * (-(↑6 * x ^ (6 - 1)) / (x ^ 6) ^ 2))) *
+            (Real.sin (x ^ 5))⁻¹ +
+          Real.sin (Real.tan (-99 / x ^ 6)) * (-(Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1))) / Real.sin (x ^ 5) ^ 2)) *
+        (32 / x ^ 6)⁻¹ +
+      Real.sin (Real.tan (-99 / x ^ 6)) / Real.sin (x ^ 5) *
+        (-(32 * (-(↑6 * x ^ (6 - 1)) / (x ^ 6) ^ 2)) / (32 / x ^ 6) ^ 2),
+  domain := fun x => ((32 / x ^ 6 ≠ 0 ∧ Real.sin (x ^ 5) ≠ 0) ∧ x ^ 6 ≠ 0) ∧ Real.cos (-99 / x ^ 6) ≠ 0,
+  proof := d_test86._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.fun_mul
+      (HasDerivAt.sin
+        (HasDerivAt.tan' a.right (HasDerivAt.const_mul (-99) (HasDerivAt.inv (hasDerivAt_pow 6 x) a.left.right))))
+      (HasDerivAt.inv (HasDerivAt.sin (hasDerivAt_pow 5 x)) a.left.left.right))
+    (HasDerivAt.inv (HasDerivAt.const_mul 32 (HasDerivAt.inv (hasDerivAt_pow 6 x) a.left.right)) a.left.left.left)
+

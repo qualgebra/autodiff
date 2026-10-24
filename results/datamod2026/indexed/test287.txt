@@ -1,0 +1,43 @@
+Input: test287
+fun x =>
+  Real.cos (Real.cos ((x ^ 8 - x ^ 4) / (-5 - 57))) /
+    ((Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) * (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8))))
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (Real.cos ((x ^ 8 - x ^ 4) / (-5 - 57))) *
+            (-Real.sin ((x ^ 8 - x ^ 4) / (-5 - 57)) * ((↑8 * x ^ (8 - 1) - ↑4 * x ^ (4 - 1)) / (-5 - 57))) *
+          ((Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) *
+            (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8)))) -
+        Real.cos (Real.cos ((x ^ 8 - x ^ 4) / (-5 - 57))) *
+          ((↑9 * x ^ (9 - 1) / x ^ 9 - (↑2 * x ^ (2 - 1) * x ^ 2 - x ^ 2 * (↑2 * x ^ (2 - 1))) / (x ^ 2) ^ 2) *
+                (-8 / Real.tan 85) *
+              (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8))) +
+            (Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) *
+              (Real.log (-68) * (Real.cos (-44) * (↑8 * x ^ (8 - 1) / x ^ 8))))) /
+      ((Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) *
+          (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8)))) ^
+        2,
+  domain := fun x =>
+    (((Real.log (x ^ 9) - x ^ 2 / x ^ 2) * (-8 / Real.tan 85) * (Real.log (-68) * (Real.cos (-44) * Real.log (x ^ 8))) ≠
+            0 ∧
+          x ^ 8 ≠ 0) ∧
+        x ^ 2 ≠ 0) ∧
+      x ^ 9 ≠ 0,
+  proof := d_test287._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.cos
+      (HasDerivAt.cos (HasDerivAt.div_const (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 4 x)) (-5 - 57))))
+    (HasDerivAt.fun_mul
+      (HasDerivAt.mul_const
+        (HasDerivAt.sub (HasDerivAt.log' a.right (hasDerivAt_pow 9 x))
+          (HasDerivAt.fun_div (hasDerivAt_pow 2 x) (hasDerivAt_pow 2 x) a.left.right))
+        (-8 / Real.tan 85))
+      (HasDerivAt.const_mul (Real.log (-68))
+        (HasDerivAt.const_mul (Real.cos (-44)) (HasDerivAt.log' a.left.left.right (hasDerivAt_pow 8 x)))))
+    a.left.left.left
+

@@ -1,0 +1,16 @@
+Input: test49
+fun x => Real.cos (x ^ 2) * (55 / Real.tan (x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1)) * (55 / Real.tan (x ^ 2)) +
+      Real.cos (x ^ 2) *
+        ((0 * Real.tan (x ^ 2) - 55 * (1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)))) / Real.tan (x ^ 2) ^ 2),
+  domain := fun x => Real.tan (x ^ 2) ≠ 0 ∧ Real.cos (x ^ 2) ≠ 0, proof := d_test49._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.cos (hasDerivAt_pow 2 x))
+    (HasDerivAt.fun_div (hasDerivAt_const x 55) (HasDerivAt.tan' a.right (hasDerivAt_pow 2 x)) a.left)
+

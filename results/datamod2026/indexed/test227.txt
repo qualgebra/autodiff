@@ -1,0 +1,22 @@
+Input: test227
+fun x =>
+  Real.sin ((66 / 55 + Real.log (x ^ 1)) * (61 * 81 / (x ^ 8 + -44))) /
+    (Real.tan (Real.log (-62 + 97)) + Real.tan (Real.sin 96))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((66 / 55 + Real.log (x ^ 1)) * (61 * 81 / (x ^ 8 + -44))) *
+        (↑1 * x ^ (1 - 1) / x ^ 1 * (61 * 81 / (x ^ 8 + -44)) +
+          (66 / 55 + Real.log (x ^ 1)) * ((0 * (x ^ 8 + -44) - 61 * 81 * (↑8 * x ^ (8 - 1))) / (x ^ 8 + -44) ^ 2)) /
+      (Real.tan (Real.log (-62 + 97)) + Real.tan (Real.sin 96)),
+  domain := fun x => x ^ 8 + -44 ≠ 0 ∧ x ^ 1 ≠ 0, proof := d_test227._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.div_const
+    (HasDerivAt.sin
+      (HasDerivAt.fun_mul (HasDerivAt.const_add (66 / 55) (HasDerivAt.log' a.right (hasDerivAt_pow 1 x)))
+        (HasDerivAt.fun_div (hasDerivAt_const x (61 * 81)) (HasDerivAt.add_const (-44) (hasDerivAt_pow 8 x)) a.left)))
+    (Real.tan (Real.log (-62 + 97)) + Real.tan (Real.sin 96))
+

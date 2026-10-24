@@ -1,0 +1,13 @@
+Input: test229
+fun x => Real.cos (Real.tan (Real.tan (x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.tan (Real.tan (x ^ 8))) *
+      (1 / Real.cos (Real.tan (x ^ 8)) ^ 2 * (1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1)))),
+  domain := fun x => Real.cos (x ^ 8) ≠ 0 ∧ Real.cos (Real.tan (x ^ 8)) ≠ 0, proof := d_test229._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.tan' a.right (HasDerivAt.tan' a.left (hasDerivAt_pow 8 x)))
+

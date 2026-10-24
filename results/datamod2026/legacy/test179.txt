@@ -1,0 +1,13 @@
+Input: test179
+fun x => Real.cos (Real.log (Real.cos (Real.sin (x ^ 2))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.log (Real.cos (Real.sin (x ^ 2)))) *
+      (-Real.sin (Real.sin (x ^ 2)) * (Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1))) / Real.cos (Real.sin (x ^ 2))),
+  domain := fun x => Real.cos (Real.sin (x ^ 2)) ≠ 0, proof := d_test179._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.cos (HasDerivAt.log' a (HasDerivAt.cos (HasDerivAt.sin (hasDerivAt_pow 2 x))))
+

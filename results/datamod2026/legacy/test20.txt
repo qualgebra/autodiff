@@ -1,0 +1,15 @@
+Input: test20
+fun x => Real.log (-96 - (79 + Real.sin (x ^ 5 - x ^ 7)))
+
+Result:
+{
+  f' := fun x =>
+    -(Real.cos (x ^ 5 - x ^ 7) * (↑5 * x ^ (5 - 1) - ↑7 * x ^ (7 - 1))) / (-96 - (79 + Real.sin (x ^ 5 - x ^ 7))),
+  domain := fun x => -96 - (79 + Real.sin (x ^ 5 - x ^ 7)) ≠ 0, proof := d_test20._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.const_sub (-96)
+      (HasDerivAt.const_add 79 (HasDerivAt.sin (HasDerivAt.sub (hasDerivAt_pow 5 x) (hasDerivAt_pow 7 x)))))
+

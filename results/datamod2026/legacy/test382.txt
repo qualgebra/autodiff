@@ -1,0 +1,40 @@
+Input: test382
+fun x =>
+  Real.log (Real.log (x ^ 1)) * Real.sin (x ^ 3 + 53) * Real.sin 43 /
+    ((66 + Real.sin 8 - Real.sin (Real.log (-75))) * Real.tan (x ^ 2 * x ^ 2 / (x ^ 10 + 100)))
+
+Result:
+{
+  f' := fun x =>
+    (Real.one✝ / x ^ 1 / Real.log (x ^ 1) * Real.sin (x ^ 3 + 53) +
+            Real.log (Real.log (x ^ 1)) * (Real.cos (x ^ 3 + 53) * (↑3 * x ^ (3 - 1)))) *
+          Real.sin 43 *
+        ((66 + Real.sin 8 - Real.sin (Real.log (-75))) * Real.tan (x ^ 2 * x ^ 2 / (x ^ 10 + 100)))⁻¹ +
+      Real.log (Real.log (x ^ 1)) * Real.sin (x ^ 3 + 53) * Real.sin 43 *
+        (-((66 + Real.sin 8 - Real.sin (Real.log (-75))) *
+              (1 / Real.cos (x ^ 2 * x ^ 2 / (x ^ 10 + 100)) ^ 2 *
+                ((↑2 * x ^ (2 - 1) * x ^ 2 + x ^ 2 * (↑2 * x ^ (2 - 1))) * (x ^ 10 + 100)⁻¹ +
+                  x ^ 2 * x ^ 2 * (-(↑10 * x ^ (10 - 1)) / (x ^ 10 + 100) ^ 2)))) /
+          ((66 + Real.sin 8 - Real.sin (Real.log (-75))) * Real.tan (x ^ 2 * x ^ 2 / (x ^ 10 + 100))) ^ 2),
+  domain := fun x =>
+    ((((66 + Real.sin 8 - Real.sin (Real.log (-75))) * Real.tan (x ^ 2 * x ^ 2 / (x ^ 10 + 100)) ≠ 0 ∧
+            x ^ 10 + 100 ≠ 0) ∧
+          Real.cos (x ^ 2 * x ^ 2 / (x ^ 10 + 100)) ≠ 0) ∧
+        x ^ 1 ≠ 0) ∧
+      Real.log (x ^ 1) ≠ 0,
+  proof := d_test382._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.mul_const
+      (HasDerivAt.fun_mul (HasDerivAt.log' a.right (HasDerivAt.log' a.left.right (hasDerivAt_const_mul Real.one✝)))
+        (HasDerivAt.sin (HasDerivAt.add_const 53 (hasDerivAt_pow 3 x))))
+      (Real.sin 43))
+    (HasDerivAt.inv
+      (HasDerivAt.const_mul (66 + Real.sin 8 - Real.sin (Real.log (-75)))
+        (HasDerivAt.tan' a.left.left.right
+          (HasDerivAt.fun_mul (HasDerivAt.fun_mul (hasDerivAt_pow 2 x) (hasDerivAt_pow 2 x))
+            (HasDerivAt.inv (HasDerivAt.add_const 100 (hasDerivAt_pow 10 x)) a.left.left.left.right))))
+      a.left.left.left.left)
+

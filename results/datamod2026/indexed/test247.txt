@@ -1,0 +1,17 @@
+Input: test247
+fun x => Real.log (Real.log (x ^ 4) * x ^ 2 - Real.log (x ^ 6))
+
+Result:
+{
+  f' := fun x =>
+    (↑4 * x ^ (4 - 1) / x ^ 4 * x ^ 2 + Real.log (x ^ 4) * (↑2 * x ^ (2 - 1)) - ↑6 * x ^ (6 - 1) / x ^ 6) /
+      (Real.log (x ^ 4) * x ^ 2 - Real.log (x ^ 6)),
+  domain := fun x => (x ^ 6 ≠ 0 ∧ x ^ 4 ≠ 0) ∧ Real.log (x ^ 4) * x ^ 2 - Real.log (x ^ 6) ≠ 0,
+  proof := d_test247._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.sub (HasDerivAt.fun_mul (HasDerivAt.log' a.left.right (hasDerivAt_pow 4 x)) (hasDerivAt_pow 2 x))
+      (HasDerivAt.log' a.left.left (hasDerivAt_pow 6 x)))
+

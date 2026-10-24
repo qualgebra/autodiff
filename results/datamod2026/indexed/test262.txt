@@ -1,0 +1,18 @@
+Input: test262
+fun x => Real.log (Real.log (Real.cos (Real.sin (x ^ 7 + x ^ 4))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (x ^ 7 + x ^ 4)) * (Real.cos (x ^ 7 + x ^ 4) * (↑7 * x ^ (7 - 1) + ↑4 * x ^ (4 - 1))) /
+        Real.cos (Real.sin (x ^ 7 + x ^ 4)) /
+      Real.log (Real.cos (Real.sin (x ^ 7 + x ^ 4))),
+  domain := fun x => Real.cos (Real.sin (x ^ 7 + x ^ 4)) ≠ 0 ∧ Real.log (Real.cos (Real.sin (x ^ 7 + x ^ 4))) ≠ 0,
+  proof := d_test262._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.log' a.left
+      (HasDerivAt.cos (HasDerivAt.sin (HasDerivAt.fun_add (hasDerivAt_pow 7 x) (hasDerivAt_pow 4 x)))))
+

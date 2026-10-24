@@ -1,0 +1,21 @@
+Input: test277
+fun x =>
+  x ^ 10 - (Real.cos (x ^ 5) + Real.sin (-37)) - Real.sin (x ^ 6 / x ^ 6) / -99 -
+    Real.tan (Real.sin (Real.log 31) / -25)
+
+Result:
+{
+  f' := fun x =>
+    ↑10 * x ^ (10 - 1) - -Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) -
+      Real.cos (x ^ 6 / x ^ 6) * (↑6 * x ^ (6 - 1) * (x ^ 6)⁻¹ + x ^ 6 * (-(↑6 * x ^ (6 - 1)) / (x ^ 6) ^ 2)) * (-99)⁻¹,
+  domain := fun x => x ^ 6 ≠ 0, proof := d_test277._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const (-Real.tan (Real.sin (Real.log 31) / -25))
+    (HasDerivAt.sub
+      (HasDerivAt.sub (hasDerivAt_pow 10 x)
+        (HasDerivAt.add_const (Real.sin (-37)) (HasDerivAt.cos (hasDerivAt_pow 5 x))))
+      (HasDerivAt.mul_const
+        (HasDerivAt.sin (HasDerivAt.fun_mul (hasDerivAt_pow 6 x) (HasDerivAt.inv (hasDerivAt_pow 6 x) a))) (-99)⁻¹))
+

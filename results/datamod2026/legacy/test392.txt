@@ -1,0 +1,22 @@
+Input: test392
+fun x => (Real.log (x ^ 6) - -96) * (Real.cos (Real.tan (-4 / x ^ 3)) * Real.cos (x ^ 9))
+
+Result:
+{
+  f' := fun x =>
+    ↑6 * x ^ (6 - 1) / x ^ 6 * (Real.cos (Real.tan (-4 / x ^ 3)) * Real.cos (x ^ 9)) +
+      (Real.log (x ^ 6) - -96) *
+        (-Real.sin (Real.tan (-4 / x ^ 3)) *
+              (1 / Real.cos (-4 / x ^ 3) ^ 2 * (-4 * (-(↑3 * x ^ (3 - 1)) / (x ^ 3) ^ 2))) *
+            Real.cos (x ^ 9) +
+          Real.cos (Real.tan (-4 / x ^ 3)) * (-Real.sin (x ^ 9) * (↑9 * x ^ (9 - 1)))),
+  domain := fun x => (x ^ 3 ≠ 0 ∧ Real.cos (-4 / x ^ 3) ≠ 0) ∧ x ^ 6 ≠ 0, proof := d_test392._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.add_const (- -96) (HasDerivAt.log' a.right (hasDerivAt_pow 6 x)))
+    (HasDerivAt.fun_mul
+      (HasDerivAt.cos
+        (HasDerivAt.tan' a.left.right (HasDerivAt.const_mul (-4) (HasDerivAt.inv (hasDerivAt_pow 3 x) a.left.left))))
+      (HasDerivAt.cos (hasDerivAt_pow 9 x)))
+

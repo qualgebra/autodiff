@@ -1,0 +1,19 @@
+Input: test325
+fun x => Real.sin (x ^ 10) / ((Real.cos (-86 + -85) - Real.cos (x ^ 3 / -11)) / -100)
+
+Result:
+{
+  f' := fun x =>
+    (Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1)) * ((Real.cos (-86 + -85) - Real.cos (x ^ 3 / -11)) / -100) -
+        Real.sin (x ^ 10) * (-(-Real.sin (x ^ 3 / -11) * (↑3 * x ^ (3 - 1) / -11)) / -100)) /
+      ((Real.cos (-86 + -85) - Real.cos (x ^ 3 / -11)) / -100) ^ 2,
+  domain := fun x => (Real.cos (-86 + -85) - Real.cos (x ^ 3 / -11)) / -100 ≠ 0, proof := d_test325._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (HasDerivAt.sin (hasDerivAt_pow 10 x))
+    (HasDerivAt.div_const
+      (HasDerivAt.const_sub (Real.cos (-86 + -85)) (HasDerivAt.cos (HasDerivAt.div_const (hasDerivAt_pow 3 x) (-11))))
+      (-100))
+    a
+

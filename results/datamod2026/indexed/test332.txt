@@ -1,0 +1,19 @@
+Input: test332
+fun x => Real.tan (x ^ 1) * Real.cos (Real.sin (x ^ 3)) + Real.cos (Real.log (x ^ 4 / -31)) + 52
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (x ^ 1) ^ 2 * (↑1 * x ^ (1 - 1)) * Real.cos (Real.sin (x ^ 3)) +
+        Real.tan (x ^ 1) * (-Real.sin (Real.sin (x ^ 3)) * (Real.cos (x ^ 3) * (↑3 * x ^ (3 - 1)))) +
+      -Real.sin (Real.log (x ^ 4 / -31)) * (↑4 * x ^ (4 - 1) / -31 / (x ^ 4 / -31)),
+  domain := fun x => x ^ 4 / -31 ≠ 0 ∧ Real.cos (x ^ 1) ≠ 0, proof := d_test332._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const 52
+    (HasDerivAt.fun_add
+      (HasDerivAt.fun_mul (HasDerivAt.tan' a.right (hasDerivAt_pow 1 x))
+        (HasDerivAt.cos (HasDerivAt.sin (hasDerivAt_pow 3 x))))
+      (HasDerivAt.cos (HasDerivAt.log' a.left (HasDerivAt.div_const (hasDerivAt_pow 4 x) (-31)))))
+

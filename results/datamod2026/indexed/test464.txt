@@ -1,0 +1,20 @@
+Input: test464
+fun x =>
+  Real.log (37 - x ^ 6 + Real.sin (x ^ 1)) + Real.cos (Real.log (x ^ 4 - x ^ 7)) -
+    (Real.sin (Real.log (Real.sin 89)) + Real.tan (Real.cos (90 / 11)))
+
+Result:
+{
+  f' := fun x =>
+    (-(↑6 * x ^ (6 - 1)) + Real.cos (x ^ 1) * (↑1 * x ^ (1 - 1))) / (37 - x ^ 6 + Real.sin (x ^ 1)) +
+      -Real.sin (Real.log (x ^ 4 - x ^ 7)) * ((↑4 * x ^ (4 - 1) - ↑7 * x ^ (7 - 1)) / (x ^ 4 - x ^ 7)),
+  domain := fun x => x ^ 4 - x ^ 7 ≠ 0 ∧ 37 - x ^ 6 + Real.sin (x ^ 1) ≠ 0, proof := d_test464._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.sin (Real.log (Real.sin 89)) + Real.tan (Real.cos (90 / 11)))
+    (HasDerivAt.fun_add
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_add (HasDerivAt.const_sub 37 (hasDerivAt_pow 6 x)) (HasDerivAt.sin (hasDerivAt_pow 1 x))))
+      (HasDerivAt.cos (HasDerivAt.log' a.left (HasDerivAt.sub (hasDerivAt_pow 4 x) (hasDerivAt_pow 7 x)))))
+

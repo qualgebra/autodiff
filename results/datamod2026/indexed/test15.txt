@@ -1,0 +1,31 @@
+Input: test15
+fun x =>
+  Real.log (Real.sin (-10) * (x ^ 6 + x ^ 1) + Real.cos (Real.cos 15)) /
+    Real.log (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98))
+
+Result:
+{
+  f' := fun x =>
+    (Real.sin (-10) * (↑6 * x ^ (6 - 1) + ↑1 * x ^ (1 - 1)) /
+            (Real.sin (-10) * (x ^ 6 + x ^ 1) + Real.cos (Real.cos 15)) *
+          Real.log (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98)) -
+        Real.log (Real.sin (-10) * (x ^ 6 + x ^ 1) + Real.cos (Real.cos 15)) *
+          (-45 * (↑6 * x ^ (6 - 1)) / (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98)))) /
+      Real.log (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98)) ^ 2,
+  domain := fun x =>
+    (Real.log (-45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98)) ≠ 0 ∧
+        -45 * x ^ 6 + Real.sin 89 + Real.log (Real.log 98) ≠ 0) ∧
+      Real.sin (-10) * (x ^ 6 + x ^ 1) + Real.cos (Real.cos 15) ≠ 0,
+  proof := d_test15._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.log' a.right
+      (HasDerivAt.add_const (Real.cos (Real.cos 15))
+        (HasDerivAt.const_mul (Real.sin (-10)) (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 1 x)))))
+    (HasDerivAt.log' a.left.right
+      (HasDerivAt.add_const (Real.log (Real.log 98))
+        (HasDerivAt.add_const (Real.sin 89) (HasDerivAt.const_mul (-45) (hasDerivAt_pow 6 x)))))
+    a.left.left
+

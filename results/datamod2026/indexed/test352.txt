@@ -1,0 +1,30 @@
+Input: test352
+fun x => (x ^ 3 - x ^ 9) / (x ^ 6 * Real.cos (x ^ 7) / Real.tan (-10 / x ^ 2)) * 90
+
+Result:
+{
+  f' := fun x =>
+    ((↑3 * x ^ (3 - 1) - ↑9 * x ^ (9 - 1)) * (x ^ 6 * Real.cos (x ^ 7) / Real.tan (-10 / x ^ 2)) -
+          (x ^ 3 - x ^ 9) *
+            (((↑6 * x ^ (6 - 1) * Real.cos (x ^ 7) + x ^ 6 * (-Real.sin (x ^ 7) * (↑7 * x ^ (7 - 1)))) *
+                  Real.tan (-10 / x ^ 2) -
+                x ^ 6 * Real.cos (x ^ 7) *
+                  (1 / Real.cos (-10 / x ^ 2) ^ 2 * ((0 * x ^ 2 - -10 * (↑2 * x ^ (2 - 1))) / (x ^ 2) ^ 2))) /
+              Real.tan (-10 / x ^ 2) ^ 2)) /
+        (x ^ 6 * Real.cos (x ^ 7) / Real.tan (-10 / x ^ 2)) ^ 2 *
+      90,
+  domain := fun x =>
+    ((x ^ 6 * Real.cos (x ^ 7) / Real.tan (-10 / x ^ 2) ≠ 0 ∧ Real.tan (-10 / x ^ 2) ≠ 0) ∧ x ^ 2 ≠ 0) ∧
+      Real.cos (-10 / x ^ 2) ≠ 0,
+  proof := d_test352._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.fun_div (HasDerivAt.sub (hasDerivAt_pow 3 x) (hasDerivAt_pow 9 x))
+      (HasDerivAt.fun_div (HasDerivAt.fun_mul (hasDerivAt_pow 6 x) (HasDerivAt.cos (hasDerivAt_pow 7 x)))
+        (HasDerivAt.tan' a.right (HasDerivAt.fun_div (hasDerivAt_const x (-10)) (hasDerivAt_pow 2 x) a.left.right))
+        a.left.left.right)
+      a.left.left.left)
+    90
+

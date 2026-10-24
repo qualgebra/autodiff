@@ -1,0 +1,22 @@
+Input: test446
+fun x => x ^ 4 / Real.sin (Real.tan (4 + 46 - (x ^ 3 - -84)))
+
+Result:
+{
+  f' := fun x =>
+    ↑4 * x ^ (4 - 1) * (Real.sin (Real.tan (4 + 46 - (x ^ 3 - -84))))⁻¹ +
+      x ^ 4 *
+        (-(Real.cos (Real.tan (4 + 46 - (x ^ 3 - -84))) *
+              (1 / Real.cos (4 + 46 - (x ^ 3 - -84)) ^ 2 * -(↑3 * x ^ (3 - 1)))) /
+          Real.sin (Real.tan (4 + 46 - (x ^ 3 - -84))) ^ 2),
+  domain := fun x => Real.sin (Real.tan (4 + 46 - (x ^ 3 - -84))) ≠ 0 ∧ Real.cos (4 + 46 - (x ^ 3 - -84)) ≠ 0,
+  proof := d_test446._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_pow 4 x)
+    (HasDerivAt.inv
+      (HasDerivAt.sin
+        (HasDerivAt.tan' a.right (HasDerivAt.const_sub (4 + 46) (HasDerivAt.add_const (- -84) (hasDerivAt_pow 3 x)))))
+      a.left)
+

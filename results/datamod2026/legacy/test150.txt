@@ -1,0 +1,24 @@
+Input: test150
+fun x => Real.log ((Real.cos (x ^ 6 + x ^ 10) + Real.tan (x ^ 6 - -98)) * (Real.sin (Real.tan 64) - Real.log (x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    ((-Real.sin (x ^ 6 + x ^ 10) * (↑6 * x ^ (6 - 1) + ↑10 * x ^ (10 - 1)) +
+            1 / Real.cos (x ^ 6 - -98) ^ 2 * (↑6 * x ^ (6 - 1))) *
+          (Real.sin (Real.tan 64) - Real.log (x ^ 8)) +
+        (Real.cos (x ^ 6 + x ^ 10) + Real.tan (x ^ 6 - -98)) * -(↑8 * x ^ (8 - 1) / x ^ 8)) /
+      ((Real.cos (x ^ 6 + x ^ 10) + Real.tan (x ^ 6 - -98)) * (Real.sin (Real.tan 64) - Real.log (x ^ 8))),
+  domain := fun x =>
+    (x ^ 8 ≠ 0 ∧ Real.cos (x ^ 6 - -98) ≠ 0) ∧
+      (Real.cos (x ^ 6 + x ^ 10) + Real.tan (x ^ 6 - -98)) * (Real.sin (Real.tan 64) - Real.log (x ^ 8)) ≠ 0,
+  proof := d_test150._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a.right
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_add (HasDerivAt.cos (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 10 x)))
+        (HasDerivAt.tan' a.left.right (HasDerivAt.add_const (- -98) (hasDerivAt_pow 6 x))))
+      (HasDerivAt.const_sub (Real.sin (Real.tan 64)) (HasDerivAt.log' a.left.left (hasDerivAt_pow 8 x))))
+

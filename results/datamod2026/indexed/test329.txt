@@ -1,0 +1,14 @@
+Input: test329
+fun x => -34 * Real.sin (91 + (-53 / -25 - (x ^ 6 + x ^ 10)))
+
+Result:
+{ f' := fun x => -34 * (Real.cos (91 + (-53 / -25 - (x ^ 6 + x ^ 10))) * -(↑6 * x ^ (6 - 1) + ↑10 * x ^ (10 - 1))),
+  domain := fun x => True, proof := d_test329._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (-34)
+    (HasDerivAt.sin
+      (HasDerivAt.const_add 91
+        (HasDerivAt.const_sub (-53 / -25) (HasDerivAt.fun_add (hasDerivAt_pow 6 x) (hasDerivAt_pow 10 x)))))
+

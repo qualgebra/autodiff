@@ -1,0 +1,13 @@
+Input: test472
+fun x => Real.log (29 + (-49 * 92 - Real.cos (x ^ 5))) + 40
+
+Result:
+{ f' := fun x => -(-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1))) / (29 + (-49 * 92 - Real.cos (x ^ 5))),
+  domain := fun x => 29 + (-49 * 92 - Real.cos (x ^ 5)) ≠ 0, proof := d_test472._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const 40
+    (HasDerivAt.log' a
+      (HasDerivAt.const_add 29 (HasDerivAt.const_sub (-49 * 92) (HasDerivAt.cos (hasDerivAt_pow 5 x)))))
+

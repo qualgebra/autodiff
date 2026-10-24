@@ -1,0 +1,26 @@
+Input: test405
+fun x =>
+  (Real.tan (-15) + -2 * -67 - (-14 * -73 + (-45 - x ^ 6))) * Real.sin (-51 / 63 + x ^ 2) +
+    Real.cos (-50) / (67 - (x ^ 7 * -66 + x ^ 8))
+
+Result:
+{
+  f' := fun x =>
+    - -(↑6 * x ^ (6 - 1)) * Real.sin (-51 / 63 + x ^ 2) +
+        (Real.tan (-15) + -2 * -67 - (-14 * -73 + (-45 - x ^ 6))) * (Real.cos (-51 / 63 + x ^ 2) * (↑2 * x ^ (2 - 1))) +
+      (0 * (67 - (x ^ 7 * -66 + x ^ 8)) - Real.cos (-50) * -(↑7 * x ^ (7 - 1) * -66 + ↑8 * x ^ (8 - 1))) /
+        (67 - (x ^ 7 * -66 + x ^ 8)) ^ 2,
+  domain := fun x => 67 - (x ^ 7 * -66 + x ^ 8) ≠ 0, proof := d_test405._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_mul
+      (HasDerivAt.const_sub (Real.tan (-15) + -2 * -67)
+        (HasDerivAt.const_add (-14 * -73) (HasDerivAt.const_sub (-45) (hasDerivAt_pow 6 x))))
+      (HasDerivAt.sin (HasDerivAt.const_add (-51 / 63) (hasDerivAt_pow 2 x))))
+    (HasDerivAt.fun_div (hasDerivAt_const x (Real.cos (-50)))
+      (HasDerivAt.const_sub 67
+        (HasDerivAt.fun_add (HasDerivAt.mul_const (hasDerivAt_pow 7 x) (-66)) (hasDerivAt_pow 8 x)))
+      a)
+

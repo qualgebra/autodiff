@@ -1,0 +1,38 @@
+Input: test376
+fun x =>
+  (Real.cos 42 / (x ^ 7 - 82) + (x ^ 10 + x ^ 2) / (17 / 70)) / Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) *
+    (Real.cos (Real.cos 47) - Real.cos (x ^ 2) + Real.log (Real.cos (Real.sin (x ^ 5))))
+
+Result:
+{
+  f' := fun x =>
+    ((Real.cos 42 * (-(↑7 * x ^ (7 - 1)) / (x ^ 7 - 82) ^ 2) + (↑10 * x ^ (10 - 1) + ↑2 * x ^ (2 - 1)) * (17 / 70)⁻¹) *
+            (Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)))⁻¹ +
+          (Real.cos 42 / (x ^ 7 - 82) + (x ^ 10 + x ^ 2) / (17 / 70)) *
+            (-(-Real.sin (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) *
+                  (1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1)) - (↑9 * x ^ (9 - 1) + ↑7 * x ^ (7 - 1)))) /
+              Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) ^ 2)) *
+        (Real.cos (Real.cos 47) - Real.cos (x ^ 2) + Real.log (Real.cos (Real.sin (x ^ 5)))) +
+      (Real.cos 42 / (x ^ 7 - 82) + (x ^ 10 + x ^ 2) / (17 / 70)) / Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) *
+        (-(-Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1))) +
+          -Real.sin (Real.sin (x ^ 5)) * (Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1))) / Real.cos (Real.sin (x ^ 5))),
+  domain := fun x =>
+    ((Real.cos (Real.sin (x ^ 5)) ≠ 0 ∧ Real.cos (Real.tan (x ^ 5) - (x ^ 9 + x ^ 7)) ≠ 0) ∧ Real.cos (x ^ 5) ≠ 0) ∧
+      x ^ 7 - 82 ≠ 0,
+  proof := d_test376._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_add
+        (HasDerivAt.const_mul (Real.cos 42) (HasDerivAt.inv (HasDerivAt.add_const (-82) (hasDerivAt_pow 7 x)) a.right))
+        (HasDerivAt.mul_const (HasDerivAt.fun_add (hasDerivAt_pow 10 x) (hasDerivAt_pow 2 x)) (17 / 70)⁻¹))
+      (HasDerivAt.inv
+        (HasDerivAt.cos
+          (HasDerivAt.sub (HasDerivAt.tan' a.left.right (hasDerivAt_pow 5 x))
+            (HasDerivAt.fun_add (hasDerivAt_pow 9 x) (hasDerivAt_pow 7 x))))
+        a.left.left.right))
+    (HasDerivAt.fun_add (HasDerivAt.const_sub (Real.cos (Real.cos 47)) (HasDerivAt.cos (hasDerivAt_pow 2 x)))
+      (HasDerivAt.log' a.left.left.left (HasDerivAt.cos (HasDerivAt.sin (hasDerivAt_pow 5 x)))))
+

@@ -1,0 +1,19 @@
+Input: test303
+fun x => Real.sin (Real.sin (Real.sin (Real.sin 91 / Real.cos (x ^ 1))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (Real.sin (Real.sin 91 / Real.cos (x ^ 1)))) *
+      (Real.cos (Real.sin (Real.sin 91 / Real.cos (x ^ 1))) *
+        (Real.cos (Real.sin 91 / Real.cos (x ^ 1)) *
+          (Real.sin 91 * (-(-Real.sin (x ^ 1) * Real.one✝) / Real.cos (x ^ 1) ^ 2)))),
+  domain := fun x => Real.cos (x ^ 1) ≠ 0, proof := d_test303._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.sin
+      (HasDerivAt.sin
+        (HasDerivAt.const_mul (Real.sin 91) (HasDerivAt.inv (HasDerivAt.cos (hasDerivAt_const_mul Real.one✝)) a))))
+

@@ -1,0 +1,21 @@
+Input: test14
+fun x => x ^ 8 / Real.tan (Real.sin (Real.tan (x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    ↑8 * x ^ (8 - 1) * (Real.tan (Real.sin (Real.tan (x ^ 8))))⁻¹ +
+      x ^ 8 *
+        (-(1 / Real.cos (Real.sin (Real.tan (x ^ 8))) ^ 2 *
+              (Real.cos (Real.tan (x ^ 8)) * (1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1))))) /
+          Real.tan (Real.sin (Real.tan (x ^ 8))) ^ 2),
+  domain := fun x =>
+    (Real.tan (Real.sin (Real.tan (x ^ 8))) ≠ 0 ∧ Real.cos (x ^ 8) ≠ 0) ∧ Real.cos (Real.sin (Real.tan (x ^ 8))) ≠ 0,
+  proof := d_test14._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_pow 8 x)
+    (HasDerivAt.inv (HasDerivAt.tan' a.right (HasDerivAt.sin (HasDerivAt.tan' a.left.right (hasDerivAt_pow 8 x))))
+      a.left.left)
+

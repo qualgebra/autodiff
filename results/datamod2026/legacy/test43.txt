@@ -1,0 +1,21 @@
+Input: test43
+fun x => Real.tan (Real.cos (Real.cos (-51) * (-20 - x ^ 10)) - Real.log (Real.sin (x ^ 4 * x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.cos (Real.cos (-51) * (-20 - x ^ 10)) - Real.log (Real.sin (x ^ 4 * x ^ 8))) ^ 2 *
+      (-Real.sin (Real.cos (-51) * (-20 - x ^ 10)) * (Real.cos (-51) * -(↑10 * x ^ (10 - 1))) -
+        Real.cos (x ^ 4 * x ^ 8) * (↑4 * x ^ (4 - 1) * x ^ 8 + x ^ 4 * (↑8 * x ^ (8 - 1))) / Real.sin (x ^ 4 * x ^ 8)),
+  domain := fun x =>
+    Real.sin (x ^ 4 * x ^ 8) ≠ 0 ∧
+      Real.cos (Real.cos (Real.cos (-51) * (-20 - x ^ 10)) - Real.log (Real.sin (x ^ 4 * x ^ 8))) ≠ 0,
+  proof := d_test43._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sub
+      (HasDerivAt.cos (HasDerivAt.const_mul (Real.cos (-51)) (HasDerivAt.const_sub (-20) (hasDerivAt_pow 10 x))))
+      (HasDerivAt.log' a.left (HasDerivAt.sin (HasDerivAt.fun_mul (hasDerivAt_pow 4 x) (hasDerivAt_pow 8 x)))))
+

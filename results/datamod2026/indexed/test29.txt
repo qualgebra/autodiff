@@ -1,0 +1,18 @@
+Input: test29
+fun x => Real.cos (Real.sin (Real.tan (x ^ 5) - x ^ 9)) + (28 - Real.cos (Real.cos (Real.cos (x ^ 10))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (Real.tan (x ^ 5) - x ^ 9)) *
+        (Real.cos (Real.tan (x ^ 5) - x ^ 9) * (1 / Real.cos (x ^ 5) ^ 2 * (↑5 * x ^ (5 - 1)) - ↑9 * x ^ (9 - 1))) +
+      -(-Real.sin (Real.cos (Real.cos (x ^ 10))) *
+          (-Real.sin (Real.cos (x ^ 10)) * (-Real.sin (x ^ 10) * (↑10 * x ^ (10 - 1))))),
+  domain := fun x => Real.cos (x ^ 5) ≠ 0, proof := d_test29._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.cos (HasDerivAt.sin (HasDerivAt.sub (HasDerivAt.tan' a (hasDerivAt_pow 5 x)) (hasDerivAt_pow 9 x))))
+    (HasDerivAt.const_sub 28 (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 10 x)))))
+

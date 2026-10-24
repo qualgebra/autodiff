@@ -1,0 +1,19 @@
+Input: test263
+fun x => -45 / Real.sin (Real.sin (64 / x ^ 8)) - Real.sin 53
+
+Result:
+{
+  f' := fun x =>
+    -45 *
+      (-(Real.cos (Real.sin (64 / x ^ 8)) * (Real.cos (64 / x ^ 8) * (64 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2)))) /
+        Real.sin (Real.sin (64 / x ^ 8)) ^ 2),
+  domain := fun x => Real.sin (Real.sin (64 / x ^ 8)) ≠ 0 ∧ x ^ 8 ≠ 0, proof := d_test263._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const (-Real.sin 53)
+    (HasDerivAt.const_mul (-45)
+      (HasDerivAt.inv
+        (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.const_mul 64 (HasDerivAt.inv (hasDerivAt_pow 8 x) a.right))))
+        a.left))
+

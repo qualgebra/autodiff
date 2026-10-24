@@ -1,0 +1,22 @@
+Input: test309
+fun x => (Real.sin (39 + -88) * Real.tan 52 + 90) * Real.log (x ^ 6 + -32 + -62 / x ^ 7 + Real.sin (Real.log (x ^ 4)))
+
+Result:
+{
+  f' := fun x =>
+    (Real.sin (39 + -88) * Real.tan 52 + 90) *
+      ((↑6 * x ^ (6 - 1) + -62 * (-(↑7 * x ^ (7 - 1)) / (x ^ 7) ^ 2) +
+          Real.cos (Real.log (x ^ 4)) * (↑4 * x ^ (4 - 1) / x ^ 4)) /
+        (x ^ 6 + -32 + -62 / x ^ 7 + Real.sin (Real.log (x ^ 4)))),
+  domain := fun x => (x ^ 4 ≠ 0 ∧ x ^ 7 ≠ 0) ∧ x ^ 6 + -32 + -62 / x ^ 7 + Real.sin (Real.log (x ^ 4)) ≠ 0,
+  proof := d_test309._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (Real.sin (39 + -88) * Real.tan 52 + 90)
+    (HasDerivAt.log' a.right
+      (HasDerivAt.fun_add
+        (HasDerivAt.fun_add (HasDerivAt.add_const (-32) (hasDerivAt_pow 6 x))
+          (HasDerivAt.const_mul (-62) (HasDerivAt.inv (hasDerivAt_pow 7 x) a.left.right)))
+        (HasDerivAt.sin (HasDerivAt.log' a.left.left (hasDerivAt_pow 4 x)))))
+

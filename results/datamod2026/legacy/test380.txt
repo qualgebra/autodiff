@@ -1,0 +1,23 @@
+Input: test380
+fun x => Real.tan (x ^ 1 + Real.cos (Real.tan (x ^ 9 / x ^ 8)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (x ^ 1 + Real.cos (Real.tan (x ^ 9 / x ^ 8))) ^ 2 *
+      (Real.one✝ +
+        -Real.sin (Real.tan (x ^ 9 / x ^ 8)) *
+          (1 / Real.cos (x ^ 9 / x ^ 8) ^ 2 *
+            (↑9 * x ^ (9 - 1) * (x ^ 8)⁻¹ + x ^ 9 * (-(↑8 * x ^ (8 - 1)) / (x ^ 8) ^ 2)))),
+  domain := fun x =>
+    (x ^ 8 ≠ 0 ∧ Real.cos (x ^ 9 / x ^ 8) ≠ 0) ∧ Real.cos (x ^ 1 + Real.cos (Real.tan (x ^ 9 / x ^ 8))) ≠ 0,
+  proof := d_test380._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.fun_add (hasDerivAt_const_mul Real.one✝)
+      (HasDerivAt.cos
+        (HasDerivAt.tan' a.left.right
+          (HasDerivAt.fun_mul (hasDerivAt_pow 9 x) (HasDerivAt.inv (hasDerivAt_pow 8 x) a.left.left)))))
+

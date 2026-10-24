@@ -1,0 +1,30 @@
+Input: test394
+fun x =>
+  Real.log (Real.log (x ^ 5 - 86) - (x ^ 7 - 51 - 55 / x ^ 9)) /
+    (Real.sin (Real.sin (Real.tan (-27))) * (x ^ 10 + Real.cos (Real.log 56)))
+
+Result:
+{
+  f' := fun x =>
+    ((↑5 * x ^ (5 - 1) / (x ^ 5 - 86) - (↑7 * x ^ (7 - 1) - (0 * x ^ 9 - 55 * (↑9 * x ^ (9 - 1))) / (x ^ 9) ^ 2)) /
+            (Real.log (x ^ 5 - 86) - (x ^ 7 - 51 - 55 / x ^ 9)) *
+          (Real.sin (Real.sin (Real.tan (-27))) * (x ^ 10 + Real.cos (Real.log 56))) -
+        Real.log (Real.log (x ^ 5 - 86) - (x ^ 7 - 51 - 55 / x ^ 9)) *
+          (Real.sin (Real.sin (Real.tan (-27))) * (↑10 * x ^ (10 - 1)))) /
+      (Real.sin (Real.sin (Real.tan (-27))) * (x ^ 10 + Real.cos (Real.log 56))) ^ 2,
+  domain := fun x =>
+    ((Real.sin (Real.sin (Real.tan (-27))) * (x ^ 10 + Real.cos (Real.log 56)) ≠ 0 ∧ x ^ 9 ≠ 0) ∧ x ^ 5 - 86 ≠ 0) ∧
+      Real.log (x ^ 5 - 86) - (x ^ 7 - 51 - 55 / x ^ 9) ≠ 0,
+  proof := d_test394._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div
+    (HasDerivAt.log' a.right
+      (HasDerivAt.sub (HasDerivAt.log' a.left.right (HasDerivAt.sub_const 86 (hasDerivAt_pow 5 x)))
+        (HasDerivAt.sub (HasDerivAt.sub_const 51 (hasDerivAt_pow 7 x))
+          (HasDerivAt.fun_div (hasDerivAt_const x 55) (hasDerivAt_pow 9 x) a.left.left.right))))
+    (HasDerivAt.const_mul (Real.sin (Real.sin (Real.tan (-27))))
+      (HasDerivAt.add_const (Real.cos (Real.log 56)) (hasDerivAt_pow 10 x)))
+    a.left.left.left
+

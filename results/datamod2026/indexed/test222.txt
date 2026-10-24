@@ -1,0 +1,16 @@
+Input: test222
+fun x => Real.sin (Real.sin (Real.cos (x ^ 5)) + x ^ 10 - -60)
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (Real.cos (x ^ 5)) + x ^ 10 - -60) *
+      (Real.cos (Real.cos (x ^ 5)) * (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1))) + ↑10 * x ^ (10 - 1)),
+  domain := fun x => True, proof := d_test222._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.sub_const (-60)
+      (HasDerivAt.fun_add (HasDerivAt.sin (HasDerivAt.cos (hasDerivAt_pow 5 x))) (hasDerivAt_pow 10 x)))
+

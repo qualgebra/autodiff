@@ -1,0 +1,13 @@
+Input: test48
+fun x => Real.tan (Real.sin (x ^ 7 + Real.cos (-94 + 93)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.sin (x ^ 7 + Real.cos (-94 + 93))) ^ 2 *
+      (Real.cos (x ^ 7 + Real.cos (-94 + 93)) * (↑7 * x ^ (7 - 1))),
+  domain := fun x => Real.cos (Real.sin (x ^ 7 + Real.cos (-94 + 93))) ≠ 0, proof := d_test48._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.tan' a (HasDerivAt.sin (HasDerivAt.add_const (Real.cos (-94 + 93)) (hasDerivAt_pow 7 x)))
+

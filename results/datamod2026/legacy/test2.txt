@@ -1,0 +1,31 @@
+Input: test2
+fun x => 17 / ((Real.sin (-65) + Real.sin (x ^ 1) + Real.log (x ^ 1)) / Real.cos (-63 - -17 + Real.tan (x ^ 10)))
+
+Result:
+{
+  f' := fun x =>
+    17 *
+      (-((Real.cos (x ^ 1) * Real.one✝ + Real.one✝ / x ^ 1) * (Real.cos (-63 - -17 + Real.tan (x ^ 10)))⁻¹ +
+            (Real.sin (-65) + Real.sin (x ^ 1) + Real.log (x ^ 1)) *
+              (-(-Real.sin (-63 - -17 + Real.tan (x ^ 10)) * (1 / Real.cos (x ^ 10) ^ 2 * (↑10 * x ^ (10 - 1)))) /
+                Real.cos (-63 - -17 + Real.tan (x ^ 10)) ^ 2)) /
+        ((Real.sin (-65) + Real.sin (x ^ 1) + Real.log (x ^ 1)) / Real.cos (-63 - -17 + Real.tan (x ^ 10))) ^ 2),
+  domain := fun x =>
+    (((Real.sin (-65) + Real.sin (x ^ 1) + Real.log (x ^ 1)) / Real.cos (-63 - -17 + Real.tan (x ^ 10)) ≠ 0 ∧
+          Real.cos (-63 - -17 + Real.tan (x ^ 10)) ≠ 0) ∧
+        Real.cos (x ^ 10) ≠ 0) ∧
+      x ^ 1 ≠ 0,
+  proof := d_test2._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 17
+    (HasDerivAt.inv
+      (HasDerivAt.fun_mul
+        (HasDerivAt.fun_add (HasDerivAt.const_add (Real.sin (-65)) (HasDerivAt.sin (hasDerivAt_const_mul Real.one✝)))
+          (HasDerivAt.log' a.right (hasDerivAt_const_mul Real.one✝)))
+        (HasDerivAt.inv
+          (HasDerivAt.cos (HasDerivAt.const_add (-63 - -17) (HasDerivAt.tan' a.left.right (hasDerivAt_pow 10 x))))
+          a.left.left.right))
+      a.left.left.left)
+

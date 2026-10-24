@@ -1,0 +1,16 @@
+Input: test112
+fun x => -41 / -53 * -1 + Real.tan (Real.cos (x ^ 1 - -46) * Real.sin (82 / 40))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.cos (x ^ 1 - -46) * Real.sin (82 / 40)) ^ 2 *
+      (-Real.sin (x ^ 1 - -46) * (↑1 * x ^ (1 - 1)) * Real.sin (82 / 40)),
+  domain := fun x => Real.cos (Real.cos (x ^ 1 - -46) * Real.sin (82 / 40)) ≠ 0, proof := d_test112._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (-41 / -53 * -1)
+    (HasDerivAt.tan' a
+      (HasDerivAt.mul_const (HasDerivAt.cos (HasDerivAt.sub_const (-46) (hasDerivAt_pow 1 x))) (Real.sin (82 / 40))))
+

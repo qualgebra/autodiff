@@ -1,0 +1,19 @@
+Input: test316
+fun x =>
+  59 - (Real.tan (x ^ 4 * 84) + (29 + Real.cos (x ^ 4))) / ((Real.log (-55) - Real.log 41) * Real.sin (-94 - -16))
+
+Result:
+{
+  f' := fun x =>
+    -((1 / Real.cos (x ^ 4 * 84) ^ 2 * (↑4 * x ^ (4 - 1) * 84) + -Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1))) /
+        ((Real.log (-55) - Real.log 41) * Real.sin (-94 - -16))),
+  domain := fun x => Real.cos (x ^ 4 * 84) ≠ 0, proof := d_test316._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_sub 59
+    (HasDerivAt.div_const
+      (HasDerivAt.fun_add (HasDerivAt.tan' a (HasDerivAt.mul_const (hasDerivAt_pow 4 x) 84))
+        (HasDerivAt.const_add 29 (HasDerivAt.cos (hasDerivAt_pow 4 x))))
+      ((Real.log (-55) - Real.log 41) * Real.sin (-94 - -16)))
+

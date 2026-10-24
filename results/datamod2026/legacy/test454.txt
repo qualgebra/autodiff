@@ -1,0 +1,21 @@
+Input: test454
+fun x => Real.sin (Real.tan (x ^ 5 + (x ^ 10 + x ^ 5)) + (85 + x ^ 5 + (x ^ 2 + 52) - (Real.log (-31) + (-22 - -23))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan (x ^ 5 + (x ^ 10 + x ^ 5)) + (85 + x ^ 5 + (x ^ 2 + 52) - (Real.log (-31) + (-22 - -23)))) *
+      (1 / Real.cos (x ^ 5 + (x ^ 10 + x ^ 5)) ^ 2 * (↑5 * x ^ (5 - 1) + (↑10 * x ^ (10 - 1) + ↑5 * x ^ (5 - 1))) +
+        (↑5 * x ^ (5 - 1) + ↑2 * x ^ (2 - 1))),
+  domain := fun x => Real.cos (x ^ 5 + (x ^ 10 + x ^ 5)) ≠ 0, proof := d_test454._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.fun_add
+      (HasDerivAt.tan' a
+        (HasDerivAt.fun_add (hasDerivAt_pow 5 x) (HasDerivAt.fun_add (hasDerivAt_pow 10 x) (hasDerivAt_pow 5 x))))
+      (HasDerivAt.add_const (-(Real.log (-31) + (-22 - -23)))
+        (HasDerivAt.fun_add (HasDerivAt.const_add 85 (hasDerivAt_pow 5 x))
+          (HasDerivAt.add_const 52 (hasDerivAt_pow 2 x)))))
+

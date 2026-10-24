@@ -1,0 +1,22 @@
+Input: test82
+fun x => Real.log (x ^ 4) / Real.tan (x ^ 8 + -73) + Real.tan (Real.sin 34) * Real.sin (Real.log (x ^ 2)) + 97
+
+Result:
+{
+  f' := fun x =>
+    ↑4 * x ^ (4 - 1) / x ^ 4 * (Real.tan (x ^ 8 + -73))⁻¹ +
+        Real.log (x ^ 4) * (-(1 / Real.cos (x ^ 8 + -73) ^ 2 * (↑8 * x ^ (8 - 1))) / Real.tan (x ^ 8 + -73) ^ 2) +
+      Real.tan (Real.sin 34) * (Real.cos (Real.log (x ^ 2)) * (↑2 * x ^ (2 - 1) / x ^ 2)),
+  domain := fun x => ((x ^ 2 ≠ 0 ∧ Real.tan (x ^ 8 + -73) ≠ 0) ∧ Real.cos (x ^ 8 + -73) ≠ 0) ∧ x ^ 4 ≠ 0,
+  proof := d_test82._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.add_const 97
+    (HasDerivAt.fun_add
+      (HasDerivAt.fun_mul (HasDerivAt.log' a.right (hasDerivAt_pow 4 x))
+        (HasDerivAt.inv (HasDerivAt.tan' a.left.right (HasDerivAt.add_const (-73) (hasDerivAt_pow 8 x)))
+          a.left.left.right))
+      (HasDerivAt.const_mul (Real.tan (Real.sin 34))
+        (HasDerivAt.sin (HasDerivAt.log' a.left.left.left (hasDerivAt_pow 2 x)))))
+

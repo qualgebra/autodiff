@@ -1,0 +1,22 @@
+Input: test340
+fun x => Real.sin (x ^ 8 + 66 - x ^ 5 / x ^ 3 - Real.tan (-11 - x ^ 5)) + (-15 + Real.sin (x ^ 2))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (x ^ 8 + 66 - x ^ 5 / x ^ 3 - Real.tan (-11 - x ^ 5)) *
+        (↑8 * x ^ (8 - 1) - (↑5 * x ^ (5 - 1) * x ^ 3 - x ^ 5 * (↑3 * x ^ (3 - 1))) / (x ^ 3) ^ 2 -
+          1 / Real.cos (-11 - x ^ 5) ^ 2 * -(↑5 * x ^ (5 - 1))) +
+      Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)),
+  domain := fun x => Real.cos (-11 - x ^ 5) ≠ 0 ∧ x ^ 3 ≠ 0, proof := d_test340._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.sin
+      (HasDerivAt.sub
+        (HasDerivAt.sub (HasDerivAt.add_const 66 (hasDerivAt_pow 8 x))
+          (HasDerivAt.fun_div (hasDerivAt_pow 5 x) (hasDerivAt_pow 3 x) a.right))
+        (HasDerivAt.tan' a.left (HasDerivAt.const_sub (-11) (hasDerivAt_pow 5 x)))))
+    (HasDerivAt.const_add (-15) (HasDerivAt.sin (hasDerivAt_pow 2 x)))
+

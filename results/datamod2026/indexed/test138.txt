@@ -1,0 +1,18 @@
+Input: test138
+fun x => Real.cos ((8 - Real.sin 72) * (Real.tan (x ^ 3) / (-58 - 60)) + x ^ 5)
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin ((8 - Real.sin 72) * (Real.tan (x ^ 3) / (-58 - 60)) + x ^ 5) *
+      ((8 - Real.sin 72) * (1 / Real.cos (x ^ 3) ^ 2 * (↑3 * x ^ (3 - 1)) / (-58 - 60)) + ↑5 * x ^ (5 - 1)),
+  domain := fun x => Real.cos (x ^ 3) ≠ 0, proof := d_test138._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.fun_add
+      (HasDerivAt.const_mul (8 - Real.sin 72)
+        (HasDerivAt.div_const (HasDerivAt.tan' a (hasDerivAt_pow 3 x)) (-58 - 60)))
+      (hasDerivAt_pow 5 x))
+

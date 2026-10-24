@@ -1,0 +1,15 @@
+Input: test363
+fun x => Real.sin (Real.sin 88) + Real.log (Real.sin ((12 - x ^ 2) / (93 * -46)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((12 - x ^ 2) / (93 * -46)) * (-(↑2 * x ^ (2 - 1)) / (93 * -46)) / Real.sin ((12 - x ^ 2) / (93 * -46)),
+  domain := fun x => Real.sin ((12 - x ^ 2) / (93 * -46)) ≠ 0, proof := d_test363._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_add (Real.sin (Real.sin 88))
+    (HasDerivAt.log' a
+      (HasDerivAt.sin (HasDerivAt.div_const (HasDerivAt.const_sub 12 (hasDerivAt_pow 2 x)) (93 * -46))))
+

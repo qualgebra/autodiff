@@ -1,0 +1,34 @@
+Input: test50
+fun x =>
+  Real.log (Real.log 40 / (10 / x ^ 2)) / x ^ 2 +
+    (Real.sin (x ^ 3) - Real.tan (-98) - Real.tan (x ^ 9)) / Real.tan (x ^ 8)
+
+Result:
+{
+  f' := fun x =>
+    ((0 * (10 / x ^ 2) - Real.log 40 * ((0 * x ^ 2 - 10 * (↑2 * x ^ (2 - 1))) / (x ^ 2) ^ 2)) / (10 / x ^ 2) ^ 2 /
+              (Real.log 40 / (10 / x ^ 2)) *
+            x ^ 2 -
+          Real.log (Real.log 40 / (10 / x ^ 2)) * (↑2 * x ^ (2 - 1))) /
+        (x ^ 2) ^ 2 +
+      ((Real.cos (x ^ 3) * (↑3 * x ^ (3 - 1)) - 1 / Real.cos (x ^ 9) ^ 2 * (↑9 * x ^ (9 - 1))) * Real.tan (x ^ 8) -
+          (Real.sin (x ^ 3) - Real.tan (-98) - Real.tan (x ^ 9)) * (1 / Real.cos (x ^ 8) ^ 2 * (↑8 * x ^ (8 - 1)))) /
+        Real.tan (x ^ 8) ^ 2,
+  domain := fun x =>
+    ((((Real.tan (x ^ 8) ≠ 0 ∧ Real.cos (x ^ 8) ≠ 0) ∧ Real.cos (x ^ 9) ≠ 0) ∧ 10 / x ^ 2 ≠ 0) ∧ x ^ 2 ≠ 0) ∧
+      Real.log 40 / (10 / x ^ 2) ≠ 0,
+  proof := d_test50._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_div
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_div (hasDerivAt_const x (Real.log 40))
+          (HasDerivAt.fun_div (hasDerivAt_const x 10) (hasDerivAt_pow 2 x) a.left.right) a.left.left.right))
+      (hasDerivAt_pow 2 x) a.left.right)
+    (HasDerivAt.fun_div
+      (HasDerivAt.sub (HasDerivAt.sub_const (Real.tan (-98)) (HasDerivAt.sin (hasDerivAt_pow 3 x)))
+        (HasDerivAt.tan' a.left.left.left.right (hasDerivAt_pow 9 x)))
+      (HasDerivAt.tan' a.left.left.left.left.right (hasDerivAt_pow 8 x)) a.left.left.left.left.left)
+

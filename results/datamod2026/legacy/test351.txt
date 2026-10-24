@@ -1,0 +1,25 @@
+Input: test351
+fun x => 7 / Real.log (Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43))
+
+Result:
+{
+  f' := fun x =>
+    7 *
+      (-(-((↑10 * x ^ (10 - 1) + Real.one✝) * (91 + 43)⁻¹) /
+            (Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43))) /
+        Real.log (Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43)) ^ 2),
+  domain := fun x =>
+    Real.log (Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43)) ≠ 0 ∧
+      Real.tan (Real.tan (-36)) - (x ^ 10 + x ^ 1) / (91 + 43) ≠ 0,
+  proof := d_test351._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul 7
+    (HasDerivAt.inv
+      (HasDerivAt.log' a.right
+        (HasDerivAt.const_sub (Real.tan (Real.tan (-36)))
+          (HasDerivAt.mul_const (HasDerivAt.fun_add (hasDerivAt_pow 10 x) (hasDerivAt_const_mul Real.one✝))
+            (91 + 43)⁻¹)))
+      a.left)
+

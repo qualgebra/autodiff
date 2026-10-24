@@ -1,0 +1,31 @@
+Input: test368
+fun x =>
+  Real.log (Real.cos (-95) + Real.cos (x ^ 4)) / (Real.log (x ^ 10 + x ^ 5) - (-89 - x ^ 2) / Real.log (x ^ 5)) -
+    Real.tan (Real.cos 60 * Real.tan (Real.sin 73))
+
+Result:
+{
+  f' := fun x =>
+    (-Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1)) / (Real.cos (-95) + Real.cos (x ^ 4)) *
+          (Real.log (x ^ 10 + x ^ 5) - (-89 - x ^ 2) / Real.log (x ^ 5)) -
+        Real.log (Real.cos (-95) + Real.cos (x ^ 4)) *
+          ((↑10 * x ^ (10 - 1) + ↑5 * x ^ (5 - 1)) / (x ^ 10 + x ^ 5) -
+            (-(↑2 * x ^ (2 - 1)) * Real.log (x ^ 5) - (-89 - x ^ 2) * (↑5 * x ^ (5 - 1) / x ^ 5)) /
+              Real.log (x ^ 5) ^ 2)) /
+      (Real.log (x ^ 10 + x ^ 5) - (-89 - x ^ 2) / Real.log (x ^ 5)) ^ 2,
+  domain := fun x =>
+    (((Real.log (x ^ 10 + x ^ 5) - (-89 - x ^ 2) / Real.log (x ^ 5) ≠ 0 ∧ Real.log (x ^ 5) ≠ 0) ∧ x ^ 5 ≠ 0) ∧
+        x ^ 10 + x ^ 5 ≠ 0) ∧
+      Real.cos (-95) + Real.cos (x ^ 4) ≠ 0,
+  proof := d_test368._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub_const (Real.tan (Real.cos 60 * Real.tan (Real.sin 73)))
+    (HasDerivAt.fun_div
+      (HasDerivAt.log' a.right (HasDerivAt.const_add (Real.cos (-95)) (HasDerivAt.cos (hasDerivAt_pow 4 x))))
+      (HasDerivAt.sub (HasDerivAt.log' a.left.right (HasDerivAt.fun_add (hasDerivAt_pow 10 x) (hasDerivAt_pow 5 x)))
+        (HasDerivAt.fun_div (HasDerivAt.const_sub (-89) (hasDerivAt_pow 2 x))
+          (HasDerivAt.log' a.left.left.right (hasDerivAt_pow 5 x)) a.left.left.left.right))
+      a.left.left.left.left)
+

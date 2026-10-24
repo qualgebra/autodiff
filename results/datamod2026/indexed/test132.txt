@@ -1,0 +1,33 @@
+Input: test132
+fun x =>
+  Real.tan (-76 * 80 * Real.tan (x ^ 3) * Real.log (45 + x ^ 6) * (Real.tan (x ^ 6 - x ^ 4) + Real.cos (Real.tan 80)))
+
+Result:
+{
+  f' := fun x =>
+    1 /
+        Real.cos
+            (-76 * 80 * Real.tan (x ^ 3) * Real.log (45 + x ^ 6) *
+              (Real.tan (x ^ 6 - x ^ 4) + Real.cos (Real.tan 80))) ^
+          2 *
+      ((-76 * 80 * (1 / Real.cos (x ^ 3) ^ 2 * (↑3 * x ^ (3 - 1))) * Real.log (45 + x ^ 6) +
+            -76 * 80 * Real.tan (x ^ 3) * (↑6 * x ^ (6 - 1) / (45 + x ^ 6))) *
+          (Real.tan (x ^ 6 - x ^ 4) + Real.cos (Real.tan 80)) +
+        -76 * 80 * Real.tan (x ^ 3) * Real.log (45 + x ^ 6) *
+          (1 / Real.cos (x ^ 6 - x ^ 4) ^ 2 * (↑6 * x ^ (6 - 1) - ↑4 * x ^ (4 - 1)))),
+  domain := fun x =>
+    ((Real.cos (x ^ 6 - x ^ 4) ≠ 0 ∧ 45 + x ^ 6 ≠ 0) ∧ Real.cos (x ^ 3) ≠ 0) ∧
+      Real.cos
+          (-76 * 80 * Real.tan (x ^ 3) * Real.log (45 + x ^ 6) * (Real.tan (x ^ 6 - x ^ 4) + Real.cos (Real.tan 80))) ≠
+        0,
+  proof := d_test132._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_mul (HasDerivAt.const_mul (-76 * 80) (HasDerivAt.tan' a.left.right (hasDerivAt_pow 3 x)))
+        (HasDerivAt.log' a.left.left.right (HasDerivAt.const_add 45 (hasDerivAt_pow 6 x))))
+      (HasDerivAt.add_const (Real.cos (Real.tan 80))
+        (HasDerivAt.tan' a.left.left.left (HasDerivAt.sub (hasDerivAt_pow 6 x) (hasDerivAt_pow 4 x)))))
+

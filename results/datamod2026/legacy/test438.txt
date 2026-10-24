@@ -1,0 +1,10 @@
+Input: test438
+fun x => Real.cos (x ^ 4) / Real.tan (Real.tan (Real.sin 10))
+
+Result:
+{ f' := fun x => -Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1)) * (Real.tan (Real.tan (Real.sin 10)))⁻¹,
+  domain := fun x => True, proof := d_test438._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (HasDerivAt.cos (hasDerivAt_pow 4 x)) (Real.tan (Real.tan (Real.sin 10)))⁻¹
+

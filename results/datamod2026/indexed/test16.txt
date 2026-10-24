@@ -1,0 +1,36 @@
+Input: test16
+fun x =>
+  Real.sin (Real.log (Real.tan (Real.cos 26))) /
+    ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)))
+
+Result:
+{
+  f' := fun x =>
+    (0 * ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1))) -
+        Real.sin (Real.log (Real.tan (Real.cos 26))) *
+          ((0 * Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) -
+              (90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) *
+                ((1 / Real.cos (x ^ 6) ^ 2 * (↑6 * x ^ (6 - 1)) * Real.cos (x ^ 1) -
+                      Real.tan (x ^ 6) * (-Real.sin (x ^ 1) * (↑1 * x ^ (1 - 1)))) /
+                    Real.cos (x ^ 1) ^ 2 /
+                  (Real.tan (x ^ 6) / Real.cos (x ^ 1)))) /
+            Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ^ 2)) /
+      ((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1))) ^ 2,
+  domain := fun x =>
+    ((((90 / 83 * (-78 + 100) - (79 + Real.cos (-30))) / Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ≠ 0 ∧
+            Real.log (Real.tan (x ^ 6) / Real.cos (x ^ 1)) ≠ 0) ∧
+          Real.cos (x ^ 1) ≠ 0) ∧
+        Real.cos (x ^ 6) ≠ 0) ∧
+      Real.tan (x ^ 6) / Real.cos (x ^ 1) ≠ 0,
+  proof := d_test16._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x (Real.sin (Real.log (Real.tan (Real.cos 26)))))
+    (HasDerivAt.fun_div (hasDerivAt_const x (90 / 83 * (-78 + 100) - (79 + Real.cos (-30))))
+      (HasDerivAt.log' a.right
+        (HasDerivAt.fun_div (HasDerivAt.tan' a.left.right (hasDerivAt_pow 6 x)) (HasDerivAt.cos (hasDerivAt_pow 1 x))
+          a.left.left.right))
+      a.left.left.left.right)
+    a.left.left.left.left
+

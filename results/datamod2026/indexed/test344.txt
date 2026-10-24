@@ -1,0 +1,10 @@
+Input: test344
+fun x => -71 / x ^ 1
+
+Result:
+{ f' := fun x => (0 * x ^ 1 - -71 * (↑1 * x ^ (1 - 1))) / (x ^ 1) ^ 2, domain := fun x => x ^ 1 ≠ 0,
+  proof := d_test344._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.fun_div (hasDerivAt_const x (-71)) (hasDerivAt_pow 1 x) a
+

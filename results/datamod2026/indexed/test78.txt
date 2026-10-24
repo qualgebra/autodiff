@@ -1,0 +1,33 @@
+Input: test78
+fun x =>
+  Real.tan (Real.tan (88 + 75 - (-10 - 2))) *
+    (Real.cos (x ^ 6) * (x ^ 10 * x ^ 2) / Real.cos (x ^ 3) * Real.cos (x ^ 10 / x ^ 6 - Real.sin (x ^ 5)))
+
+Result:
+{
+  f' := fun x =>
+    Real.tan (Real.tan (88 + 75 - (-10 - 2))) *
+      (((-Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1)) * (x ^ 10 * x ^ 2) +
+                  Real.cos (x ^ 6) * (↑10 * x ^ (10 - 1) * x ^ 2 + x ^ 10 * (↑2 * x ^ (2 - 1)))) *
+                Real.cos (x ^ 3) -
+              Real.cos (x ^ 6) * (x ^ 10 * x ^ 2) * (-Real.sin (x ^ 3) * (↑3 * x ^ (3 - 1)))) /
+            Real.cos (x ^ 3) ^ 2 *
+          Real.cos (x ^ 10 / x ^ 6 - Real.sin (x ^ 5)) +
+        Real.cos (x ^ 6) * (x ^ 10 * x ^ 2) / Real.cos (x ^ 3) *
+          (-Real.sin (x ^ 10 / x ^ 6 - Real.sin (x ^ 5)) *
+            ((↑10 * x ^ (10 - 1) * x ^ 6 - x ^ 10 * (↑6 * x ^ (6 - 1))) / (x ^ 6) ^ 2 -
+              Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1))))),
+  domain := fun x => x ^ 6 ≠ 0 ∧ Real.cos (x ^ 3) ≠ 0, proof := d_test78._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_mul (Real.tan (Real.tan (88 + 75 - (-10 - 2))))
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_div
+        (HasDerivAt.fun_mul (HasDerivAt.cos (hasDerivAt_pow 6 x))
+          (HasDerivAt.fun_mul (hasDerivAt_pow 10 x) (hasDerivAt_pow 2 x)))
+        (HasDerivAt.cos (hasDerivAt_pow 3 x)) a.right)
+      (HasDerivAt.cos
+        (HasDerivAt.sub (HasDerivAt.fun_div (hasDerivAt_pow 10 x) (hasDerivAt_pow 6 x) a.left)
+          (HasDerivAt.sin (hasDerivAt_pow 5 x)))))
+

@@ -1,0 +1,19 @@
+Input: test409
+fun x => Real.sin (Real.tan (x ^ 2 * (-48 * -23) - (Real.log (-61) - Real.tan (x ^ 1))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.tan (x ^ 2 * (-48 * -23) - (Real.log (-61) - Real.tan (x ^ 1)))) *
+      (1 / Real.cos (x ^ 2 * (-48 * -23) - (Real.log (-61) - Real.tan (x ^ 1))) ^ 2 *
+        (↑2 * x ^ (2 - 1) * (-48 * -23) - -(1 / Real.cos (x ^ 1) ^ 2 * (↑1 * x ^ (1 - 1))))),
+  domain := fun x => Real.cos (x ^ 1) ≠ 0 ∧ Real.cos (x ^ 2 * (-48 * -23) - (Real.log (-61) - Real.tan (x ^ 1))) ≠ 0,
+  proof := d_test409._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sin
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.sub (HasDerivAt.mul_const (hasDerivAt_pow 2 x) (-48 * -23))
+        (HasDerivAt.const_sub (Real.log (-61)) (HasDerivAt.tan' a.left (hasDerivAt_pow 1 x)))))
+

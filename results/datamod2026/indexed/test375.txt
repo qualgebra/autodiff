@@ -1,0 +1,26 @@
+Input: test375
+fun x => 13 / Real.log (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91))
+
+Result:
+{
+  f' := fun x =>
+    (0 * Real.log (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91)) -
+        13 *
+          ((0 * Real.tan (x ^ 10 + 91) - Real.sin (54 * 44) * (1 / Real.cos (x ^ 10 + 91) ^ 2 * (↑10 * x ^ (10 - 1)))) /
+              Real.tan (x ^ 10 + 91) ^ 2 /
+            (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91)))) /
+      Real.log (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91)) ^ 2,
+  domain := fun x =>
+    ((Real.log (Real.sin (54 * 44) / Real.tan (x ^ 10 + 91)) ≠ 0 ∧ Real.tan (x ^ 10 + 91) ≠ 0) ∧
+        Real.cos (x ^ 10 + 91) ≠ 0) ∧
+      Real.sin (54 * 44) / Real.tan (x ^ 10 + 91) ≠ 0,
+  proof := d_test375._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x 13)
+    (HasDerivAt.log' a.right
+      (HasDerivAt.fun_div (hasDerivAt_const x (Real.sin (54 * 44)))
+        (HasDerivAt.tan' a.left.right (HasDerivAt.add_const 91 (hasDerivAt_pow 10 x))) a.left.left.right))
+    a.left.left.left
+

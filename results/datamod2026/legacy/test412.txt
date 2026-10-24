@@ -1,0 +1,24 @@
+Input: test412
+fun x =>
+  Real.cos (Real.cos (x ^ 5) + Real.sin 62 + Real.tan (Real.log (-44)) - Real.cos (Real.log (x ^ 1) - -19 / x ^ 10))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin
+          (Real.cos (x ^ 5) + Real.sin 62 + Real.tan (Real.log (-44)) - Real.cos (Real.log (x ^ 1) - -19 / x ^ 10)) *
+      (-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) -
+        -Real.sin (Real.log (x ^ 1) - -19 / x ^ 10) *
+          (Real.one✝ / x ^ 1 - -19 * (-(↑10 * x ^ (10 - 1)) / (x ^ 10) ^ 2))),
+  domain := fun x => x ^ 10 ≠ 0 ∧ x ^ 1 ≠ 0, proof := d_test412._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.sub
+      (HasDerivAt.add_const (Real.tan (Real.log (-44)))
+        (HasDerivAt.add_const (Real.sin 62) (HasDerivAt.cos (hasDerivAt_pow 5 x))))
+      (HasDerivAt.cos
+        (HasDerivAt.sub (HasDerivAt.log' a.right (hasDerivAt_const_mul Real.one✝))
+          (HasDerivAt.const_mul (-19) (HasDerivAt.inv (hasDerivAt_pow 10 x) a.left)))))
+

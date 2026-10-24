@@ -1,0 +1,18 @@
+Input: test204
+fun x => Real.tan (Real.cos (Real.cos (x ^ 3 - x ^ 9))) + Real.cos (x ^ 8 - x ^ 9 + Real.tan (Real.sin 41))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.cos (Real.cos (x ^ 3 - x ^ 9))) ^ 2 *
+        (-Real.sin (Real.cos (x ^ 3 - x ^ 9)) * (-Real.sin (x ^ 3 - x ^ 9) * (↑3 * x ^ (3 - 1) - ↑9 * x ^ (9 - 1)))) +
+      -Real.sin (x ^ 8 - x ^ 9 + Real.tan (Real.sin 41)) * (↑8 * x ^ (8 - 1) - ↑9 * x ^ (9 - 1)),
+  domain := fun x => Real.cos (Real.cos (Real.cos (x ^ 3 - x ^ 9))) ≠ 0, proof := d_test204._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.tan' a (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.sub (hasDerivAt_pow 3 x) (hasDerivAt_pow 9 x)))))
+    (HasDerivAt.cos
+      (HasDerivAt.add_const (Real.tan (Real.sin 41)) (HasDerivAt.sub (hasDerivAt_pow 8 x) (hasDerivAt_pow 9 x))))
+

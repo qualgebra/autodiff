@@ -1,0 +1,23 @@
+Input: test128
+fun x => Real.sin (Real.cos (Real.cos (80 * x ^ 6))) * Real.tan (Real.cos (Real.tan (Real.tan (x ^ 2))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.cos (Real.cos (80 * x ^ 6))) *
+          (-Real.sin (Real.cos (80 * x ^ 6)) * (-Real.sin (80 * x ^ 6) * (80 * (↑6 * x ^ (6 - 1))))) *
+        Real.tan (Real.cos (Real.tan (Real.tan (x ^ 2)))) +
+      Real.sin (Real.cos (Real.cos (80 * x ^ 6))) *
+        (1 / Real.cos (Real.cos (Real.tan (Real.tan (x ^ 2)))) ^ 2 *
+          (-Real.sin (Real.tan (Real.tan (x ^ 2))) *
+            (1 / Real.cos (Real.tan (x ^ 2)) ^ 2 * (1 / Real.cos (x ^ 2) ^ 2 * (↑2 * x ^ (2 - 1)))))),
+  domain := fun x =>
+    (Real.cos (x ^ 2) ≠ 0 ∧ Real.cos (Real.tan (x ^ 2)) ≠ 0) ∧ Real.cos (Real.cos (Real.tan (Real.tan (x ^ 2)))) ≠ 0,
+  proof := d_test128._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (HasDerivAt.sin (HasDerivAt.cos (HasDerivAt.cos (HasDerivAt.const_mul 80 (hasDerivAt_pow 6 x)))))
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.cos (HasDerivAt.tan' a.left.right (HasDerivAt.tan' a.left.left (hasDerivAt_pow 2 x)))))
+

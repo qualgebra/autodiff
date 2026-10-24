@@ -1,0 +1,17 @@
+Input: test200
+fun x => Real.log (Real.sin (Real.sin (x ^ 9 * Real.cos (x ^ 10))))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (Real.sin (x ^ 9 * Real.cos (x ^ 10))) *
+        (Real.cos (x ^ 9 * Real.cos (x ^ 10)) *
+          (↑9 * x ^ (9 - 1) * Real.cos (x ^ 10) + x ^ 9 * (-Real.sin (x ^ 10) * (↑10 * x ^ (10 - 1))))) /
+      Real.sin (Real.sin (x ^ 9 * Real.cos (x ^ 10))),
+  domain := fun x => Real.sin (Real.sin (x ^ 9 * Real.cos (x ^ 10))) ≠ 0, proof := d_test200._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.sin (HasDerivAt.sin (HasDerivAt.fun_mul (hasDerivAt_pow 9 x) (HasDerivAt.cos (hasDerivAt_pow 10 x)))))
+

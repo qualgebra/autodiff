@@ -1,0 +1,24 @@
+Input: test70
+fun x => Real.log (7 * x ^ 9) + x ^ 1 * x ^ 4 / (x ^ 3 * x ^ 9) + 13 * (55 + x ^ 7) + x ^ 6
+
+Result:
+{
+  f' := fun x =>
+    7 * (↑9 * x ^ (9 - 1)) / (7 * x ^ 9) +
+          ((↑1 * x ^ (1 - 1) * x ^ 4 + x ^ 1 * (↑4 * x ^ (4 - 1))) * (x ^ 3 * x ^ 9) -
+              x ^ 1 * x ^ 4 * (↑3 * x ^ (3 - 1) * x ^ 9 + x ^ 3 * (↑9 * x ^ (9 - 1)))) /
+            (x ^ 3 * x ^ 9) ^ 2 +
+        13 * (↑7 * x ^ (7 - 1)) +
+      ↑6 * x ^ (6 - 1),
+  domain := fun x => x ^ 3 * x ^ 9 ≠ 0 ∧ 7 * x ^ 9 ≠ 0, proof := d_test70._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.fun_add
+      (HasDerivAt.fun_add (HasDerivAt.log' a.right (HasDerivAt.const_mul 7 (hasDerivAt_pow 9 x)))
+        (HasDerivAt.fun_div (HasDerivAt.fun_mul (hasDerivAt_pow 1 x) (hasDerivAt_pow 4 x))
+          (HasDerivAt.fun_mul (hasDerivAt_pow 3 x) (hasDerivAt_pow 9 x)) a.left))
+      (HasDerivAt.const_mul 13 (HasDerivAt.const_add 55 (hasDerivAt_pow 7 x))))
+    (hasDerivAt_pow 6 x)
+

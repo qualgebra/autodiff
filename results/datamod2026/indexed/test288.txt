@@ -1,0 +1,23 @@
+Input: test288
+fun x => x ^ 5 + x ^ 3 - x ^ 4 / (x ^ 8 * x ^ 1 / Real.log 27 - (43 * -51 - Real.sin (x ^ 6)))
+
+Result:
+{
+  f' := fun x =>
+    ↑5 * x ^ (5 - 1) + ↑3 * x ^ (3 - 1) -
+      (↑4 * x ^ (4 - 1) * (x ^ 8 * x ^ 1 / Real.log 27 - (43 * -51 - Real.sin (x ^ 6))) -
+          x ^ 4 *
+            ((↑8 * x ^ (8 - 1) * x ^ 1 + x ^ 8 * (↑1 * x ^ (1 - 1))) / Real.log 27 -
+              -(Real.cos (x ^ 6) * (↑6 * x ^ (6 - 1))))) /
+        (x ^ 8 * x ^ 1 / Real.log 27 - (43 * -51 - Real.sin (x ^ 6))) ^ 2,
+  domain := fun x => x ^ 8 * x ^ 1 / Real.log 27 - (43 * -51 - Real.sin (x ^ 6)) ≠ 0, proof := d_test288._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub (HasDerivAt.fun_add (hasDerivAt_pow 5 x) (hasDerivAt_pow 3 x))
+    (HasDerivAt.fun_div (hasDerivAt_pow 4 x)
+      (HasDerivAt.sub
+        (HasDerivAt.div_const (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (hasDerivAt_pow 1 x)) (Real.log 27))
+        (HasDerivAt.const_sub (43 * -51) (HasDerivAt.sin (hasDerivAt_pow 6 x))))
+      a)
+

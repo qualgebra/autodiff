@@ -1,0 +1,22 @@
+Input: test366
+fun x => x ^ 1 / (Real.log (Real.sin 57) + Real.log (-24 - x ^ 8) * Real.cos (Real.cos (-80)))
+
+Result:
+{
+  f' := fun x =>
+    Real.one✝ * (Real.log (Real.sin 57) + Real.log (-24 - x ^ 8) * Real.cos (Real.cos (-80)))⁻¹ +
+      x ^ 1 *
+        (-(-(↑8 * x ^ (8 - 1)) / (-24 - x ^ 8) * Real.cos (Real.cos (-80))) /
+          (Real.log (Real.sin 57) + Real.log (-24 - x ^ 8) * Real.cos (Real.cos (-80))) ^ 2),
+  domain := fun x => Real.log (Real.sin 57) + Real.log (-24 - x ^ 8) * Real.cos (Real.cos (-80)) ≠ 0 ∧ -24 - x ^ 8 ≠ 0,
+  proof := d_test366._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_const_mul Real.one✝)
+    (HasDerivAt.inv
+      (HasDerivAt.const_add (Real.log (Real.sin 57))
+        (HasDerivAt.mul_const (HasDerivAt.log' a.right (HasDerivAt.const_sub (-24) (hasDerivAt_pow 8 x)))
+          (Real.cos (Real.cos (-80)))))
+      a.left)
+

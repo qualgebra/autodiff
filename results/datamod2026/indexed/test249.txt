@@ -1,0 +1,18 @@
+Input: test249
+fun x => -98 - (Real.cos (Real.log (83 / x ^ 4)) + x ^ 1)
+
+Result:
+{
+  f' := fun x =>
+    -(-Real.sin (Real.log (83 / x ^ 4)) * ((0 * x ^ 4 - 83 * (↑4 * x ^ (4 - 1))) / (x ^ 4) ^ 2 / (83 / x ^ 4)) +
+        ↑1 * x ^ (1 - 1)),
+  domain := fun x => x ^ 4 ≠ 0 ∧ 83 / x ^ 4 ≠ 0, proof := d_test249._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_sub (-98)
+    (HasDerivAt.fun_add
+      (HasDerivAt.cos
+        (HasDerivAt.log' a.right (HasDerivAt.fun_div (hasDerivAt_const x 83) (hasDerivAt_pow 4 x) a.left)))
+      (hasDerivAt_pow 1 x))
+

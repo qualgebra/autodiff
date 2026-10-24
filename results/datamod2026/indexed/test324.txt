@@ -1,0 +1,22 @@
+Input: test324
+fun x => Real.tan (Real.cos ((-53 + x ^ 5) * Real.log (x ^ 1)) / (Real.sin 41 * -18))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.cos ((-53 + x ^ 5) * Real.log (x ^ 1)) / (Real.sin 41 * -18)) ^ 2 *
+      (-Real.sin ((-53 + x ^ 5) * Real.log (x ^ 1)) *
+          (↑5 * x ^ (5 - 1) * Real.log (x ^ 1) + (-53 + x ^ 5) * (↑1 * x ^ (1 - 1) / x ^ 1)) /
+        (Real.sin 41 * -18)),
+  domain := fun x => x ^ 1 ≠ 0 ∧ Real.cos (Real.cos ((-53 + x ^ 5) * Real.log (x ^ 1)) / (Real.sin 41 * -18)) ≠ 0,
+  proof := d_test324._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.div_const
+      (HasDerivAt.cos
+        (HasDerivAt.fun_mul (HasDerivAt.const_add (-53) (hasDerivAt_pow 5 x))
+          (HasDerivAt.log' a.left (hasDerivAt_pow 1 x))))
+      (Real.sin 41 * -18))
+

@@ -1,0 +1,10 @@
+Input: test23
+fun x => x ^ 7 * Real.sin (Real.cos (Real.cos (Real.cos 29)))
+
+Result:
+{ f' := fun x => ↑7 * x ^ (7 - 1) * Real.sin (Real.cos (Real.cos (Real.cos 29))), domain := fun x => True,
+  proof := d_test23._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.mul_const (hasDerivAt_pow 7 x) (Real.sin (Real.cos (Real.cos (Real.cos 29))))
+

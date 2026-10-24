@@ -1,0 +1,30 @@
+Input: test259
+fun x => Real.tan (55 * (20 - x ^ 4) * x ^ 3 / ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6))))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (55 * (20 - x ^ 4) * x ^ 3 / ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6)))) ^ 2 *
+      ((55 * -(↑4 * x ^ (4 - 1)) * x ^ 3 + 55 * (20 - x ^ 4) * (↑3 * x ^ (3 - 1))) *
+          ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6)))⁻¹ +
+        55 * (20 - x ^ 4) * x ^ 3 *
+          (-(-Real.sin (x ^ 5) * (↑5 * x ^ (5 - 1)) * (Real.cos (Real.cos (x ^ 6)))⁻¹ +
+                (Real.cos (x ^ 5) + Real.sin (-80)) *
+                  (-(-Real.sin (Real.cos (x ^ 6)) * (-Real.sin (x ^ 6) * (↑6 * x ^ (6 - 1)))) /
+                    Real.cos (Real.cos (x ^ 6)) ^ 2)) /
+            ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6))) ^ 2)),
+  domain := fun x =>
+    ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6)) ≠ 0 ∧ Real.cos (Real.cos (x ^ 6)) ≠ 0) ∧
+      Real.cos (55 * (20 - x ^ 4) * x ^ 3 / ((Real.cos (x ^ 5) + Real.sin (-80)) / Real.cos (Real.cos (x ^ 6)))) ≠ 0,
+  proof := d_test259._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.fun_mul
+      (HasDerivAt.fun_mul (HasDerivAt.const_mul 55 (HasDerivAt.const_sub 20 (hasDerivAt_pow 4 x))) (hasDerivAt_pow 3 x))
+      (HasDerivAt.inv
+        (HasDerivAt.fun_mul (HasDerivAt.add_const (Real.sin (-80)) (HasDerivAt.cos (hasDerivAt_pow 5 x)))
+          (HasDerivAt.inv (HasDerivAt.cos (HasDerivAt.cos (hasDerivAt_pow 6 x))) a.left.right))
+        a.left.left))
+

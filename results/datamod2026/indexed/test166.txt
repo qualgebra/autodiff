@@ -1,0 +1,21 @@
+Input: test166
+fun x =>
+  Real.sin (x ^ 7 - x ^ 6) / Real.tan (Real.sin (-74)) / Real.sin (-22) + Real.sin (Real.log (Real.tan (x ^ 3 - 44)))
+
+Result:
+{
+  f' := fun x =>
+    Real.cos (x ^ 7 - x ^ 6) * (↑7 * x ^ (7 - 1) - ↑6 * x ^ (6 - 1)) / Real.tan (Real.sin (-74)) / Real.sin (-22) +
+      Real.cos (Real.log (Real.tan (x ^ 3 - 44))) *
+        (1 / Real.cos (x ^ 3 - 44) ^ 2 * (↑3 * x ^ (3 - 1)) / Real.tan (x ^ 3 - 44)),
+  domain := fun x => Real.cos (x ^ 3 - 44) ≠ 0 ∧ Real.tan (x ^ 3 - 44) ≠ 0, proof := d_test166._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.div_const
+      (HasDerivAt.div_const (HasDerivAt.sin (HasDerivAt.sub (hasDerivAt_pow 7 x) (hasDerivAt_pow 6 x)))
+        (Real.tan (Real.sin (-74))))
+      (Real.sin (-22)))
+    (HasDerivAt.sin (HasDerivAt.log' a.right (HasDerivAt.tan' a.left (HasDerivAt.sub_const 44 (hasDerivAt_pow 3 x)))))
+

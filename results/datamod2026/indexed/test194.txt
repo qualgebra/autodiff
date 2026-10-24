@@ -1,0 +1,18 @@
+Input: test194
+fun x => 1 + (Real.sin 54 + (x ^ 4 - x ^ 1) - Real.sin (x ^ 3)) - Real.cos (x ^ 2)
+
+Result:
+{
+  f' := fun x =>
+    ↑4 * x ^ (4 - 1) - ↑1 * x ^ (1 - 1) - Real.cos (x ^ 3) * (↑3 * x ^ (3 - 1)) -
+      -Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1)),
+  domain := fun x => True, proof := d_test194._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.const_add 1
+      (HasDerivAt.sub (HasDerivAt.const_add (Real.sin 54) (HasDerivAt.sub (hasDerivAt_pow 4 x) (hasDerivAt_pow 1 x)))
+        (HasDerivAt.sin (hasDerivAt_pow 3 x))))
+    (HasDerivAt.cos (hasDerivAt_pow 2 x))
+

@@ -1,0 +1,21 @@
+Input: test439
+fun x => Real.sin ((x ^ 2 + -87 - (36 - x ^ 10)) * x ^ 6) - x ^ 8
+
+Result:
+{
+  f' := fun x =>
+    Real.cos ((x ^ 2 + -87 - (36 - x ^ 10)) * x ^ 6) *
+        ((↑2 * x ^ (2 - 1) - -(↑10 * x ^ (10 - 1))) * x ^ 6 + (x ^ 2 + -87 - (36 - x ^ 10)) * (↑6 * x ^ (6 - 1))) -
+      ↑8 * x ^ (8 - 1),
+  domain := fun x => True, proof := d_test439._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.sin
+      (HasDerivAt.fun_mul
+        (HasDerivAt.sub (HasDerivAt.add_const (-87) (hasDerivAt_pow 2 x))
+          (HasDerivAt.const_sub 36 (hasDerivAt_pow 10 x)))
+        (hasDerivAt_pow 6 x)))
+    (hasDerivAt_pow 8 x)
+

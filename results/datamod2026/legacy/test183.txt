@@ -1,0 +1,24 @@
+Input: test183
+fun x => Real.cos (Real.sin (Real.tan (Real.log (x ^ 2))) / (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44))))
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (Real.sin (Real.tan (Real.log (x ^ 2))) / (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44)))) *
+      (Real.cos (Real.tan (Real.log (x ^ 2))) * (1 / Real.cos (Real.log (x ^ 2)) ^ 2 * (↑2 * x ^ (2 - 1) / x ^ 2)) *
+          (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44)))⁻¹ +
+        Real.sin (Real.tan (Real.log (x ^ 2))) *
+          (-(Real.one✝ * ((x ^ 9 + 44) * Real.sin (-44)) + x ^ 1 * (↑9 * x ^ (9 - 1) * Real.sin (-44))) /
+            (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44))) ^ 2)),
+  domain := fun x => (x ^ 1 * ((x ^ 9 + 44) * Real.sin (-44)) ≠ 0 ∧ x ^ 2 ≠ 0) ∧ Real.cos (Real.log (x ^ 2)) ≠ 0,
+  proof := d_test183._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.fun_mul (HasDerivAt.sin (HasDerivAt.tan' a.right (HasDerivAt.log' a.left.right (hasDerivAt_pow 2 x))))
+      (HasDerivAt.inv
+        (HasDerivAt.fun_mul (hasDerivAt_const_mul Real.one✝)
+          (HasDerivAt.mul_const (HasDerivAt.add_const 44 (hasDerivAt_pow 9 x)) (Real.sin (-44))))
+        a.left.left))
+

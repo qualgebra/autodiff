@@ -1,0 +1,21 @@
+Input: test289
+fun x => Real.tan (Real.log (Real.log (x ^ 7 + -20 - (31 + x ^ 9))))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.log (Real.log (x ^ 7 + -20 - (31 + x ^ 9)))) ^ 2 *
+      ((↑7 * x ^ (7 - 1) - ↑9 * x ^ (9 - 1)) / (x ^ 7 + -20 - (31 + x ^ 9)) / Real.log (x ^ 7 + -20 - (31 + x ^ 9))),
+  domain := fun x =>
+    (x ^ 7 + -20 - (31 + x ^ 9) ≠ 0 ∧ Real.log (x ^ 7 + -20 - (31 + x ^ 9)) ≠ 0) ∧
+      Real.cos (Real.log (Real.log (x ^ 7 + -20 - (31 + x ^ 9)))) ≠ 0,
+  proof := d_test289._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.log' a.left.right
+      (HasDerivAt.log' a.left.left
+        (HasDerivAt.sub (HasDerivAt.add_const (-20) (hasDerivAt_pow 7 x))
+          (HasDerivAt.const_add 31 (hasDerivAt_pow 9 x)))))
+

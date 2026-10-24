@@ -1,0 +1,28 @@
+Input: test217
+fun x =>
+  Real.sin (Real.tan (Real.tan (-17) / 92)) -
+    ((x ^ 10 - -79) * (x ^ 1 + x ^ 9) * ((x ^ 3 - x ^ 10) / x ^ 8) + Real.sin ((81 + x ^ 8) * (x ^ 4 / 39)))
+
+Result:
+{
+  f' := fun x =>
+    -((↑10 * x ^ (10 - 1) * (x ^ 1 + x ^ 9) + (x ^ 10 - -79) * (↑1 * x ^ (1 - 1) + ↑9 * x ^ (9 - 1))) *
+            ((x ^ 3 - x ^ 10) / x ^ 8) +
+          (x ^ 10 - -79) * (x ^ 1 + x ^ 9) *
+            (((↑3 * x ^ (3 - 1) - ↑10 * x ^ (10 - 1)) * x ^ 8 - (x ^ 3 - x ^ 10) * (↑8 * x ^ (8 - 1))) / (x ^ 8) ^ 2) +
+        Real.cos ((81 + x ^ 8) * (x ^ 4 / 39)) *
+          (↑8 * x ^ (8 - 1) * (x ^ 4 / 39) + (81 + x ^ 8) * (↑4 * x ^ (4 - 1) / 39))),
+  domain := fun x => x ^ 8 ≠ 0, proof := d_test217._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.const_sub (Real.sin (Real.tan (Real.tan (-17) / 92)))
+    (HasDerivAt.fun_add
+      (HasDerivAt.fun_mul
+        (HasDerivAt.fun_mul (HasDerivAt.sub_const (-79) (hasDerivAt_pow 10 x))
+          (HasDerivAt.fun_add (hasDerivAt_pow 1 x) (hasDerivAt_pow 9 x)))
+        (HasDerivAt.fun_div (HasDerivAt.sub (hasDerivAt_pow 3 x) (hasDerivAt_pow 10 x)) (hasDerivAt_pow 8 x) a))
+      (HasDerivAt.sin
+        (HasDerivAt.fun_mul (HasDerivAt.const_add 81 (hasDerivAt_pow 8 x))
+          (HasDerivAt.div_const (hasDerivAt_pow 4 x) 39))))
+

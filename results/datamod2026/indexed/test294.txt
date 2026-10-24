@@ -1,0 +1,22 @@
+Input: test294
+fun x => x ^ 1 / (Real.log (Real.log (x ^ 2)) - (Real.cos (Real.cos 84) + (Real.sin (x ^ 2) - -27)))
+
+Result:
+{
+  f' := fun x =>
+    (↑1 * x ^ (1 - 1) * (Real.log (Real.log (x ^ 2)) - (Real.cos (Real.cos 84) + (Real.sin (x ^ 2) - -27))) -
+        x ^ 1 * (↑2 * x ^ (2 - 1) / x ^ 2 / Real.log (x ^ 2) - Real.cos (x ^ 2) * (↑2 * x ^ (2 - 1)))) /
+      (Real.log (Real.log (x ^ 2)) - (Real.cos (Real.cos 84) + (Real.sin (x ^ 2) - -27))) ^ 2,
+  domain := fun x =>
+    (Real.log (Real.log (x ^ 2)) - (Real.cos (Real.cos 84) + (Real.sin (x ^ 2) - -27)) ≠ 0 ∧ x ^ 2 ≠ 0) ∧
+      Real.log (x ^ 2) ≠ 0,
+  proof := d_test294._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_pow 1 x)
+    (HasDerivAt.sub (HasDerivAt.log' a.right (HasDerivAt.log' a.left.right (hasDerivAt_pow 2 x)))
+      (HasDerivAt.const_add (Real.cos (Real.cos 84))
+        (HasDerivAt.sub_const (-27) (HasDerivAt.sin (hasDerivAt_pow 2 x)))))
+    a.left.left
+

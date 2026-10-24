@@ -1,0 +1,17 @@
+Input: test77
+fun x => Real.log (Real.cos (-57) + (x ^ 8 - (Real.log (-99) + Real.cos (x ^ 4))))
+
+Result:
+{
+  f' := fun x =>
+    (↑8 * x ^ (8 - 1) - -Real.sin (x ^ 4) * (↑4 * x ^ (4 - 1))) /
+      (Real.cos (-57) + (x ^ 8 - (Real.log (-99) + Real.cos (x ^ 4)))),
+  domain := fun x => Real.cos (-57) + (x ^ 8 - (Real.log (-99) + Real.cos (x ^ 4))) ≠ 0, proof := d_test77._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.log' a
+    (HasDerivAt.const_add (Real.cos (-57))
+      (HasDerivAt.sub (hasDerivAt_pow 8 x)
+        (HasDerivAt.const_add (Real.log (-99)) (HasDerivAt.cos (hasDerivAt_pow 4 x)))))
+

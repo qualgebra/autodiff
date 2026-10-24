@@ -1,0 +1,19 @@
+Input: test175
+fun x => Real.log (Real.tan (x ^ 8 * (x ^ 8 * 14))) + x ^ 1
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (x ^ 8 * (x ^ 8 * 14)) ^ 2 * (↑8 * x ^ (8 - 1) * (x ^ 8 * 14) + x ^ 8 * (↑8 * x ^ (8 - 1) * 14)) /
+        Real.tan (x ^ 8 * (x ^ 8 * 14)) +
+      ↑1 * x ^ (1 - 1),
+  domain := fun x => Real.cos (x ^ 8 * (x ^ 8 * 14)) ≠ 0 ∧ Real.tan (x ^ 8 * (x ^ 8 * 14)) ≠ 0,
+  proof := d_test175._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add
+    (HasDerivAt.log' a.right
+      (HasDerivAt.tan' a.left (HasDerivAt.fun_mul (hasDerivAt_pow 8 x) (HasDerivAt.mul_const (hasDerivAt_pow 8 x) 14))))
+    (hasDerivAt_pow 1 x)
+

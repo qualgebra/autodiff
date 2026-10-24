@@ -1,0 +1,20 @@
+Input: test218
+fun x =>
+  Real.sin (Real.sin (Real.log 38) + Real.log (Real.cos (-10))) /
+    (Real.cos (x ^ 2) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14))))
+
+Result:
+{
+  f' := fun x =>
+    (0 * (Real.cos (x ^ 2) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14)))) -
+        Real.sin (Real.sin (Real.log 38) + Real.log (Real.cos (-10))) *
+          (-Real.sin (x ^ 2) * (↑2 * x ^ (2 - 1)) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14))))) /
+      (Real.cos (x ^ 2) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14)))) ^ 2,
+  domain := fun x => Real.cos (x ^ 2) * (Real.tan (92 * 56) - Real.sin (Real.cos (-14))) ≠ 0,
+  proof := d_test218._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x (Real.sin (Real.sin (Real.log 38) + Real.log (Real.cos (-10)))))
+    (HasDerivAt.mul_const (HasDerivAt.cos (hasDerivAt_pow 2 x)) (Real.tan (92 * 56) - Real.sin (Real.cos (-14)))) a
+

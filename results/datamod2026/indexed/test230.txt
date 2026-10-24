@@ -1,0 +1,17 @@
+Input: test230
+fun x => x ^ 5 * (-52 - -92 * (x ^ 4 * -67) / Real.cos (Real.tan 96))
+
+Result:
+{
+  f' := fun x =>
+    ↑5 * x ^ (5 - 1) * (-52 - -92 * (x ^ 4 * -67) / Real.cos (Real.tan 96)) +
+      x ^ 5 * -(-92 * (↑4 * x ^ (4 - 1) * -67) / Real.cos (Real.tan 96)),
+  domain := fun x => True, proof := d_test230._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_mul (hasDerivAt_pow 5 x)
+    (HasDerivAt.const_sub (-52)
+      (HasDerivAt.div_const (HasDerivAt.const_mul (-92) (HasDerivAt.mul_const (hasDerivAt_pow 4 x) (-67)))
+        (Real.cos (Real.tan 96))))
+

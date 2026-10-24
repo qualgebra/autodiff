@@ -1,0 +1,27 @@
+Input: test21
+fun x => Real.tan 56 / (Real.tan (x ^ 7) + Real.log (-46 / x ^ 1)) - Real.log (x ^ 1)
+
+Result:
+{
+  f' := fun x =>
+    (0 * (Real.tan (x ^ 7) + Real.log (-46 / x ^ 1)) -
+          Real.tan 56 *
+            (1 / Real.cos (x ^ 7) ^ 2 * (↑7 * x ^ (7 - 1)) +
+              (0 * x ^ 1 - -46 * (↑1 * x ^ (1 - 1))) / (x ^ 1) ^ 2 / (-46 / x ^ 1))) /
+        (Real.tan (x ^ 7) + Real.log (-46 / x ^ 1)) ^ 2 -
+      ↑1 * x ^ (1 - 1) / x ^ 1,
+  domain := fun x =>
+    (((x ^ 1 ≠ 0 ∧ Real.tan (x ^ 7) + Real.log (-46 / x ^ 1) ≠ 0) ∧ x ^ 1 ≠ 0) ∧ -46 / x ^ 1 ≠ 0) ∧
+      Real.cos (x ^ 7) ≠ 0,
+  proof := d_test21._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.sub
+    (HasDerivAt.fun_div (hasDerivAt_const x (Real.tan 56))
+      (HasDerivAt.fun_add (HasDerivAt.tan' a.right (hasDerivAt_pow 7 x))
+        (HasDerivAt.log' a.left.right
+          (HasDerivAt.fun_div (hasDerivAt_const x (-46)) (hasDerivAt_pow 1 x) a.left.left.left.left)))
+      a.left.left.left.right)
+    (HasDerivAt.log' a.left.left.left.left (hasDerivAt_pow 1 x))
+

@@ -1,0 +1,22 @@
+Input: test270
+fun x => x ^ 3 - x ^ 7 + Real.tan (Real.tan (Real.sin (x ^ 10)) + Real.cos 77 / x ^ 10)
+
+Result:
+{
+  f' := fun x =>
+    ↑3 * x ^ (3 - 1) - ↑7 * x ^ (7 - 1) +
+      1 / Real.cos (Real.tan (Real.sin (x ^ 10)) + Real.cos 77 / x ^ 10) ^ 2 *
+        (1 / Real.cos (Real.sin (x ^ 10)) ^ 2 * (Real.cos (x ^ 10) * (↑10 * x ^ (10 - 1))) +
+          Real.cos 77 * (-(↑10 * x ^ (10 - 1)) / (x ^ 10) ^ 2)),
+  domain := fun x =>
+    (x ^ 10 ≠ 0 ∧ Real.cos (Real.sin (x ^ 10)) ≠ 0) ∧
+      Real.cos (Real.tan (Real.sin (x ^ 10)) + Real.cos 77 / x ^ 10) ≠ 0,
+  proof := d_test270._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_add (HasDerivAt.sub (hasDerivAt_pow 3 x) (hasDerivAt_pow 7 x))
+    (HasDerivAt.tan' a.right
+      (HasDerivAt.fun_add (HasDerivAt.tan' a.left.right (HasDerivAt.sin (hasDerivAt_pow 10 x)))
+        (HasDerivAt.const_mul (Real.cos 77) (HasDerivAt.inv (hasDerivAt_pow 10 x) a.left.left))))
+

@@ -1,0 +1,23 @@
+Input: test208
+fun x => Real.tan (Real.sin (x ^ 5) + Real.tan ((x ^ 10 - x ^ 7) * (x ^ 7 - 85)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.sin (x ^ 5) + Real.tan ((x ^ 10 - x ^ 7) * (x ^ 7 - 85))) ^ 2 *
+      (Real.cos (x ^ 5) * (↑5 * x ^ (5 - 1)) +
+        1 / Real.cos ((x ^ 10 - x ^ 7) * (x ^ 7 - 85)) ^ 2 *
+          ((↑10 * x ^ (10 - 1) - ↑7 * x ^ (7 - 1)) * (x ^ 7 - 85) + (x ^ 10 - x ^ 7) * (↑7 * x ^ (7 - 1)))),
+  domain := fun x =>
+    Real.cos ((x ^ 10 - x ^ 7) * (x ^ 7 - 85)) ≠ 0 ∧
+      Real.cos (Real.sin (x ^ 5) + Real.tan ((x ^ 10 - x ^ 7) * (x ^ 7 - 85))) ≠ 0,
+  proof := d_test208._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.fun_add (HasDerivAt.sin (hasDerivAt_pow 5 x))
+      (HasDerivAt.tan' a.left
+        (HasDerivAt.fun_mul (HasDerivAt.sub (hasDerivAt_pow 10 x) (hasDerivAt_pow 7 x))
+          (HasDerivAt.sub_const 85 (hasDerivAt_pow 7 x)))))
+

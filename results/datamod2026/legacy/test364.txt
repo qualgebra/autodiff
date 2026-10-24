@@ -1,0 +1,17 @@
+Input: test364
+fun x => Real.cos (x ^ 10 - Real.tan (x ^ 9 + x ^ 9) - -90)
+
+Result:
+{
+  f' := fun x =>
+    -Real.sin (x ^ 10 - Real.tan (x ^ 9 + x ^ 9) - -90) *
+      (↑10 * x ^ (10 - 1) - 1 / Real.cos (x ^ 9 + x ^ 9) ^ 2 * (↑9 * x ^ (9 - 1) + ↑9 * x ^ (9 - 1))),
+  domain := fun x => Real.cos (x ^ 9 + x ^ 9) ≠ 0, proof := d_test364._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.cos
+    (HasDerivAt.add_const (- -90)
+      (HasDerivAt.sub (hasDerivAt_pow 10 x)
+        (HasDerivAt.tan' a (HasDerivAt.fun_add (hasDerivAt_pow 9 x) (hasDerivAt_pow 9 x)))))
+

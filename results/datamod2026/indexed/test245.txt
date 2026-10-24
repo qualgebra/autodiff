@@ -1,0 +1,10 @@
+Input: test245
+fun x => Real.tan (x ^ 4) / -60
+
+Result:
+{ f' := fun x => 1 / Real.cos (x ^ 4) ^ 2 * (↑4 * x ^ (4 - 1)) / -60, domain := fun x => Real.cos (x ^ 4) ≠ 0,
+  proof := d_test245._proof_1 }
+
+Proof:
+id fun x a => HasDerivAt.div_const (HasDerivAt.tan' a (hasDerivAt_pow 4 x)) (-60)
+

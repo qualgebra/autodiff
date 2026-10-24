@@ -1,0 +1,15 @@
+Input: test440
+fun x => Real.sin (Real.cos (Real.tan 23)) / (-72 + Real.log (x ^ 4))
+
+Result:
+{
+  f' := fun x =>
+    (0 * (-72 + Real.log (x ^ 4)) - Real.sin (Real.cos (Real.tan 23)) * (↑4 * x ^ (4 - 1) / x ^ 4)) /
+      (-72 + Real.log (x ^ 4)) ^ 2,
+  domain := fun x => -72 + Real.log (x ^ 4) ≠ 0 ∧ x ^ 4 ≠ 0, proof := d_test440._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.fun_div (hasDerivAt_const x (Real.sin (Real.cos (Real.tan 23))))
+    (HasDerivAt.const_add (-72) (HasDerivAt.log' a.right (hasDerivAt_pow 4 x))) a.left
+

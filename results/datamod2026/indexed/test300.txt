@@ -1,0 +1,23 @@
+Input: test300
+fun x => Real.tan (Real.sin (Real.log (x ^ 9 - x ^ 8) + Real.log (-21 / x ^ 5)))
+
+Result:
+{
+  f' := fun x =>
+    1 / Real.cos (Real.sin (Real.log (x ^ 9 - x ^ 8) + Real.log (-21 / x ^ 5))) ^ 2 *
+      (Real.cos (Real.log (x ^ 9 - x ^ 8) + Real.log (-21 / x ^ 5)) *
+        ((↑9 * x ^ (9 - 1) - ↑8 * x ^ (8 - 1)) / (x ^ 9 - x ^ 8) +
+          (0 * x ^ 5 - -21 * (↑5 * x ^ (5 - 1))) / (x ^ 5) ^ 2 / (-21 / x ^ 5))),
+  domain := fun x =>
+    ((x ^ 5 ≠ 0 ∧ -21 / x ^ 5 ≠ 0) ∧ x ^ 9 - x ^ 8 ≠ 0) ∧
+      Real.cos (Real.sin (Real.log (x ^ 9 - x ^ 8) + Real.log (-21 / x ^ 5))) ≠ 0,
+  proof := d_test300._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.tan' a.right
+    (HasDerivAt.sin
+      (HasDerivAt.fun_add (HasDerivAt.log' a.left.right (HasDerivAt.sub (hasDerivAt_pow 9 x) (hasDerivAt_pow 8 x)))
+        (HasDerivAt.log' a.left.left.right
+          (HasDerivAt.fun_div (hasDerivAt_const x (-21)) (hasDerivAt_pow 5 x) a.left.left.left))))
+

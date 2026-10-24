@@ -1,0 +1,15 @@
+Input: test292
+fun x => Real.log (67 * x ^ 9 + x ^ 4 + 89) * -21
+
+Result:
+{ f' := fun x => (67 * (↑9 * x ^ (9 - 1)) + ↑4 * x ^ (4 - 1)) / (67 * x ^ 9 + x ^ 4 + 89) * -21,
+  domain := fun x => 67 * x ^ 9 + x ^ 4 + 89 ≠ 0, proof := d_test292._proof_1 }
+
+Proof:
+id fun x a =>
+  HasDerivAt.mul_const
+    (HasDerivAt.log' a
+      (HasDerivAt.add_const 89
+        (HasDerivAt.fun_add (HasDerivAt.const_mul 67 (hasDerivAt_pow 9 x)) (hasDerivAt_pow 4 x))))
+    (-21)
+
