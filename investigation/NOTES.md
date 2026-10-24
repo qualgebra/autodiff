@@ -105,3 +105,13 @@ test expectations were updated. `Main.lean` no longer assumes the proof lemma is
   - failed derivations are reported as `FAIL` instead of panicking;
   - the function is printed on one line (multi-line output broke the CSV).
 - Seeded cases 1-5: 26-170 ms per derivative (indexed) vs 96 ms-2.5 s (`AD_LEGACY=1`).
+
+## Constant functions and the generator
+
+- In a first 500-case run, 252/500 generated functions did not mention the variable, and 115
+  of those got a domain made only of conditions on constants (e.g. `-46 ≠ 0`), because a
+  constant subterm such as `log (-46)` could be differentiated with the logarithm rule.
+- Fix in the tool: bodies that do not mention the variable are proved with
+  `hasDerivAt_const` (derivative 0, no side conditions), in both search modes.
+- Fix in the generator: constant functions are rejected; leaves are a literal or the
+  variable; exponents are drawn from 1..10; constructors are uniform; `exp` stays disabled.
