@@ -53,25 +53,6 @@ meta def getAppHead: Expr → Name
 | .app t₁ _ => getAppHead t₁
 | _ => Name.anonymous
 
--- instrumentation: the function argument of a theorem's HasDerivAt conclusion
-meta def thmFnArg (ty: Expr): Option Expr :=
-  let b := ty.getForallBody
-  let args := b.getAppArgs
-  if b.isAppOf `HasDerivAt && args.size ≥ 3 then some args[args.size - 3]! else none
-
--- catch-all: conclusion is `HasDerivAt f _ _` with `f` a bound variable
-meta def isCatchAll (ty: Expr): Bool :=
-  match thmFnArg ty with
-  | some f => f.getAppFn.isBVar
-  | none => false
-
--- head symbol of the function argument (anonymous if unknown)
-meta def thmHead (ty: Expr): Name :=
-  match thmFnArg ty with
-  | some (.lam _ _ b _) => getAppHead b
-  | some f => getAppHead f
-  | none => Name.anonymous
-
 def simplifyGoals: Bool := false --true
 
 mutual
@@ -95,10 +76,14 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
     --logInfo m!"already in history: {t}"
     failure
 
+  let legacy := (← IO.getEnv "AD_LEGACY").isSome
   let blackList := [`DifferentiableAt, `HasFPowerSeriesAt, `HasDerivWithinAt,
                     `DifferentiableOn, `HasStrictDerivAt, `HasFDerivAt]
-  if blackList.any (t.isAppOf) then
+  if legacy && blackList.any (t.isAppOf) then
     --logInfo m!"goal {t} ignored."
+    failure
+  -- the database only proves `HasDerivAt` goals
+  if ! legacy && ! t.isAppOf `HasDerivAt then
     failure
 
   let appHead ← do
@@ -129,20 +114,13 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   --  thms ← populateExt
 
   --logInfo m!"theorems: {thms.map ConstantInfo.name}"
-  let mode := (← IO.getEnv "AD_MODE").getD ""
-  if mode.contains 'c' then
-    thms := thms.filter (fun th => ! isCatchAll th.type)
-  if mode.contains 'h' then
-    thms := thms.filter (fun th =>
-      let h := thmHead th.type
-      h.isAnonymous || appHead.isAnonymous || h == appHead)
   for th in thms do
     let cst ← Meta.mkConstWithFreshMVarLevels th.name
     --logInfo m!"trying --> {cst}"
     try
       let t0 ← IO.monoNanosNow
       try
-        if mode.contains 'r' then withReducible (applyConstant cst) else if mode.contains 'i' then withTransparency .instances (applyConstant cst) else applyConstant cst
+        applyConstant cst
       catch e =>
         let t1 ← IO.monoNanosNow
         statsRef.modify (·.push (th.name, false, t1 - t0))
@@ -180,9 +158,7 @@ end -- mutual
 -- Instrumentation (investigation branch), all opt-in via environment variables:
 --   AD_STATS=1         log apply counts/timings per `difftac` call
 --   AD_RECS=<file>     append one CSV line per apply attempt (theorem,success,nanos)
---   AD_MODE=<flags>    search variants: c = skip catch-all theorems,
---                      h = filter by head symbol, r = reducible transparency,
---                      i = instances transparency
+--   AD_LEGACY=1        original search: all theorems (incl. catch-alls), no head index
 --   AD_KEEPBUG=1       restore the original `getFullTargetType` call (see B8)
 elab "difftac" : tactic => do
   statsRef.set #[]
