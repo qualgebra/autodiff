@@ -6,7 +6,8 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 
 ## Setup
 
-- Tool: branch `perf-investigation`, commit a7e7d90 (generator, search and benchmark driver).
+- Tool: branch `perf-investigation`. `indexed/` was produced with commit 05276f6, `legacy/` with a7e7d90;
+  the legacy search is identical in both commits (it ignores the index key).
 - Lean 4.33.1, Mathlib v4.33.1; default heartbeat limit (200000).
 - AMD Ryzen 7 7730U (8 cores), 40 GB RAM, Linux 7.0.0-38-generic.
 - Test case `i` is the `i`-th function of a fixed random sequence of distinct functions
@@ -32,6 +33,8 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 
 - With the index: 500/500 cases completed. Without it: 488/500 (12 reached the heartbeat limit).
 - The computed domains are identical in all 488 cases that complete in both configurations.
-- Median time per differentiation: 172 ms with the index, 2423 ms without; median per-case
-  speedup 9.1x (restricted domains 14.5x, universal domains 6.2x), up to 66x.
-- Total time over the 488 common cases: 94 s with the index, 1333 s without.
+- Median time per differentiation: 181 ms with the index, 2423 ms without; median per-case
+  speedup 8.6x (restricted domains 13.8x, universal domains 5.9x), up to 71x.
+- Total time over the 488 common cases: 98 s with the index, 1333 s without.
+- Timing varies by about 5% between runs: an earlier indexed run (commit 517e43e-299505e code,
+  producing identical derivations for all 500 cases) gave a median of 172 ms.
