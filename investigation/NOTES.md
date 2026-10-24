@@ -10,7 +10,7 @@ Probe files are not part of any `lean_lib`; run them directly:
 
     lake build Autodiff
     AD_STATS=1 lake env lean investigation/Stats.lean
-    AD_STATS=1 AD_MODE=ch lake env lean investigation/Stats.lean
+    AD_STATS=1 AD_LEGACY=1 lake env lean investigation/Stats.lean
     AD_RECS=/tmp/recs.csv lake env lean investigation/Stats2.lean   # per-attempt CSV
     lake env lean investigation/Prof.lean                           # profiler
     lake env lean investigation/Diag.lean                           # unfolding diagnostics
@@ -21,7 +21,8 @@ Environment variables (see the comment above `difftac` in `Autodiff/FindTheorems
 |---|---|
 | `AD_STATS=1` | log apply counts and timings per `difftac` call |
 | `AD_RECS=<file>` | append `theorem,success,nanos` per apply attempt |
-| `AD_MODE=<flags>` | `c` skip catch-all theorems, `h` filter by head symbol, `r` reducible, `i` instances transparency |
+| `AD_LEGACY=1` | original search: all theorems incl. catch-alls, no head index, hand-written blacklists |
+| `AD_HEARTBEATS=<n>` | benchmark only: heartbeat limit (default 200000, Lean's default) |
 | `AD_KEEPBUG=1` | restore the original `getFullTargetType` call (B8) |
 
 ## Findings (on `test0` from `Test/autodiff_debug.lean`, restricted domain)
@@ -86,3 +87,21 @@ test expectations were updated. `Main.lean` no longer assumes the proof lemma is
 4. Index theorems by head symbol (`DiscrTree`; `ThmDB.lookup` already takes the key).
 5. Build the DB once per benchmark process (timed runs currently restart from the post-import
    state and rebuild it), then re-run the benchmark and revisit the heartbeat limit.
+
+## B10: implemented
+
+- Catch-all theorems are excluded automatically and the remaining theorems are indexed by the
+  head symbol of the differentiated function (`ThmIndex` in `Autodiff/ListThmDB.lean`);
+  non-`HasDerivAt` goals fail immediately. This replaces both hand-written blacklists, which
+  now only apply under `AD_LEGACY=1`. Test suite: 10-25x fewer apply attempts; computed
+  domains unchanged; derivatives use the power/quotient rules directly.
+- Benchmark (`Main.lean`):
+  - the theorem DB is built once in a warm-up; every timed run starts from that state (A1);
+  - only the `differentiate` command is timed (not re-defining the function);
+  - the generator is seeded with the test index, so runs are reproducible and comparable (A8);
+  - the heartbeat limit is now passed as an option (`AD_HEARTBEATS`). Previously the
+    `Core.Context.maxHeartbeats` field was ignored by command elaboration, so the effective
+    limit was Lean's default 200000 (A6);
+  - failed derivations are reported as `FAIL` instead of panicking;
+  - the function is printed on one line (multi-line output broke the CSV).
+- Seeded cases 1-5: 26-170 ms per derivative (indexed) vs 96 ms-2.5 s (`AD_LEGACY=1`).

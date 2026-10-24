@@ -127,7 +127,20 @@ def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElab
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf}"
   outFile.putStrLn ""
 
-def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
+/-- Elaborate `cmd`, returning the elapsed time in nanoseconds and whether it
+  succeeded (no error messages). -/
+def timedElab (cmd: Syntax): CommandElabM (Nat × Bool) := do
+  let errs₀ := (← get).messages.toList.filter (·.severity == .error) |>.length
+  let t₀ ← IO.monoNanosNow
+  elabCommand cmd
+  let t₁ ← IO.monoNanosNow
+  let errs₁ := (← get).messages.toList.filter (·.severity == .error) |>.length
+  return (t₁ - t₀, errs₁ == errs₀)
+
+def fmtMs (ns: Nat): String :=
+  s!"{(Float.ofNat (ns / 100000)) / 10}ms"
+
+def runTest (i: ℕ) (ctx: Core.Context) (st: Core.State): CommandElabM Unit := do
   let ⟨b, size, depth⟩ ← genFunc 6
   let fsyntax ← func2term b
 
@@ -142,13 +155,9 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
   let outFile ← IO.FS.Handle.mk (fnName.toString ++ ".txt") IO.FS.Mode.write
 
   let fnCmd ← `(noncomputable def $(mkIdent fnName) : $realT → $realT := $tc)
-  --IO.println s!"Testing {fnName} = {tc'}, size = {size}, depth = {depth}"
-
   let derivCmd ← `(let $(mkIdent fnName') := differentiate $(mkIdent fnName))
 
-  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 1000000}
-
-  -- bootstrapping round
+  -- bootstrapping round (not timed)
   elabCommand fnCmd
 
   let env ← getEnv
@@ -156,17 +165,24 @@ def runTest (i: ℕ) (st: Core.State): CommandElabM Unit := do
 
   let f ← liftTermElabM <| PrettyPrinter.ppExpr fn.value!
 
-  stderr.putStr s!"{i}, {f}, {size}, {depth}"
+  stderr.putStr s!"{i}, {f.pretty 100000}, {size}, {depth}"
 
-  elabCommand derivCmd
+  let (_, ok) ← timedElab derivCmd
+  if ! ok then
+    stderr.putStrLn ", FAIL"
+    for m in (← get).messages.toList do
+      outFile.putStrLn (← m.toString)
+    return
   dumpTestData outFile fnName fnName'
 
+  -- timed rounds, each from the same state: theorem database already built,
+  -- test function not yet defined; only the `differentiate` command is timed
   for _ in List.range 4 do
-    let _ ← timeit s!", "
-      (Lean.Core.CoreM.toIO (liftCommandElabM <| do
+    let ((t, ok), _) ← Lean.Core.CoreM.toIO (liftCommandElabM <| do
         elabCommand fnCmd
-        elabCommand derivCmd)
-      ctx st)
+        timedElab derivCmd)
+      ctx st
+    stderr.putStr (if ok then s!", {fmtMs t}" else ", FAIL")
 
   stderr.putStrLn ""
 
@@ -174,6 +190,8 @@ unsafe def main(args: List String): IO Unit := do
   IO.println s!"{args}"
 
   let initIdx := if args.length > 0 then (args.head!).toNat! else 0
+  -- reproducible test functions: the test index is the random seed
+  IO.setRandSeed initIdx
 
   enableInitializersExecution
 
@@ -186,8 +204,16 @@ unsafe def main(args: List String): IO Unit := do
     `Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic,
     `Mathlib.Data.Real.Basic] {} 1 (loadExts := true)
 
-  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, maxHeartbeats := 1000000}
-  let st: Core.State := { env := env }
+  -- the heartbeat limit must be passed as an option to take effect in command
+  -- elaboration; the default is Lean's own default
+  let heartbeats := ((← IO.getEnv "AD_HEARTBEATS").bind String.toNat?).getD 200000
+  let opts := maxHeartbeats.set Options.empty heartbeats
+  let ctx: Core.Context := { fileName := "autodiff.lean", fileMap := default, options := opts }
 
-  --for i in List.range' initIdx (initIdx + 100) do
-  let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest initIdx st) ctx st
+  -- build the theorem database once, outside the timed runs
+  let warmup : CommandElabM Unit := do
+    elabCommand (← `(noncomputable def warmup : ℝ → ℝ := fun x => x))
+    elabCommand (← `(let warmup' := differentiate warmup))
+  let (_, st) ← Lean.Core.CoreM.toIO (liftCommandElabM warmup) ctx { env := env }
+
+  let _ ← Lean.Core.CoreM.toIO (liftCommandElabM <| runTest initIdx ctx st) ctx st
