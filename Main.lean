@@ -26,6 +26,7 @@ inductive FuncBody where
 | Tan (p:FuncBody)
 --| Exp (p:FuncBody)
 | Log (p:FuncBody)
+deriving BEq
 
 def realT := mkIdent `Real
 def intT  := mkIdent `Int
@@ -109,11 +110,24 @@ def FuncBody.hasArg : FuncBody → Bool
   | .Plus b₁ b₂ | .Minus b₁ b₂ | .Mul b₁ b₂ | .Div b₁ b₂ => b₁.hasArg || b₂.hasArg
   | .Sin p | .Cos p | .Tan p | .Log p => p.hasArg
 
-/-- A random function body that mentions the variable (constant functions are
-  trivially differentiable, so they are excluded from the test set). -/
-partial def genNonConstFunc (d: ℕ): IO (FuncBody × ℕ × ℕ) := do
-  let r ← genFunc d
-  if r.1.hasArg then return r else genNonConstFunc d
+def FuncBody.isLeaf : FuncBody → Bool
+  | .IntLit _ | .Arg _ => true
+  | _ => false
+
+/-- The `i`-th (1-based) function of a fixed random sequence of distinct test
+  functions. Each one mentions the variable (constant functions are trivially
+  differentiable) and has an operator or function at the root (excluding the
+  bare `x ^ n`). Every test runs in its own process, so the sequence is
+  regenerated from a fixed seed each time. -/
+partial def genTestFunc (i: ℕ): IO (FuncBody × ℕ × ℕ) := do
+  IO.setRandSeed 0
+  let rec go (seen: List FuncBody) (k: ℕ) : IO (FuncBody × ℕ × ℕ) := do
+    let r ← genFunc 6
+    let b := r.1
+    if ! b.hasArg || b.isLeaf || seen.contains b then go seen k
+    else if k + 1 == max i 1 then return r
+    else go (b :: seen) (k + 1)
+  go [] 0
 
 def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElabM Unit := do
   let env ← getEnv
@@ -155,7 +169,7 @@ def fmtMs (ns: Nat): String :=
   s!"{(Float.ofNat (ns / 100000)) / 10}ms"
 
 def runTest (i: ℕ) (ctx: Core.Context) (st: Core.State): CommandElabM Unit := do
-  let ⟨b, size, depth⟩ ← genNonConstFunc 6
+  let ⟨b, size, depth⟩ ← genTestFunc i
   let fsyntax ← func2term b
 
   let stderr ← IO.getStderr
@@ -204,8 +218,6 @@ unsafe def main(args: List String): IO Unit := do
   IO.println s!"{args}"
 
   let initIdx := if args.length > 0 then (args.head!).toNat! else 0
-  -- reproducible test functions: the test index is the random seed
-  IO.setRandSeed initIdx
 
   enableInitializersExecution
 
