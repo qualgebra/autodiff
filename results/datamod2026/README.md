@@ -27,6 +27,8 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 | `results.json` | per-case summary produced by `analyze.py` |
 | `analyze.py` | summary statistics: `python3 analyze.py .` |
 | `plot.py` | Fig. 7 of the paper: `python3 plot.py . speedup.pdf` (needs matplotlib, Latin Modern fonts) |
+| `axioms.txt` | axioms each certified derivative depends on, per case (separate indexed run with commit e5d5827, which records them) |
+| `check_domains.py` | checks that domain conjuncts are side conditions `e ≠ 0` and that domains are satisfiable (by sampling) |
 | `run.sh` | runs cases: `./run.sh indexed 1 500` and `AD_LEGACY=1 ./run.sh legacy 1 500` (run in empty directories) |
 
 ## Summary
@@ -38,3 +40,8 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 - Total time over the 488 common cases: 98 s with the index, 1333 s without.
 - Timing varies by about 5% between runs: an earlier indexed run (commit a7e7d90,
   producing identical derivations for all 500 cases) gave a median of 172 ms.
+- Every certified derivative depends only on `propext`, `Classical.choice` and `Quot.sound`
+  (no `sorryAx`), for all 500 cases (`axioms.txt`).
+- Every domain conjunct has the form `e ≠ 0`; 432 of the 433 restricted domains are
+  satisfiable (`check_domains.py`). The exception, case 203, has an argument of `log` with
+  the factor `84 + -84`, so its domain is empty.
