@@ -155,6 +155,11 @@ def dumpTestData (outFile : IO.FS.Handle) (fnName resultName: Name): CommandElab
   outFile.putStrLn s!"{← liftTermElabM <| PrettyPrinter.ppExpr prf}"
   outFile.putStrLn ""
 
+  -- axioms the certified derivative depends on (`sorryAx` would reveal an
+  -- incomplete proof)
+  let axioms ← collectAxioms resultName
+  outFile.putStrLn s!"Axioms: {axioms.toList}"
+
 /-- Elaborate `cmd`, returning the elapsed time in nanoseconds and whether it
   succeeded (no error messages). -/
 def timedElab (cmd: Syntax): CommandElabM (Nat × Bool) := do
