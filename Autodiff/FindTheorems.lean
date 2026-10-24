@@ -86,6 +86,17 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   if ! legacy && ! t.isAppOf `HasDerivAt then
     failure
 
+  -- a function that does not depend on its argument is constant: its derivative
+  -- is 0 everywhere, with no side conditions (in both search modes)
+  if t.isAppOf `HasDerivAt then
+    let args := t.getAppArgs
+    if let .lam _ _ body _ := (← instantiateMVars args[args.size - 3]!) then
+      if ! body.hasLooseBVars then
+        try
+          applyConstant (← Meta.mkConstWithFreshMVarLevels `hasDerivAt_const)
+          return domain
+        catch _ => pure ()
+
   let appHead ← do
     match t with
     | .app (.app (.app t₁ (.lam _ _ (.app s₁ _) _)) _) _ =>
