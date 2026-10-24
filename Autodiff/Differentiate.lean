@@ -48,6 +48,16 @@ set_option maxHeartbeats 1000000
 meta def domainBVar := Expr.bvar 0
 meta def xBVar := Expr.bvar 1
 
+meta def buildDomainExprDirect (d: List Expr) : Expr :=
+  let t_const := Lean.mkConst `True []
+  let body := if d.length == 0 then t_const
+              else if d.length == 1 then d.head!
+              else d.tail.foldl (mkApp2 (mkConst `And [])) d.head!
+  let body := match body.find? Expr.isFVar with
+              | some fv => body.abstract #[fv]
+              | none => body
+  mkLambda `x BinderInfo.default (mkConst `Real []) body
+
 meta def buildDomainExpr (d: List Expr) :=
   let t_const := Lean.mkConst `True []
   let domainExpr' := if d.length == 0 then t_const
@@ -116,7 +126,7 @@ meta partial def runTactic' (f: TSyntax `ident): TermElabM (Expr × Expr × Expr
   --logInfo m!"result: {result}"
   let env ← getEnv
   let d := AR.Tools.Context.domainExt.getState env
-  let domainExpr := buildDomainExpr d
+  let domainExpr := if (← IO.getEnv "AD_DIRECT").isSome then buildDomainExprDirect d else buildDomainExpr d
   domainMVar.assign domainExpr
 
   let domain ← instantiateMVars (Expr.mvar domainMVar)
@@ -155,6 +165,16 @@ elab "let " lhs: ident ":= " "differentiate " f: ident : command => do
   let prf'' ← prepareProof prf' d
   let prf := prf'' --fixNatCast prf''
   --logInfo m!"prf'': {prf''} - prf: {prf}"
+  if (← IO.getEnv "AD_DIRECT").isSome then
+    liftTermElabM do
+      let prf ← instantiateMVars prf
+      let val ← mkAppM ``CDeriv.mk #[result, domain, prf]
+      let val ← instantiateMVars val
+      let ty ← instantiateMVars (← inferType val)
+      let declName := (← getCurrNamespace) ++ lhs.getId
+      addDecl (.defnDecl { name := declName, levelParams := [], type := ty, value := val,
+                           hints := .opaque, safety := .safe })
+    return
   let resultTerm ← liftTermElabM <| PrettyPrinter.delab result
   let domainTerm ← liftTermElabM <| PrettyPrinter.delab domain
 

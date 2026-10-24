@@ -53,6 +53,25 @@ meta def getAppHead: Expr → Name
 | .app t₁ _ => getAppHead t₁
 | _ => Name.anonymous
 
+-- instrumentation: the function argument of a theorem's HasDerivAt conclusion
+meta def thmFnArg (ty: Expr): Option Expr :=
+  let b := ty.getForallBody
+  let args := b.getAppArgs
+  if b.isAppOf `HasDerivAt && args.size ≥ 3 then some args[args.size - 3]! else none
+
+-- catch-all: conclusion is `HasDerivAt f _ _` with `f` a bound variable
+meta def isCatchAll (ty: Expr): Bool :=
+  match thmFnArg ty with
+  | some f => f.getAppFn.isBVar
+  | none => false
+
+-- head symbol of the function argument (anonymous if unknown)
+meta def thmHead (ty: Expr): Name :=
+  match thmFnArg ty with
+  | some (.lam _ _ b _) => getAppHead b
+  | some f => getAppHead f
+  | none => Name.anonymous
+
 def simplifyGoals: Bool := false --true
 
 mutual
@@ -99,7 +118,10 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   --let env ← getEnv
   let size ← ThmDB.size db
   if size = 0 then
+    let t0 ← IO.monoNanosNow
     ThmDB.init db
+    let t1 ← IO.monoNanosNow
+    initNanosRef.modify (· + (t1 - t0))
     --logInfo m!"DB size: {← ThmDB.size db}"
 
   let mut thms ← ThmDB.lookup db appHead -- derivExt.getState env
@@ -107,11 +129,26 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   --  thms ← populateExt
 
   --logInfo m!"theorems: {thms.map ConstantInfo.name}"
+  let mode := (← IO.getEnv "AD_MODE").getD ""
+  if mode.contains 'c' then
+    thms := thms.filter (fun th => ! isCatchAll th.type)
+  if mode.contains 'h' then
+    thms := thms.filter (fun th =>
+      let h := thmHead th.type
+      h.isAnonymous || appHead.isAnonymous || h == appHead)
   for th in thms do
     let cst ← Meta.mkConstWithFreshMVarLevels th.name
     --logInfo m!"trying --> {cst}"
     try
-      applyConstant cst
+      let t0 ← IO.monoNanosNow
+      try
+        if mode.contains 'r' then withReducible (applyConstant cst) else if mode.contains 'i' then withTransparency .instances (applyConstant cst) else applyConstant cst
+      catch e =>
+        let t1 ← IO.monoNanosNow
+        statsRef.modify (·.push (th.name, false, t1 - t0))
+        throw e
+      let t1 ← IO.monoNanosNow
+      statsRef.modify (·.push (th.name, true, t1 - t0))
       -- logInfo m!"Proved directly by {th.name}"
 
       let subgoals₁ ← getUnsolvedGoals
@@ -122,7 +159,7 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
         if ! assigned then
           g.instantiateMVars
           if ! (← g.getType).hasMVar then
-            let _ ← getFullTargetType
+            if (← IO.getEnv "AD_KEEPBUG").isSome then let _ ← getFullTargetType
             let t ← g.getType
             if ! domain.contains t then
               domain := t :: domain
@@ -141,8 +178,37 @@ meta partial def differentiate (history domain': List Expr): TacticM (List Expr)
   return domain
 end -- mutual
 
+-- Instrumentation (investigation branch), all opt-in via environment variables:
+--   AD_STATS=1         log apply counts/timings per `difftac` call
+--   AD_RECS=<file>     append one CSV line per apply attempt (theorem,success,nanos)
+--   AD_MODE=<flags>    search variants: c = skip catch-all theorems,
+--                      h = filter by head symbol, r = reducible transparency,
+--                      i = instances transparency
+--   AD_KEEPBUG=1       restore the original `getFullTargetType` call (see B8)
+--   AD_DIRECT=1        add the CDeriv via `addDecl` instead of delab/re-elab (incomplete)
 elab "difftac" : tactic => do
-  let d ← differentiate [] []
+  statsRef.set #[]
+  initNanosRef.set 0
+  let stats := (← IO.getEnv "AD_STATS").isSome
+  let d ← try differentiate [] [] catch e =>
+    if stats then
+      let st ← statsRef.get
+      logInfo m!"FAILED after {st.size} applies; ok: {(st.filter (·.2.1)).toList.map (·.1)}; tried: {(st.toList.map (·.1)).eraseDups}"
+    throw e
+  let st ← statsRef.get
+  if stats then
+    let ok := st.filter (·.2.1)
+    let bad := st.filter (! ·.2.1)
+    let sumMs (a : Array (Name × Bool × Nat)) := (a.foldl (· + ·.2.2) 0) / 1000000
+    let dbSize ← ThmDB.size db
+    logInfo m!"STATS db={dbSize} initMs={(← initNanosRef.get) / 1000000} applies={st.size} ok={ok.size} okMs={sumMs ok} fail={bad.size} failMs={sumMs bad}"
+    let top := (bad.qsort (·.2.2 > ·.2.2)).extract 0 15
+    logInfo m!"TOPFAIL {top.toList.map (fun (n, _, t) => (n, t / 1000000))}"
+    logInfo m!"OK {ok.toList.map (fun (n, _, t) => (n, t / 1000000))}"
+  if let some path ← IO.getEnv "AD_RECS" then
+    let h ← IO.FS.Handle.mk path IO.FS.Mode.append
+    h.putStrLn "RUN"
+    for (n, b, t) in st do h.putStrLn s!"{n},{b},{t}"
 
   let env ← getEnv
   setEnv <| domainExt.setState env d

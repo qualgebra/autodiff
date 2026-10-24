@@ -50,6 +50,10 @@ def arity (env: Environment) (n:Name): Nat :=
   | some ci => ci.type.getForallArity
   | _ => 0
 
+-- instrumentation: (theorem, success?, nanos)
+public initialize statsRef : IO.Ref (Array (Name × Bool × Nat)) ← IO.mkRef #[]
+public initialize initNanosRef : IO.Ref Nat ← IO.mkRef 0
+
 public def db: ListThmDB := {
 }
 
