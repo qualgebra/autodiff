@@ -2,7 +2,7 @@
 
 Benchmark of 500 randomly generated functions, each differentiated with the theorem
 index (`indexed/`) and without it (`legacy/`, `AD_LEGACY=1`). These are the results
-reported in the paper's evaluation (Table 1 and Fig. 7).
+reported in the paper's evaluation (Table 1 and Fig. 6).
 
 ## Setup
 
@@ -26,7 +26,7 @@ reported in the paper's evaluation (Table 1 and Fig. 7).
 | `*/wall.txt` | wall-clock seconds per case, including Lean start-up and imports |
 | `results.json` | per-case summary produced by `analyze.py` |
 | `analyze.py` | summary statistics: `python3 analyze.py .` |
-| `plot.py` | Fig. 7 of the paper: `python3 plot.py . speedup.pdf` (needs matplotlib, Latin Modern fonts) |
+| `plot.py` | Fig. 6 of the paper: `python3 plot.py . speedup.pdf` (needs matplotlib, Latin Modern fonts) |
 | `axioms.txt` | axioms each certified derivative depends on, per case (separate indexed run with commit e5d5827, which records them) |
 | `check_domains.py` | checks that domain conjuncts are side conditions `e ≠ 0` and that domains are satisfiable (by sampling) |
 | `run.sh` | runs cases: `./run.sh indexed 1 500` and `AD_LEGACY=1 ./run.sh legacy 1 500` (run in empty directories) |
