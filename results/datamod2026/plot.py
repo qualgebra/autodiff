@@ -11,6 +11,7 @@ r = list(json.load(open(f"{D}/results.json")).values())
 
 INDEXED, LEGACY = "#2a78d6", "#eb6834"          # categorical slots 1, 2 (validated)
 INK, MUTED, GRID = "#0b0b0b", "#52514e", "#e4e3df"
+UNIVERSAL, NEUTRAL = "#1baf7a", "#9c9b96"     # categorical slot 3 (validated with 1, 2); neutral grey
 
 plt.rcParams.update({
     "font.family": "Latin Modern Roman", "font.size": 8, "axes.titlesize": 8,
@@ -39,10 +40,13 @@ a.legend(frameon=False, loc="lower right", handletextpad=0.2, borderaxespad=0.1)
 
 # (b) per-function speedup (legacy / indexed), marker shape = computed domain
 both = [v for v in r if v["legacy_ok"]]
-for univ, mk, face, lbl in [(False, "o", INK, "restricted domain"), (True, "o", "none", "universal domain")]:
+# restricted (majority) in neutral grey underneath; universal (minority) in
+# categorical slot 3 on top, with a different marker for grayscale print
+for univ, mk, face, size, lbl in [(False, "o", NEUTRAL, 9, "restricted domain"),
+                                  (True, "D", UNIVERSAL, 9, "universal domain")]:
     sel = [v for v in both if v["universal"] == univ]
-    b.scatter([v["size"] for v in sel], [v["t_legacy"] / v["t_indexed"] for v in sel], s=9, marker=mk,
-              facecolor=face, edgecolor=INK, linewidth=0.5, label=lbl)
+    b.scatter([v["size"] for v in sel], [v["t_legacy"] / v["t_indexed"] for v in sel], s=size, marker=mk,
+              facecolor=face, edgecolor="white", linewidth=0.3, label=lbl, zorder=3 if univ else 2)
 b.axhline(1, color=MUTED, linewidth=0.6, linestyle="--")
 b.set_yscale("log"); b.set_ylim(0.8, 100)
 b.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}×"))
