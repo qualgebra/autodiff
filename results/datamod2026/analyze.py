@@ -43,7 +43,7 @@ for name, sel in [("all", both), ("universal", [i for i in both if n[i]['univ']]
     print(f"{name:11s} {len(sel):4d} | {st.median(a):6.1f} {st.mean(a):6.1f} {pct(a,.95):6.1f} {max(a):6.1f} | "
           f"{st.median(b):7.1f} {st.mean(b):7.1f} {pct(b,.95):7.1f} {max(b):7.1f} | "
           f"{st.median(sp):5.1f} {geo:5.1f} {min(sp):5.1f} {max(sp):6.1f}")
-print("all indexed (500):", f"median {st.median(r['t'] for r in n.values()):.1f} max {max(r['t'] for r in n.values()):.1f}",
+print(f"all indexed ({len(n)}):", f"median {st.median(r['t'] for r in n.values()):.1f} max {max(r['t'] for r in n.values()):.1f}",
       "universal", sum(r['univ'] for r in n.values()))
 print("total time (both ok): indexed %.1fs legacy %.1fs" % (sum(n[i]['t'] for i in both) / 1e3, sum(g[i]['t'] for i in both) / 1e3))
 print("size range", min(r['size'] for r in n.values()), max(r['size'] for r in n.values()))

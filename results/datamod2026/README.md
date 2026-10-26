@@ -4,6 +4,9 @@ Benchmark of 500 randomly generated functions, each differentiated with the theo
 index (`indexed/`) and without it (`legacy/`, `AD_LEGACY=1`). These are the results
 reported in the paper's evaluation (Table 1 and Fig. 6).
 
+To reproduce them, see "Reproducing the evaluation" in the top-level `README.md`
+(in short: `./runBenchmark.sh 500 eval-out` from the repository root).
+
 ## Setup
 
 - Tool: branch `perf-investigation`. `indexed/` was produced with commit 05276f6, `legacy/` with a7e7d90;

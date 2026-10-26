@@ -1,7 +1,7 @@
 """Check the computed domains in results.json (written by analyze.py).
 
-A10: every conjunct should be a side condition of the form `e ≠ 0`.
-A9:  every domain should be satisfiable. A domain is reported satisfiable when some
+Conjuncts: every conjunct should be a side condition of the form `e ≠ 0`.
+Domains:   every domain should be satisfiable. A domain is reported satisfiable when some
      sample point satisfies all of its conjuncts, evaluated with Mathlib's conventions
      (x / 0 = 0, log x = log |x| with log 0 = 0, tan x = sin x / cos x).
 usage: python3 check_domains.py <dir with results.json>
@@ -98,9 +98,9 @@ for i, v in sorted(r.items(), key=lambda kv: int(kv[0])):
         unsat.append((i, v["f"], dom))
 
 print(f"restricted domains: {n_dom} of {len(r)}; with a conjunct not mentioning x: {n_const}")
-print(f"A10 conjuncts not of the form `e ≠ 0`: {len(bad_form)}")
+print(f"conjuncts not of the form `e ≠ 0`: {len(bad_form)}")
 for i, c in bad_form[:20]:
     print(f"  case {i}: {c}")
-print(f"A9 domains with no satisfying sample: {len(unsat)}")
+print(f"domains with no satisfying sample (possibly unsatisfiable): {len(unsat)}")
 for i, f, d in unsat[:20]:
     print(f"  case {i}: {f}\n     domain: {d}")
